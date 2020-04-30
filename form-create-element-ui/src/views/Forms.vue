@@ -1,17 +1,18 @@
 <template>
-  <section class="forms">
-    <h2>组件模式：使用&lt;form-create>&lt;/form-create> 或 &lt;FormCreate /> 标签来创建（生成）表单</h2>
+  <section>
+    <h1>组件模式：使用&lt;form-create>&lt;/form-create> 或 &lt;FormCreate /> 标签来创建（生成）表单</h1>
 
     <br />
     <a href="http://www.form-create.com/v2/guide/rule.html" target="_blank">表单 rule[] 生成规则</a>
 
     <br />
     <br />
-    <Row class="btn-box">
-      <i-button type="success" @click="generateFormFn" icon="el-icon-setting">根据JSON生成表单</i-button>
-      <i-button type="primary" @click="ajaxSetDataFn" icon="el-icon-edit">Ajax请求初始化表单</i-button>
-      <i-button type="error" @click="getFormModelFn" icon="el-icon-s-promotion">获取表单Model对象</i-button>
-    </Row>
+    <el-row>
+      <el-button type="success" @click="generateFormFn" icon="el-icon-setting">根据JSON生成表单</el-button>
+      <el-button type="primary" @click="ajaxSetDataFn" icon="el-icon-edit">Ajax请求初始化表单</el-button>
+      <el-button type="danger" @click="getFormModelFn" icon="el-icon-s-promotion">获取表单Model对象</el-button>
+    </el-row>
+
     <br />
     <h3>使用&lt;form-create>&lt;/form-create>标签来创建（生成）表单：</h3>
     <form-create v-model="fApi" :rule="rule" :option="option"></form-create>
@@ -373,7 +374,7 @@ export default {
             maxSize: 2048, // 上传文件大小最大值
             maxLength: 5, // 上传文件数量最大值
             action: "http://www.upimage.com/imguploadApi", // 上传后端接收API接口
-            onSuccess: function() {
+            onSuccess: function(res) {
               return ""; // 上传成功回调函数
             }
           }
@@ -386,7 +387,7 @@ export default {
       console.log("Form表单 model对象：", this.fApi.model());
     },
 
-    getUserNameChange() {
+    getUserNameChange(e) {
       this.$nextTick(() => {
         this.rule[2].value = this.rule[0].value;
       });
@@ -397,21 +398,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.forms {
-  h2 {
-    line-height: 50px;
-  }
-  .btn-box {
-    button {
-      margin: 6px;
-    }
-  }
-  .ivu-form {
-    margin: 50px auto;
-    padding: 50px;
-    width: 680px;
-    border: 1px solid gray;
-    border-radius: 8px;
-  }
+.el-form {
+  margin: 50px auto;
+  padding: 50px;
+  width: 580px;
+  border: 1px solid gray;
+  border-radius: 8px;
 }
 </style>

@@ -22,6 +22,11 @@
       </Submenu>
       <MenuItem name="4">
         <router-link to="/forms">
+          <Icon type="ios-construct" />原form-create表单组件
+        </router-link>
+      </MenuItem>
+      <MenuItem name="5">
+        <router-link to="/myforms">
           <Icon type="ios-construct" />自定义form-create表单组件
         </router-link>
       </MenuItem>
