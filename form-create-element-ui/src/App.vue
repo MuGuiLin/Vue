@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <nav id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
       <router-link to="/forms">Forms</router-link>|
       <router-link to="/myforms">MyForms</router-link>
-    </div>
+    </nav>
+
     <hr />
     <router-view />
+    <!-- keepAlive默认true，开启缓存可以记录滚动条位置，同时支持路由配置meta:{keepAlive:false} 关闭某个页面缓存 -->
+    <!-- <vue-route-transition id="app" :keepAlive="true"></vue-route-transition> -->
   </div>
 </template>
 
