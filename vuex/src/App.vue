@@ -4,7 +4,9 @@
       <router-link to="/">Home</router-link> | 
       <router-link to="/about">About</router-link> | 
       <router-link to="/vuex">Vuex</router-link> | 
-      <router-link to="/move">Move</router-link>
+      <router-link to="/move">Move</router-link> | 
+      <router-link to="/nativedom">NativeDom</router-link> |
+      <router-link to="/virtualdom">VirtualDom</router-link>
     </nav>
     <!-- 路由动画 -->
     <transition name="mupiao" mode="out-in">

@@ -4,7 +4,8 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
       <router-link to="/forms">Forms</router-link>|
-      <router-link to="/myforms">MyForms</router-link>
+      <router-link to="/myforms">MyForms</router-link>|
+      <router-link to="/weather">Weather</router-link>
     </nav>
 
     <hr />

@@ -43,6 +43,22 @@ const routes = [
     }
   },
   {
+    path: '/nativedom',
+    name: 'NativeDom',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/NativeDom.vue')
+  },
+  {
+    path: '/virtualdom',
+    name: 'VirtualDom',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/VirtualDom.vue')
+  },
+  {
     path: '*',
     name: '404',
     component: () => import('../views/404.vue')

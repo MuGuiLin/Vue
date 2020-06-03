@@ -27,6 +27,11 @@ Vue.use(VueRouter)
       path: '/myforms',
       name: 'MyForms',
       component: () => import('../views/MyForms.vue')
+    },
+    {
+      path: '/weather',
+      name: 'Weather',
+      component: () => import('../views/Weather.vue')
     }
 ]
 

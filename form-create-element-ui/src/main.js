@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Axios from 'axios'
 
 // 引入element-ui UI框架
 import ElementUI from "element-ui"
@@ -22,6 +23,12 @@ import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
+
+Vue.prototype.$ = {
+  Axios,
+  Appid: "53767848",
+  Appsecret: "gaLdkW1o"
+}
 
 new Vue({
   router,
