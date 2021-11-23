@@ -4,9 +4,9 @@
             <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
                 <el-radio-button :label="false">expand</el-radio-button>
                 <el-radio-button :label="true">collapse</el-radio-button>
-            </el-radio-group> -->
+            </el-radio-group>-->
             <el-menu
-                default-active="1-4-1"
+                default-active="1-1"
                 class="el-menu-vertical-demo"
                 :collapse="isCollapse"
                 @open="handleOpen"
@@ -23,17 +23,28 @@
                         <template #title>
                             <span>单个数据声明</span>
                         </template>
-                        <router-link to="/vue3/setup"><el-menu-item index="1-1">setup()、ref()</el-menu-item></router-link>
+                        <router-link to="/vue3/setup">
+                            <el-menu-item index="1-1">setup()、ref()</el-menu-item>
+                        </router-link>
+                        <router-link to="/vue3/module">
+                            <el-menu-item index="1-2">module 模块化</el-menu-item>
+                        </router-link>
                     </el-menu-item-group>
                     <el-menu-item-group title="数据/对象声明">
-                        <el-menu-item index="1-2"><router-link to="/vue3/setup">reactive()</router-link></el-menu-item>
-                        <el-menu-item index="1-3"><router-link to="/vue3/setup"></router-link></el-menu-item>
+                        <el-menu-item index="1-3">
+                            <router-link to="/vue3/setup">reactive()</router-link>
+                        </el-menu-item>
+                        <el-menu-item index="1-4">
+                            <router-link to="/vue3/watch">watch()</router-link>
+                        </el-menu-item>
                     </el-menu-item-group>
-                    <el-sub-menu index="1-4">
+                    <el-sub-menu index="1-5">
                         <template #title>
                             <span>生命周期钩子</span>
                         </template>
-                        <el-menu-item index="1-4-1"><router-link to="/vue3/hook">Hook</router-link></el-menu-item>
+                        <el-menu-item index="1-5-1">
+                            <router-link to="/vue3/hook">Hook</router-link>
+                        </el-menu-item>
                     </el-sub-menu>
                 </el-sub-menu>
                 <el-menu-item index="2">
@@ -96,7 +107,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     // width: 200px;
     min-height: calc(100vh - 120px);

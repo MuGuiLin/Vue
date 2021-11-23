@@ -36,6 +36,22 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('@/views/Vue3/Hook.vue'),
       },
+      {
+        path: '/vue3/watch',
+        name: 'Watch',
+        meta: {
+          title: 'Watch函数',
+        },
+        component: () => import('@/views/Vue3/Watch.vue'),
+      },
+      {
+        path: '/vue3/module',
+        name: 'Module',
+        meta: {
+          title: 'Module模块化',
+        },
+        component: () => import('@/views/Vue3/Module.vue'),
+      },
     ]
   }
 ]

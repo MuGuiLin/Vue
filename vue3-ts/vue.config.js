@@ -26,4 +26,6 @@ module.exports = {
             },
         },
     },
+
+    lintOnServe: false // 关闭eslint
 };

@@ -8,6 +8,8 @@
 
         <!-- <el-button type="primary" :icon="Refresh" @click="update">更新组件</el-button> -->
         <el-button type="primary" @click="update">更新组件</el-button>
+
+        <el-input v-model="hook" autosize type="textarea" placeholder="Please input" />
     </div>
 </template>
 <script lang="ts">
@@ -17,6 +19,7 @@ import { Refresh } from '@element-plus/icons';
 interface DataProps {
     title: string | number;
     update: () => void;
+    hook: string;
 }
 export default {
     name: 'Hook',
@@ -68,7 +71,7 @@ export default {
 
 
         /**
-         * Vue3 新增的 两个 状态(数据)
+         * Vue3 新增的 两个 跟踪状态(数据)的改变情况，可用于代码、功能调试
          * onRenderTracked()
          * onRenderTriggered()
          **/
@@ -95,7 +98,59 @@ export default {
             title: 'Hook Pages 666',
             update: () => {
                 data.title = Math.random() * 1000;
-            }
+            },
+            hook: `
+            // 注：Vue3 的生命周期在setup()中执行！！
+            setup() { 
+
+                onErrorCaptured(() => {
+                    console.error('* Error、在捕获一个来自后代(子孙)组件的异常、错误时被调用！------> onErrorCaptured()');
+                });
+
+                onDeactivated(() => {
+                    console.error('* 9、组件(页面)后台(失去焦点)！------> onDeactivated()');
+                });
+
+                onActivated(() => {
+                    console.error('* 8、组件(页面)激活(得到焦点)！------> onActivated()');
+                });
+
+                onUnmounted(() => {
+                    console.error('* 7、组件(页面)卸载之后！------> onUnmounted()');
+                });
+
+                onBeforeUnmount(() => {
+                    console.error('* 6、组件(页面)卸载之前！------> onBeforeUnmount()');
+                });
+
+                onUpdated(() => {
+                    console.error('* 5、组件(页面)更新之后！------> onUpdated()');
+                });
+
+                onBeforeUpdate(() => {
+                    console.error('* 4、组件(页面)更新之前！------> onBeforeUpdate()');
+                });
+
+                onRenderTriggered((event) => {
+                    console.error('* 4.0、当虚拟 DOM 状态(具体：数据) 重新渲染被触发时调用！------> onRenderTriggered()');
+                });
+
+                onMounted(() => {
+                    console.log('获取DOM：', document.querySelector('.hook'), '注：获取DOM一定要在组件挂载到页面之后！！！');
+                    console.error('* 3、组件挂载到页面之后！------> onMounted()');
+                });
+
+                onRenderTracked((event) => {
+                    console.error('* 3.1 跟踪虚拟 DOM 状态(全部：数据)  重新渲染时调用！------> onRenderTracked()');
+                });
+
+                onBeforeMount(() => {
+                    console.log('获取DOM：', document.querySelector('.hook'));
+                    console.error('* 2、组件挂载到页面之前！------> onBeforeMount()');
+                });
+
+                console.error('* 1、开始创建组件！------> setup()');
+            },`
         });
 
         return {

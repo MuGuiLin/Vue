@@ -2,7 +2,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
-                <span>ref() 单个值 </span>
+                <span>ref() 单个值 返回一个响应式且可变的 ref 对象 const count = ref(0); count.value++; </span>
                 <el-button class="button" type="text">{{ title }}</el-button>
             </div>
         </template>
@@ -18,7 +18,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
-                <span>reactive() 多个值 </span>
+                <span>reactive() 多个值 返回对象的响应式副本 const obj = reactive({ count: 0 }); obj.count++ </span>
                 <el-button class="button" type="text">{{ data.title }}</el-button>
             </div>
         </template>
@@ -80,7 +80,7 @@ export default defineComponent({
 
         // 单个值 响应式API：ref, unef, toRef, toRefs, isRef, customRef, shallowRef, triggerRef, Computed, watch, Effect
         const title = ref<string | number>('');
-        const fruit = ref(['apple', 'banana', 'pear', 'orange']);
+        const fruit = ref(['Apple', 'Banana', 'Pear', 'Orange']);
         const select = (index: number) => {
             title.value = fruit.value[index];
         };
@@ -89,7 +89,7 @@ export default defineComponent({
         // 多个值(深层次) 响应性基础 API: reactive, readonly, isProxy, isReactive, isReadonly, toRaw, markRaw, shallowReactive, shallowReadonly
         const data: DataProps = reactive({
             title: '',
-            fruit: ['apple', 'banana', 'pear', 'orange'],
+            fruit: ['Apple', 'Banana', 'Pear', 'Orange'],
             select: (index: number) => {
                 data.title = data.fruit[index];
             }
@@ -104,14 +104,14 @@ export default defineComponent({
         // });
 
         return {
-            // 
+     
             // title,
             // fruit,
             // select,
 
             data,
             // 解构输出toRefs
-            ...toRefs(data),
+            ...toRefs(data),  // 解构这里和上面的title，fruit，select功能效果一样
         }
     },
 })
