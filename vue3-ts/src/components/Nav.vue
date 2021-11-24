@@ -40,18 +40,25 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
-  setup() {
-    const activeIndex = ref('1')
-    const activeIndex2 = ref('1')
-    const handleSelect = (key:any, keyPath:any) => {
-      console.log(key, keyPath)
-    }
-    return {
-      activeIndex,
-      activeIndex2,
-      handleSelect,
-    }
-  },
+    name: 'Nav',
+    components: {
+
+    },
+    props: {
+
+    },
+    setup() {
+        const activeIndex = ref('1')
+        const activeIndex2 = ref('1')
+        const handleSelect = (key: any, keyPath: any) => {
+            console.log(key, keyPath)
+        }
+        return {
+            activeIndex,
+            activeIndex2,
+            handleSelect,
+        }
+    },
 })
 // import { Options, Vue } from 'vue-class-component';
 // @Options({

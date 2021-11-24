@@ -16,7 +16,9 @@
         <br />
         <br />
 
-        <el-button type="primary" @click="show = !show"><h2>Vue3瞬移组件&lt;teleport&gt;标签</h2></el-button>
+        <el-button type="primary" @click="show = !show">
+            <h2>Vue3瞬移组件&lt;teleport&gt;标签</h2>
+        </el-button>
         <Alert v-if="show" />
 
         <br />
@@ -26,18 +28,19 @@
             <template #default>
                 <div class="suspense">
                     <h2>Vue3异步组件&lt;suspense&gt;标签</h2>
-                    <Async />
+                    <!-- <Async /> -->
+                    <async-axios />
                 </div>
             </template>
             <template #fallback>
-                <h1 class="loading">加载中，请稍后！</h1>
+                <h1 class="loading">{{ loadingText }}</h1>
             </template>
         </suspense>
     </section>
 </template>
 
 <script lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, onErrorCaptured, watch } from 'vue';
 import { ElLoading } from 'element-plus';
 
 import { nowTime, getNowTime } from '@/utils/nowTime';
@@ -45,14 +48,16 @@ import useAxios from '@/utils/useAxios';
 
 import Alert from '../../components/Teleport.vue';
 import Async from '@/components/Suspense.vue';
+import AsyncAxios from '@/components/Suspense2.vue';
 
 export default {
     name: 'Module',
     components: {
         Alert,
-        Async
+        Async,
+        AsyncAxios
     },
-    setup(props) {
+    setup(props: any) {
         // 模块化前：
         // const nowTime = ref<string>('00:00:00');
         // const into = (n: number) => {
@@ -77,6 +82,17 @@ export default {
 
         onMounted(() => {
             getNowTime();
+        });
+
+        const loadingText = ref('加载中，请稍后！');
+
+        onErrorCaptured((err, vm, info) => {
+            console.error('* Error、在捕获一个来自后代(子孙)组件的异常、错误时被调用！------> onErrorCaptured()');
+            console.debug(err);
+            console.debug(vm);
+            console.debug(info);
+            loadingText.value = 'API请求出错啦！';
+            return true;
         });
 
         // const openFullScreen = () => {
@@ -110,6 +126,7 @@ export default {
             nowTime,
             result,
             loading,
+            loadingText,
             show
         }
     }

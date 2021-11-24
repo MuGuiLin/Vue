@@ -52,6 +52,14 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('@/views/Vue3/Module.vue'),
       },
+      {
+        path: '/vue3/letter',
+        name: 'Letter',
+        meta: {
+          title: '父子组件通信',
+        },
+        component: () => import('@/views/Vue3/Letter.vue'),
+      },
     ]
   }
 ]

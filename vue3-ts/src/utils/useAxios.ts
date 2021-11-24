@@ -12,7 +12,7 @@ export default function (url: string) {
     }).catch(err => {
         error.value = err;
 
-    }).finally((_: any) => {
+    }).finally(() => {
         loading.value = false;
 
     });

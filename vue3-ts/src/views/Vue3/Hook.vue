@@ -1,7 +1,7 @@
 <template>
     <div class="hook">
         <p>
-            注意：
+            注意：<a href="https://v3.cn.vuejs.org/guide/composition-api-lifecycle-hooks.html" target="_blank" rel="noopener noreferrer">Vue3生命周期钩子</a>
             <br />所有生命周期钩子的 this 上下文将自动绑定至实例中，因此你可以访问 data、computed 和 methods。这意味着你不应该使用箭头函数来定义一个生命周期方法 (例如 created: () => this.fetchTodos())。因为箭头函数绑定了父级上下文，所以 this 不会指向预期的组件实例，并且this.fetchTodos 将会是 undefined。
         </p>
         <h2>{{ title }}</h2>
@@ -30,6 +30,7 @@ export default {
 
         onErrorCaptured(() => {
             console.error('* Error、在捕获一个来自后代(子孙)组件的异常、错误时被调用！------> onErrorCaptured()');
+            return true; // 错误时继续向下执行
         });
 
         onDeactivated(() => {

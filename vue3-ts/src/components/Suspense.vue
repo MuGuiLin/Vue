@@ -16,10 +16,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue-demi";
-
 export default {
-    setup(props) {
+    setup(props: any) {
 
         const data = new Promise((resolve, reject) => {
 
@@ -28,7 +26,7 @@ export default {
             }, 3000);
         });
 
-        console.log(data)
+        console.log(data);
 
         return data; // 注：这里需要返回的是一个Promise对象！！！
     }
