@@ -15,6 +15,8 @@
             >{{ i }} => {{ o }}</el-button>
         </div>
     </el-card>
+    <br>
+    <br>
     <el-card class="box-card">
         <template #header>
             <div class="card-header">

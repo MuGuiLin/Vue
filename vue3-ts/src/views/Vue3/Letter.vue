@@ -3,7 +3,7 @@
         <h1>组件通信</h1>
 
         <div class="vue3">
-            <h1>Vue 3 的三种语法</h1>
+            <h1>Vue 3 的三种语法 以及【3个方法：defineProps()、defineEmits()、defineExpose()】</h1>
             <hr />
             <h4>1、Option API</h4>这个不多赘述了，会写vue的都会，这就是vue2 大家最常用的 选项式API。
             <h4>2、Composition API</h4>
@@ -11,6 +11,9 @@
             组合式API，也就是Vue3诞生以来，最为人津津乐道的语法更新，也是下面script setup 语法糖的基础。
             export default defineComponent({
                 setup() {
+                    注：在 setup() 内部，this是无效的<b>this = sundefined</b>，因为setup()是<b>在解析其它组件选项之前被调用</b>的，
+                    所以 setup() 内部的 this 的行为与其它选项中的 this 完全不同。
+                    这使得 setup() 在和其它选项式 API 一起使用时可能会导致混淆。
                     return {}
                 }
             });
@@ -26,53 +29,60 @@
         <!-- <el-scrollbar height="200px">
             <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p>
         </el-scrollbar>-->
-        <h1>父组件：{{ count }}</h1>
-        <el-button type="success" @click="updateSon">修改子组件的值</el-button>
-        
-        <script-setup ref="sonRef" :count="count" @update="updateCount" />
-        <script-setup2 ref="sonRef2" :count="count" @update="updateCount" />
+        <div class="box">
+            <h1>我是父组件：{{ count }}</h1>
+            <el-button type="warning" @click="updateSon">修改子组件的值</el-button>
+
+            <CompositionAPI ref="compos" :count="count" @update="updateCount" />
+            <br />
+            <script-setup ref="script" :count="count" @update="updateCount" />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, reactive, toRefs } from 'vue';
+
+import CompositionAPI from '@/components/CompositionAPI.vue';
 import ScriptSetup from '@/components/ScriptSetup.vue';
-import ScriptSetup2 from '@/components/ScriptSetup2.vue';
+
 export default defineComponent({
     name: 'Letter',
     components: {
-        ScriptSetup,
-        ScriptSetup2
+        CompositionAPI,
+        ScriptSetup
     },
 
     setup() {
+        const compos = ref();
+        const script = ref();
 
         const data = reactive({
-            count: 99,
+            count: 0,
             updateCount: (val: number) => {
                 data.count = val;
             }
         });
 
-        const sonRef = ref();
-        const sonRef2 = ref();
-
         const updateSon = () => {
-            // sonRef.value.chingeTitle(666);
-            sonRef2.value.chingeTitle(Math.random());
+            compos.value.chingeTitle('green', Math.random());
+            script.value.chingeTitle('blue', Math.random());
 
-
+            console.log('compos------------>：', compos.value.title, 'data：', compos.value.data);
+            console.log('script------------>：', script.value.title, 'data：', script.value.data);
         };
 
         onMounted(() => {
-            console.log('sonRef------------>：', sonRef.value);
-            console.log('sonRef2------------>：', sonRef2.value.title);
+            console.log('compos------------>：', compos.value.title, 'data：', compos.value.data);
+            console.log('script------------>：', script.value.title, 'data：', script.value.data); // 注: 如果子组是用script setup 时，需要用defineExpose({})将属性暴露出来，这里才能收到！！！
         });
+
+        console.debug('this------------>：', this);
 
         return {
             ...toRefs(data),
-            sonRef,
-            sonRef2,
+            compos,
+            script,
             updateSon
         }
     }
@@ -86,6 +96,11 @@ export default defineComponent({
         line-height: 36px;
         font-size: 16px;
         text-align: left;
+    }
+    .box {
+        margin: 20px;
+        padding: 30px;
+        border: 1px solid #e6a23c;
     }
 }
 </style>

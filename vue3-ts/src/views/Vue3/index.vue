@@ -35,7 +35,7 @@
                     </el-menu-item-group>
                     <el-menu-item-group title="数据/对象声明">
                         <el-menu-item index="1-4">
-                            <router-link to="/vue3/setup">reactive()</router-link>
+                            <router-link to="/vue3/setup">reactive()， toRefs()</router-link>
                         </el-menu-item>
                         <el-menu-item index="1-5">
                             <router-link to="/vue3/watch">watch()</router-link>
