@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 // 生命周期函数(钩子)
 // import { setup, onBeforeMount, onMounted, onBeforeUpdate, onActivated, onUpdated, onBeforeUnmount, onUnmounted, onDeactivated } from 'vue'
 
@@ -22,17 +23,13 @@
    两个钩子函数都接收一个 DebuggerEvent，与 watchEffect 参数选项中的 onTrack 和 onTrigger 类似：
 */
 
-import { onMounted, ref, reactive, toRef, toRefs } from "vue";
+import { onMounted, ref, reactive } from 'vue'
+
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from "./components/HelloWorld.vue";
-import Demo from "./components/Demo.vue";
-
-import muForm from "./components/Form.vue";
-import muFormItem from "./components/FormItem.vue";
-import muInput from "./components/Input.vue";
-import { Form } from "./types/formType";
+import HelloWorld from './components/HelloWorld.vue'
+import Demo from './components/Demo.vue';
 
 /**
  * Vite 注意点：
@@ -42,67 +39,33 @@ import { Form } from "./types/formType";
  */
 
 // 定义单个值
-let str = ref("");
+let str = ref('');
 let num = ref(0);
 let demoRef = ref();
 
 // 定义数组、对象
 const arr = reactive([1, 2, { a: 1 }, 4, 5]);
-const obj = reactive({
-  key: "value",
-  b: 2,
-  user: { name: "沐枫", age: 30, job: "Web开发" },
-});
-
+const obj = reactive({ key: 'value', b: 2, user:{ name: '沐枫',age:30, job: 'Web开发'} });
 // 修改 数组、对象
 obj.b = 1024;
 arr[3] = 4444;
-// console.log(obj, arr);
+console.log(obj, arr);
+
 
 const parentFn = (par: string) => {
   // 修改 单个值
   str.value = par;
-  console.log("这是从子组件传来的参数：" + par);
+  console.log('这是从子组件传来的参数：' + par);
 };
 
 onMounted(() => {
-  // console.log(demoRef.value);
+  console.log(demoRef.value);
   // console.log(demoRef.value.name);
+
   // 调用子组件了方法
-  // demoRef.value.printJob(888);
+  demoRef.value.printJob(888);
 });
 
-const model = reactive({
-  username: "",
-  password: "",
-});
-
-const rules = reactive({
-  username: [
-    {
-      required: true,
-      message: "请输入用户名！",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "请输入密码！",
-    },
-  ],
-});
-
-// 获取表单实例
-const myForm = ref<Form>();
-const login = () => {
-  myForm.value?.validate((isValid) => {
-    if (isValid) {
-      console.log(model);
-    } else {
-      alert("请正确填写表单！");
-    }
-  });
-};
 </script>
 
 <template>
@@ -110,28 +73,11 @@ const login = () => {
 
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 
-  <!-- <b>{{ str }}</b>
+  <b>{{ str }}</b>
   <Demo ref="demoRef" @mu-click="parentFn" />
 
   <p v-for="(o, i) in arr" :key="i">{{ i }}</p>
-  <p v-for="(o, i) in obj" :key="i">{{ o }}</p> -->
-
-  <div class="my-form">
-    <h2>表单组件（带校验功能）</h2>
-    <muForm ref="myForm" :model="model" :rules="rules">
-      <muFormItem label="用户名：" prop="username">
-        <muInput v-model="model.username"></muInput>
-      </muFormItem>
-      <muFormItem label="密码：" prop="password">
-        <muInput type="password" v-model="model.password"></muInput>
-      </muFormItem>
-      <br>
-      <muFormItem>
-        <button type="button" @click="login">登 录</button>
-      </muFormItem>
-    </muForm>
-    <p>表单数据：{{ model }}</p>
-  </div>
+  <p v-for="(o, i) in obj" :key="i">{{ o }}</p>
 </template>
 
 <style>
@@ -142,15 +88,5 @@ const login = () => {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-.my-form {
-  margin: 100px;
-  padding: 40px 60px;
-  border: 1px solid gray;
-}
-
-button{
-  padding: 6px;
-  font-size: 16px;
 }
 </style>
