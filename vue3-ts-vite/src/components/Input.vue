@@ -2,7 +2,8 @@
   <input class="input" :type="type" :value="modelValue" @input="onInput" />
 </template>
 <script lang="ts" setup>
-import { emitter } from "../composables/useEmitter";
+import { defineProps, defineEmits } from "vue";
+import { emitter } from "@/composables/useEmitter";
 
 // 输入
 defineProps({

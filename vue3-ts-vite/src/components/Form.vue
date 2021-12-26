@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, provide, ref } from "vue";
+import { defineProps, defineExpose, PropType, provide, ref } from "vue";
 import { Rules } from "async-validator";
-import { FormItem, icKey } from "../types/formType";
-import { emitter } from "../composables/useEmitter";
+import { FormItem, icKey } from "@/types/formType";
+import { emitter } from "@/composables/useEmitter";
 
 // 接收Form配置：model和rules
 const props = defineProps({

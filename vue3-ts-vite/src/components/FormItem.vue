@@ -10,10 +10,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, inject } from "vue";
+import { withDefaults, defineProps, defineExpose, onMounted, ref, inject } from "vue";
 import Schema from "async-validator";
-import { emitter } from "../composables/useEmitter";
-import { FormItem, icKey } from "../types/formType";
+import { emitter } from "@/composables/useEmitter";
+import { FormItem, icKey } from "@/types/formType";
 
 interface Props {
   label?: string;
