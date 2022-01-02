@@ -11,7 +11,7 @@
 
 [Vite 官方中文文档](https://cn.vitejs.dev)
 
-## 搭建第一个 Vite 项目
+## 搭建 Vite 项目
 
 **兼容性注意** ：Vite 需要 [Node.js](https://nodejs.org/en/) 版本 >= 12.0.0。
 
@@ -52,4 +52,395 @@ pnpm create vite my-vue-app -- --template vue
 ```
 
 查看 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite) 以获取每个模板的更多细节：`vanilla`，`vanilla-ts`，`vue`，`vue-ts`，`react`，`react-ts`，`preact`，`preact-ts`，`lit`，`lit-ts`，`svelte`，`svelte-ts`。
+
+
+
+## Vue-Router安装与配置
+
+[Vue-Route - Vue.js 的官方路由](https://next.router.vuejs.org/zh/index.html)。
+
+使用 NPM:
+
+```
+$ npm i -S vue-router@next
+```
+
+使用 Yarn:
+
+```
+$  yarn add vue-router@next
+```
+
+使用 PNPM:
+
+```
+$ pnpm add vue-router@next
+```
+
+
+
+**配置router路由** ：
+
+在项目src目录中：新增router/index.ts文件，配置如下：
+
+```js
+import { createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import Home from '../views/Home.vue'
+
+const routes: Array<RouteRecordRaw> = [
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/about',
+        name: 'About',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    },
+];
+
+const router = createRouter({
+    // history: createWebHashHistory(), // #
+    history: createWebHistory(),		// /
+    routes,
+});
+
+export default router;
+```
+
+## Vuex安装与配置
+
+[Vuex - Vue.js 的官方状态管理](https://next.vuex.vuejs.org/zh/index.html)。
+
+使用 NPM:
+
+```
+$ npm i -S vuex@next
+```
+
+使用 Yarn:
+
+```
+$  yarn add vuex@next
+```
+
+使用 PNPM:
+
+```
+$ pnpm add vuex@next
+```
+
+
+
+**配置store状态管理** ：
+
+在项目src目录中：新增store/index.ts文件，配置如下：
+
+```js
+import { createStore } from 'vuex'
+
+export default createStore({
+  state: {
+    mupiao: 0,
+  },
+  mutations: {
+    add(state) {
+      state.mupiao++;
+    }
+  },
+  actions: {
+  },
+  modules: {
+  }
+})
+
+// 使用
+<template>
+    <button @click="$store.commit('add')">{{ $store.state.mupiao }}</button>
+</template>
+```
+
+
+
+### main.ts
+
+```js
+import { createApp } from 'vue'
+import Vant from 'vant';
+import App from './App.vue'
+import router from './router'
+import store from './store'
+
+import 'vant/lib/index.css'
+
+createApp(App).use(store).use(router).use(Vant).mount('#app')
+```
+
+
+
+### vite.config.ts
+
+```js
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+  ],
+
+  // 公共基础路径
+  base: process.env.NODE_ENV === "production" ? "./" : "/",
+
+  alias: {
+    // 配置目录别名
+    "@": resolve(__dirname, "src"),
+    "views": resolve(__dirname, "src/views"),
+    "utils": resolve(__dirname, "src/utils"),
+  },
+
+  css: {
+    // css预处理器
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          // 全局less变量存储路径(配置less的全局变量)
+          hack: `true; @import (reference) "${resolve('src/public/config.less')}";`,
+        },
+        javascriptEnabled: true,
+        // charset: false,
+        // additionalData: '@import "./src/public/config.less";', // 全局less变量存储路径
+      }
+    }
+  },
+
+  // 开发服务器配置
+  server: {
+    host: true,
+    open: true,
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://www.xxx.com',
+        changeOrigin: true,
+        ws: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        configure: (proxy, options) => {
+          // proxy 是 'http-proxy' 的实例
+        }
+      }
+    }
+  },
+})
+
+```
+
+
+
+## ESlint安装与配置
+
+
+
+使用 NPM:
+
+```
+$ npm install --save-dev eslint eslint-plugin-vue
+```
+
+使用 Yarn:
+
+```
+$  yarn add -D eslint eslint-plugin-vue
+```
+
+使用 PNPM:
+
+```
+$ pnpm add -D eslint eslint-plugin-vue
+```
+
+
+
+**配置eslintrc** ：
+
+在项目src目录中：新增.eslintrc.js文件，配置如下：
+
+```js
+module.exports = {
+    root: true,
+    parserOptions: {
+        sourceType: 'module'
+    },
+    parser: 'vue-eslint-parser',
+    env: {
+        browser: true,
+        node: true,
+        es6: true
+    },
+    rules: {
+        'no-console': 'off'
+    }
+};
+```
+
+
+
+
+
+## Vant 移动UI
+
+**兼容性注意** ：Vant 3 支持现代浏览器以及 Chrome >= 51、iOS >= 10.0（与 Vue 3 一致）。
+
+使用 NPM:
+
+```
+$ npm i vant@3.4
+```
+
+使用 Yarn:
+
+```
+$ yarn add vant@3.4
+```
+
+使用 PNPM:
+
+```
+$ pnpm add vant@3.4
+```
+
+
+
+**引入Vant组件** ：
+
+在main.ts中配置如下：
+
+```js
+import { createApp } from 'vue'
+
+import Vant from 'vant';
+import App from './App.vue'
+
+import 'vant/lib/index.css'
+
+createApp(App).use(Vant).mount('#lincoln')
+
+```
+
+## 移动适配：Viewport 布局
+
+Vant 默认使用 `px` 作为样式单位，如果需要使用 `viewport` 单位 (vw, vh, vmin, vmax)，推荐使用 [postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport) 进行转换。
+
+[postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport) 是一款 PostCSS 插件，用于将 px 单位转化为 vw/vh 单位。
+
+使用 NPM:
+
+```
+$ npm i -D postcss-px-to-viewport
+```
+
+使用 Yarn:
+
+```
+$ yarn add -D postcss-px-to-viewport
+```
+
+使用 PNPM:
+
+```
+$ pnpm add postcss-px-to-viewport
+```
+
+
+
+**引入Vant组件** ：
+
+在项目根目录中：新增postcss.config.js文件，配置如下：
+
+```js
+module.exports = {
+    plugins: {
+        'postcss-px-to-viewport': {
+            unitToConvert: 'px', 		            // 要转化的单位
+            viewportWidth: 375, 		            // 视窗的宽度，可根据自己的需求调整（这里是以PC端为例）
+            // viewportHeight: 668, 		        // 视窗的高度，对应的是我们设计稿的高度. (也可以不配置)
+            unitPrecision: 6, 			            // 转换后的精度，即小数点位数
+            propList: ['*'], 			            // 指定转换的css属性的单位，*代表全部css属性的单位都进行转换
+            viewportUnit: 'vw', 		            // 指定需要转换成的视窗单位，默认vw
+            fontViewportUnit: 'vw', 	            // 指定字体需要转换成的视窗单位，默认vw
+            selectorBlackList: ['.ignore', 'van'],  // 指定不转换为视窗单位的 class类名
+            minPixelValue: 1, 			            // 默认值1，小于或等于1px则不进行转换
+            mediaQuery: true, 			            // 是否在媒体查询的css代码中也进行转换，默认false
+            replace: true, 				            // 是否转换后直接更换属性值
+            exclude: [/node_modules/], 	            // 设置忽略文件，用正则做目录名匹配
+            landscape: false, 			            // 是否处理横屏情况
+        },
+    },
+};
+```
+
+## 在Vite 中使用Less
+
+**安装less 和 less-loader**
+
+使用 NPM:
+
+```
+$ npm i -D less less-loader
+```
+
+使用 Yarn:
+
+```
+$ yarn add -D less less-loader
+```
+
+使用 PNPM:
+
+```
+$ pnpm add less less-loader
+```
+
+
+
+**配置Less** 
+
+在项目根目录中的 vite.config.ts文件中，配置如下：
+
+```js
+
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+  ],
+  css: {
+    // css预处理器
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          // 全局less变量存储路径
+          hack: `true; @import (reference) "${resolve('src/public/config.less')}";`,
+        },
+        javascriptEnabled: true,
+        // charset: false,
+        // additionalData: '@import "./src/public/config.less";', // 全局less变量存储路径
+      }
+    }
+  },
+})
+
+
+```
 
