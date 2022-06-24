@@ -18,7 +18,7 @@
 使用 NPM:
 
 ```
-$ npm init vite@latest
+$ npm init vite
 ```
 
 使用 Yarn:
@@ -34,15 +34,16 @@ $ pnpm create vite
 ```
 
 然后按照提示操作即可！
+如：创建 vue3 + ts 项目
+> √ Project name: myapp
+√ Select a framework: » vue
+√ Select a variant: » vue-ts  
 
 你还可以通过附加的命令行选项直接指定项目名称和你想要使用的模板。例如，要构建一个 Vite + Vue 项目，运行:
 
 ```
 # npm 6.x
-npm init vite@latest my-vue-app --template vue
-
-# npm 7+, 需要额外的双横线：
-npm init vite@latest my-vue-app -- --template vue
+npm init vite my-vue-app --template vue
 
 # yarn
 yarn create vite my-vue-app --template vue
@@ -62,19 +63,19 @@ pnpm create vite my-vue-app -- --template vue
 使用 NPM:
 
 ```
-$ npm i -S vue-router@next
+$ npm i -S vue-router
 ```
 
 使用 Yarn:
 
 ```
-$  yarn add vue-router@next
+$  yarn add vue-router
 ```
 
 使用 PNPM:
 
 ```
-$ pnpm add vue-router@next
+$ pnpm add vue-router
 ```
 
 
@@ -334,6 +335,7 @@ createApp(App).use(Vant).mount('#lincoln')
 
 ```
 
+
 ## 移动适配：Viewport 布局
 
 Vant 默认使用 `px` 作为样式单位，如果需要使用 `viewport` 单位 (vw, vh, vmin, vmax)，推荐使用 [postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport) 进行转换。
@@ -385,6 +387,8 @@ module.exports = {
     },
 };
 ```
+
+
 
 ## 在Vite 中使用Less
 
