@@ -1,6 +1,7 @@
 module.exports = {
     root: true,
     env: {
+        browser: true,
         node: true,
         es6: true,
     },
@@ -14,9 +15,10 @@ module.exports = {
     ],
     plugins: ['prettier'],
     parserOptions: {
-        ecmaVersion: 2017
+        ecmaVersion: 2018
     },
     rules: {
+        'no-console': 'off',
         'prettier/prettier': 'error',
         'arrow-body-style': 'off',
         'prefer-arrow-callback': 'off'

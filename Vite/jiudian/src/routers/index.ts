@@ -10,4 +10,9 @@ const router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 })
 });
 
+router.beforeEach((to, from, next) => {
+    document.title = '九点漫画';
+    next();
+})
+
 export default router;

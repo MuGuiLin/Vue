@@ -21,17 +21,15 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import('@views/Book/Index.vue'),
         meta: {
             title: "九点漫画"
-        },
-        children: [
-            {
-                path: '/detail',
-                name: 'Detail',
-                component: () => import('@views/Book/Detail.vue'),
-                meta: {
-                    title: '九点漫画'
-                },
-            }
-        ],
+        }
+    },
+    {
+        path: '/detail',
+        name: 'Detail',
+        component: () => import('@views/Book/Detail.vue'),
+        meta: {
+            title: '九点漫画'
+        }
     },
     {
         path: '/mine',

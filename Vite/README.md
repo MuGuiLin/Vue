@@ -36,8 +36,13 @@ $ pnpm create vite
 然后按照提示操作即可！
 如：创建 vue3 + ts 项目
 > √ Project name: myapp
-√ Select a framework: » vue
-√ Select a variant: » vue-ts  
+> √ Select a framework: » vue
+> √ Select a variant: » vue-ts 
+
+或：
+```
+yarn create vite my-vue-app --template vue-ts
+```
 
 你还可以通过附加的命令行选项直接指定项目名称和你想要使用的模板。例如，要构建一个 Vite + Vue 项目，运行:
 

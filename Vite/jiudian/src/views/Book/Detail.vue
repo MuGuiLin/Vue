@@ -5,11 +5,11 @@ import { onMounted, reactive } from 'vue';
 import { List, Button } from '@nutui/nutui';
 
 const state = reactive({
-  count: new Array(100).fill(0)
+  count: new Array(10000).fill(0)
 });
 
 const handleScroll = () => {
-  let arr = new Array(100).fill(0);
+  let arr = new Array(10000).fill(0);
   const len = state.count.length;
   state.count = state.count.concat(
     arr.map((item: number, index: number) => len + index + 1)
@@ -35,7 +35,7 @@ onMounted(() => {
         <template v-slot="{ item }">
           <div class="list-item">
             {{ item }}
-            <img src="@/assets/manhua.jpg" alt="" />
+            <img src="@/assets/imgs/manhua.jpg" alt="" />
           </div>
         </template>
       </nut-list>

@@ -34,5 +34,11 @@
     "vite": "^2.9.9",
     "vite-plugin-style-import": "^2.0.0",
     "vue-tsc": "^0.34.7"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
 }
