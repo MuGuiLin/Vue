@@ -1,8 +1,8 @@
 import { useRouter } from 'vue-router';
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { PageEnum } from '@enums/pagEnum';
-import { isString } from '@utils/is';
+import { PageEnum } from '../enums/pageEnum';
+import { isString } from '../utils/is';
 
 export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & { path: PageEnum };
 
@@ -11,7 +11,7 @@ function handleError(e: Error) {
 }
 
 
-export function useGo(_router?: Router) {
+export function useGo(_router?: Router | any) {
     let router;
     if (!_router) {
         router = useRouter();

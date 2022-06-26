@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-1105.000000, -382.000000)">
+            <g id="编组-4备份" transform="translate(1105.000000, 388.363636)">
+                <path d="M7,1 L22,1 C27.5228475,1 32,5.4771525 32,11 L32,15 L32,15 L7,15 C3.13400675,15 4.73447626e-16,11.8659932 0,8 C-4.73447626e-16,4.13400675 3.13400675,1 7,1 Z" id="矩形备份-4" fill="#252237" transform="translate(16.000000, 8.000000) scale(-1, 1) translate(-16.000000, -8.000000) "></path>
+                <text id="VIP备份-2" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#F5D184">
+                    <tspan x="7" y="13">VIP</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

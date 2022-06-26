@@ -11,7 +11,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = '九点漫画';
+    if (to.meta.title) {
+        document.title = <string>to.meta.title as '九点漫画';
+    }
     next();
 })
 

@@ -1,20 +1,13 @@
-$font-size-txts: 14px;
-$font-size-txtm: 16px;
-$font-size-btxtl: 18px;
-$font-size-titles: 20px;
-$font-size-titlem: 22px;
-$font-size-titlel: 22px;
-
 body {
-	font-style: normal;
-	font-variant: normal;
-	font-size: 12px;
-	font-weight: 400;
-	font-size-adjust: none;
-	font-stretch: normal;
-	font-family: Arial, Helvetica, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 12px;
+    font-weight: 400;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 html,
 body,
@@ -38,26 +31,26 @@ td,
 textarea,
 th,
 ul {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 table {
-	font-size: inherit;
+    font-size: inherit;
 }
 input,
 select {
-	font-style: normal;
-	font-variant: normal;
-	font-size-adjust: none;
-	font-stretch: normal;
-	font-family: arial, helvetica, clean, sans-serif;
-	line-height: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-family: arial, helvetica, clean, sans-serif;
+    line-height: normal;
 }
 button {
-	overflow: visible;
+    overflow: visible;
 }
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 address,
 b,
@@ -65,63 +58,69 @@ cite,
 em,
 strong,
 th {
-	font-style: normal;
+    font-style: normal;
 }
 li {
-	list-style-position: outside;
-	list-style-type: none;
-	list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    list-style-image: none;
 }
 fieldset,
 img {
-	border: 0 none;
+    border: 0 none;
 }
 
-$primary-color: #1989fa;
 
+$font-size-txts: 14px;
+$font-size-txtm: 16px;
+$font-size-btxtl: 18px;
+$font-size-titles: 20px;
+$font-size-titlem: 22px;
+$font-size-titlel: 22px;
+$primary-color: #1989fa;
 $warning-color: #ba6e30;
 
 @mixin no-wrap($lines) {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: $lines;
-	-webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
 }
 
 // 单行文本超出隐藏并显示...省略号
 @mixin line-text-overflow() {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 //多行文本超过行数显示省略号，只适用于WebKit及移动端
 @mixin text-overflow($line: 2) {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: $line;
-	overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $line;
+    overflow: hidden;
 }
 
 /* 四周阴影 */
 @mixin box-shadow($bulr: 10px, $color: rgba(189, 205, 211, 0.5)) {
-	-webkit-box-shadow: 0 0 $bulr $color;
-	-moz-box-shadow: 0 0 $bulr $color;
-	box-shadow: 0 0 $bulr $color;
+    -webkit-box-shadow: 0 0 $bulr $color;
+    -moz-box-shadow: 0 0 $bulr $color;
+    box-shadow: 0 0 $bulr $color;
 }
 
 // flex布局
 @mixin layout($dir: column, $justify: center, $align: right) {
-	display: flex;
-	flex-direction: $dir;
-	justify-content: $justify;
-	align-items: $align;
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
 }
 
 @mixin userselect($val: none) {
-	-webkit-user-select: $val;
-	-moz-user-select: $val;
-	-ms-user-select: $val;
-	user-select: $val;
+    -webkit-user-select: $val;
+    -moz-user-select: $val;
+    -ms-user-select: $val;
+    user-select: $val;
 }

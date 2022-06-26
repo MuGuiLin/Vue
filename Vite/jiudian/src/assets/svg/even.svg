@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="35px" viewBox="0 0 35 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-789.000000, -436.000000)">
+            <g id="编组-2备份-3" transform="translate(790.000000, 445.000000)">
+                <path d="M2,0 L27.6445949,0 C28.2981084,-6.1659029e-15 28.9104014,0.319281744 29.2844953,0.855130232 L33.2384769,6.51877517 C33.699793,7.1795599 33.7194521,8.05266369 33.2883454,8.73354257 L29.2764056,15.0698976 C28.9097397,15.6490004 28.272059,16 27.5866366,16 L2,16 C0.8954305,16 1.3527075e-16,15.1045695 0,14 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z" id="矩形备份-5" fill="#D2B8FC"></path>
+                <text id="连载中" stroke="#000000" fill="#000000" fill-rule="nonzero" font-family="lianmengqiyilushuaizhengruiheiti-Regular, lianmengqiyilushuaizhengruiheiti" font-size="7" font-weight="normal" letter-spacing="1.166666">
+                    <tspan x="4" y="10">连载中</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

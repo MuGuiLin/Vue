@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
-import { useGo } from '@hooks/usePage';
+import { useGo } from '../hooks/usePage';
 const go = useGo();
 
 const state = reactive({
@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="home">
+  <section class="home">
     <nut-swiper
       :init-page="state.page"
       :pagination-visible="true"
@@ -34,10 +34,10 @@ onMounted(() => {
       </nut-swiper-item>
     </nut-swiper>
 
-    <section class="main">
+    <main class="main">
       <div class="main-noticebar">
         <marquee class="marquee">{{ state.noticebar }}</marquee>
-        <button class="watch" type="button" @click="go('/mine')">
+        <button class="watch" type="button" @click="go('/recharge')">
           去看看 <nut-icon name="right" size="10" color="#fa2c19"></nut-icon>
         </button>
       </div>
@@ -56,7 +56,7 @@ onMounted(() => {
               <h4>黑客漫画</h4>
               <nut-button
                 color="linear-gradient(to right, #FFBBA0, #C371ED)"
-                @click="go('/detail')"
+                @click="go('/article')"
                 >续看</nut-button
               >
             </dt>
@@ -73,7 +73,7 @@ onMounted(() => {
               <h4>黑客漫画黑客漫画黑客漫画</h4>
               <nut-button
                 color="linear-gradient(to right, #FFBBA0, #C371ED)"
-                @click="go('/detail')"
+                @click="go('/article')"
                 >续看</nut-button
               >
             </dt>
@@ -129,12 +129,12 @@ onMounted(() => {
         </li>
       </ul>
 
-      <nut-divider
-        :style="{ color: '#B1B1B1', borderColor: '#D6D6D6', padding: '30px' }"
+      <nut-divider :style="{ color: '#B1B1B1', borderColor: '#D6D6D6', padding: '30px 30px 0' }"
         >来自九九的邀请</nut-divider
       >
-    </section>
-  </article>
+      <footer class="main-footer"></footer>
+    </main>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -366,6 +366,13 @@ onMounted(() => {
           }
         }
       }
+    }
+
+    &-footer {
+      width: 100%;
+      height: 100px;
+      background: url(@/assets/imgs/qq.png) center top no-repeat;
+      background-size: contain;
     }
   }
   ::v-deep {
