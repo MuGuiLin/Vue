@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
-import { useGo } from '../hooks/usePage';
+import { useGo } from '@hooks/usePage';
 const go = useGo();
 
 const state = reactive({
@@ -371,7 +371,7 @@ onMounted(() => {
     &-footer {
       width: 100%;
       height: 100px;
-      background: url(@/assets/imgs/qq.png) center top no-repeat;
+      background: url(@/assets/imgs/qq.webp) center top no-repeat;
       background-size: contain;
     }
   }

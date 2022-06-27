@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 
 import { routes } from './modules'
+
 const router = createRouter({
-    // history: createWebHistory(process.env.BASE_URL),
-    // history: createWebHistory(import.meta.env.VITE_BASE_PATH as string),
-    history: createWebHashHistory(import.meta.env.VITE_BASE_PATH as string),
+    // history: createWebHistory(import.meta.env.BASE_URL as string),
+    history: createWebHashHistory(import.meta.env.VITE_BASE_URL as string),
     routes,
     strict: true,
     scrollBehavior: () => ({ left: 0, top: 0 })
