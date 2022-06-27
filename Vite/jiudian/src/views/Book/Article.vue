@@ -6,14 +6,14 @@ interface IState {
 }
 
 const state = reactive({
-  count: new Array(1000).fill(0),
+  count: new Array(55).fill(0),
   isVisible: false,
   val: "",
   refreshList: Array(),
 });
 
 const handleScroll = () => {
-  let arr = new Array(1000).fill(0);
+  let arr = new Array(55).fill(0);
   const len = state.count.length;
   state.count = state.count.concat(
     arr.map((item: number, index: number) => len + index + 1)
@@ -36,10 +36,10 @@ const refreshHasMore = ref(true);
 const refreshLoadMore = (done: () => void) => {
   setTimeout(() => {
     const curLen = state.refreshList.length;
-    for (let i = curLen; i < curLen + 100; i++) {
+    for (let i = curLen; i < curLen + 10; i++) {
       state.refreshList.push(`${i}`);
     }
-    if (state.refreshList.length > 1000) refreshHasMore.value = false;
+    if (state.refreshList.length > 20) refreshHasMore.value = false;
     done();
   }, 500);
 };
@@ -51,7 +51,7 @@ const refresh = (done: () => void) => {
   }, 1000);
 };
 const init = () => {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 20; i++) {
     state.refreshList.push(`${i}`);
   }
 };
@@ -64,8 +64,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <section>
-    <div class="article">
+  <section class="article">
+    <mian class="vlist">
       <nut-list
         class=""
         :height="360"
@@ -74,11 +74,12 @@ onMounted(() => {
       >
         <template v-slot="{ item }">
           <div class="list-item">
-            <img src="../../assets/hua/pic(35).jpg" :alt="item" />
+            <img :src="`src/assets/hua/pic(${item + 1}).jpg`" :alt="item" />
           </div>
         </template>
       </nut-list>
-    </div>
+    </mian>
+
     <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
       <div class="infiniteTop">
         <h3>黑客漫画</h3>
@@ -92,10 +93,12 @@ onMounted(() => {
         </div>
         <p class="point">漫画单张定价250鸡腿！</p>
       </div>
-      <ul class="infiniteUl" id="refreshScroll">
+      <ul class="nav-box" id="navScroll">
         <nut-infiniteloading
-          pull-icon="JD"
-          container-id="refreshScroll"
+          pull-icon="loading1"
+          load-icon="loading"
+          load-more-txt="到底啦～"
+          container-id="navScroll"
           :use-window="false"
           :is-open-refresh="true"
           :has-more="refreshHasMore"
@@ -103,11 +106,13 @@ onMounted(() => {
           @refresh="refresh"
         >
           <li
-            class="infiniteLi active"
+            class="nav-item active"
             v-for="(item, index) in state.refreshList"
             :key="index"
           >
-            <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+            <div class="cover lock">
+              <img src="@/assets/imgs/cover.jpg" alt="" />
+            </div>
             <dl class="info">
               <dt>
                 <h4>第{{ item }}话 - 女主登场</h4>
@@ -120,58 +125,72 @@ onMounted(() => {
         </nut-infiniteloading>
       </ul>
     </nut-actionsheet>
-    <footer class="footer">
-      <nut-tabbar
-        class=""
-        :bottom="true"
-        :safeAreaInsetBottom="true"
-        @tab-switch="tabSwitch"
-      >
-        <nut-tabbar-item tab-title="首页" icon="home" to="/"></nut-tabbar-item>
-        <nut-tabbar-item tab-title="漫画详情" icon="order"></nut-tabbar-item>
-        <nut-tabbar-item
-          tab-title="目录"
-          icon="horizontal"
-          @click="switchActionSheet"
-        ></nut-tabbar-item>
-        <nut-tabbar-item
-          tab-title="最近看漫"
-          icon="clock"
-          to="/recent"
-        ></nut-tabbar-item>
-      </nut-tabbar>
-    </footer>
+
+    <nut-tabbar
+      :bottom="true"
+      :safeAreaInsetBottom="true"
+      @tab-switch="tabSwitch"
+      unactive-color="#333"
+      active-color="#333"
+    >
+      <nut-tabbar-item
+        tab-title="首页"
+        img="src/assets/svg/home.svg"
+        activeImg="src/assets/svg/home.svg"
+        to="/"
+      ></nut-tabbar-item>
+      <nut-tabbar-item
+        tab-title="漫画详情"
+        img="src/assets/svg/info.svg"
+        activeImg="src/assets/svg/info.svg"
+      ></nut-tabbar-item>
+      <nut-tabbar-item
+        tab-title="目录"
+        img="src/assets/svg/item.svg"
+        activeImg="src/assets/svg/item.svg"
+        @click="switchActionSheet"
+      ></nut-tabbar-item>
+      <nut-tabbar-item
+        tab-title="最近看漫"
+        img="src/assets/svg/time.svg"
+        activeImg="src/assets/svg/time.svg"
+        to="/recent"
+      ></nut-tabbar-item>
+    </nut-tabbar>
   </section>
 </template>
 
 <style lang="scss" scoped>
 .article {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  .nut-list-item {
-    box-sizing: border-box;
-    padding: 0;
-    .list-item {
+  opacity: 0;
+  animation: opacity 1s forwards;
+  .vlist {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    .nut-list-item {
       box-sizing: border-box;
-      img {
-        width: 100%;
-        height: 360px;
+      padding: 0;
+      .list-item {
+        box-sizing: border-box;
+        img {
+          width: 100%;
+          height: 360px;
+        }
       }
     }
   }
-}
-.footer {
-  // position: fixed;
-  // left: 0;
-  // bottom: 0;
-  // width: 100%;
-}
 
+  @keyframes opacity {
+    to {
+      opacity: 1;
+    }
+  }
+}
 .nut-popup {
+  background: #20243c;
   .nut-actionsheet-panel {
-    background: #20243c;
     .infiniteTop {
       color: white;
       background: #20243c;
@@ -210,7 +229,7 @@ onMounted(() => {
         }
       }
     }
-    .infiniteUl {
+    .nav-box {
       box-sizing: border-box;
       padding: 0 10px 10px;
       height: 460px;
@@ -221,20 +240,35 @@ onMounted(() => {
       &::-webkit-scrollbar {
         display: none;
       }
-      .infiniteLi {
+      .nav-item {
         margin: 20px 0;
-
         display: flex;
-
-        .cover {
-          width: 110px;
+        div.cover {
+          width: 100px;
           height: 60px;
-          border-radius: 8px;
-          border: 1px solid #c6c6c6;
-          -webkit-object-fit: cover;
-          object-fit: cover;
+          border-radius: 6px;
+          box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.8);
+          overflow: hidden;
+          > img {
+            width: 100%;
+            height: 100%;
+            -webkit-object-fit: cover;
+            object-fit: cover;
+          }
         }
-        .info {
+        div.lock {
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6) url(@/assets/svg/lock.svg) center center no-repeat;
+          }
+        }
+        dl.info {
           flex: auto;
           display: flex;
           flex-direction: column;
@@ -276,9 +310,17 @@ onMounted(() => {
     }
   }
 }
+
+.nut-tabbar {
+  padding: 8px 0;
+  background: rgba(255, 255, 255, 0.8);
+}
 ::v-deep {
   .nut-list-item {
     margin: 0;
+  }
+  .nut-popup {
+    background: #20243c !important;
   }
 }
 </style>
