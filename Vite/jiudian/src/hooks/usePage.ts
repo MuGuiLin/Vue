@@ -10,13 +10,13 @@ function handleError(e: Error) {
     console.error(e);
 }
 
-
 export function useGo(_router?: Router | any) {
     let router;
     if (!_router) {
         router = useRouter();
     }
     const { push, replace } = _router || router;
+    
     function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {
         if (!opt) {
             return;

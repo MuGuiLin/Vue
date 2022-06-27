@@ -16,7 +16,7 @@ const state = reactive({
 
 onMounted(() => {
   setTimeout(() => {
-    state.list.splice(1, 1);
+    // state.list.splice(1, 1);
   }, 3000);
 });
 </script>
@@ -29,7 +29,7 @@ onMounted(() => {
       pagination-color="#DB56EE"
       auto-play="3000"
     >
-      <nut-swiper-item v-for="item in state.list" :key="item">
+      <nut-swiper-item v-for="item in state.list" :key="item" @click="go('/article')">
         <img :src="item" alt="" />
       </nut-swiper-item>
     </nut-swiper>

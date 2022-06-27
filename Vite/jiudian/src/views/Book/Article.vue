@@ -9,6 +9,7 @@ const state = reactive({
   count: new Array(55).fill(0),
   isVisible: false,
   val: "",
+  sort: true,
   refreshList: Array(),
 });
 
@@ -56,6 +57,11 @@ const init = () => {
   }
 };
 
+const sort = () => {
+  state.sort = !state.sort;
+  state.refreshList = state.refreshList.reverse();
+};
+
 onMounted(() => {
   state.count = state.count.map((item: number, index: number) => index + 1);
   console.log(state.count);
@@ -85,11 +91,8 @@ onMounted(() => {
         <h3>黑客漫画</h3>
         <div class="sort">
           <span>已更89话</span>
-          <nut-button
-            size="small"
-            color="linear-gradient(to right, #FFBBA0, #C371ED)"
-            >正序</nut-button
-          >
+          <button v-if="state.sort" @click="sort">正序</button>
+          <button v-else class="fall" @click="sort">倒序</button>
         </div>
         <p class="point">漫画单张定价250鸡腿！</p>
       </div>
@@ -115,7 +118,7 @@ onMounted(() => {
             </div>
             <dl class="info">
               <dt>
-                <h4>第{{ item }}话 - 女主登场</h4>
+                <h4>第{{ Number(item) + 1 }}话 - 女主登场</h4>
               </dt>
               <dd>
                 <time>2020-01-05</time>
@@ -207,8 +210,49 @@ onMounted(() => {
         padding: 15px 10px;
         border-bottom: 1px solid rgba(238, 238, 238, 0.2);
         > span {
+          position: relative;
           font-size: 16px;
           color: white;
+          &::after {
+            content: "";
+            position: absolute;
+            top: -8px;
+            right: -45px;
+            display: inline-block;
+            width: 40px;
+            height: 30px;
+            background: url(@/assets/svg/even.svg) no-repeat;
+            background-size: cover;
+          }
+        }
+        > button {
+          position: relative;
+          padding-left: 18px;
+          width: 68px;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          color: #d2b8fc;
+          border-radius: 30px;
+          border: none;
+          background: #32395f;
+          &::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: url(@/assets/svg/rise.svg) no-repeat;
+            background-size: cover;
+          }
+        }
+        > button.fall {
+          &::before {
+            background: url(@/assets/svg/fall.svg) no-repeat;
+            background-size: cover;
+          }
         }
       }
       p {
@@ -246,8 +290,8 @@ onMounted(() => {
         div.cover {
           width: 100px;
           height: 60px;
-          border-radius: 6px;
-          box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.8);
+          border-radius: 4px;
+          box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.6);
           overflow: hidden;
           > img {
             width: 100%;
@@ -258,14 +302,15 @@ onMounted(() => {
         }
         div.lock {
           position: relative;
-          &::before {
+          &::after {
             content: "";
             position: absolute;
             left: 0;
             bottom: 0;
             width: 100%;
             height: 24px;
-            background: rgba(0, 0, 0, 0.6) url(@/assets/svg/lock.svg) center center no-repeat;
+            background: rgba(0, 0, 0, 0.6) url(@/assets/svg/lock.svg) center
+              center no-repeat;
           }
         }
         dl.info {

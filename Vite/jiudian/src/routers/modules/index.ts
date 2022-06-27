@@ -51,7 +51,7 @@ export const routes: Array<RouteRecordRaw> = [
         //     }
         // ],
     },
-    /*{
+    {
         path: '/recent',
         name: 'Recent',
         component: () => import('@views/Mine/Recent.vue'),
@@ -99,7 +99,6 @@ export const routes: Array<RouteRecordRaw> = [
             title: '设置'
         }
     },
-    */
     {
         path: "/:pathMatch(.*)",
         redirect: "/",
