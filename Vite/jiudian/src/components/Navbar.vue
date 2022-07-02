@@ -22,4 +22,7 @@ const back = () => {
 </template>
 
 <style lang="scss" scoped>
+.nut-navbar {
+  margin: 0;
+}
 </style>

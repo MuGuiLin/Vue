@@ -1,15 +1,310 @@
 <script setup lang="ts">
+import { reactive } from "vue";
 import Navbar from "@/components/Navbar.vue";
+const state = reactive({
+  active: 0,
+  edit: false,
+});
+const edit = () => {
+  state.edit = !state.edit;
+};
 </script>
 
 <template>
   <section class="recent">
     <Navbar title="最近看漫" />
+    <a class="edit" @click="edit">{{ state.edit ? "取消" : "编辑" }}</a>
+    <nut-tabs v-model="state.active">
+      <nut-tabpane class="like" title="喜欢">
+        <ul class="recent-ul">
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+        </ul>
+
+        <h3 class="recent-h3">九九推荐</h3>
+        <ul class="recent-ul">
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>玄幻 科幻 异能</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>玄幻 科幻 异能</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>玄幻 科幻 异能</dd>
+            </dl>
+          </li>
+        </ul>
+      </nut-tabpane>
+      <nut-tabpane class="history" title="历史">
+        <ul class="recent-ul">
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>
+                <!-- <i>VIP</i> -->
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <!-- <p>666 已助力</p> -->
+              </dt>
+              <dd>
+                <h4>黑客漫画</h4>
+              </dd>
+              <dd>阅读到：第2话</dd>
+              <dd>更新至：第16话</dd>
+            </dl>
+          </li>
+        </ul>
+      </nut-tabpane>
+    </nut-tabs>
+    <footer class="footer" v-show="state.edit">
+      <a>全 选</a>
+      <a>删 除</a>
+    </footer>
   </section>
 </template>
 
 <style lang="scss" scoped>
 .recent {
-  text-align: center;
+  position: relative;
+  .edit {
+    position: absolute;
+    top: 55px;
+    right: 13px;
+    font-size: 13px;
+    color: #666;
+  }
+  .nut-tabs {
+    .nut-tabpane {
+      padding: 10px 7px;
+      height: calc(100vh - 82px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      .recent-h3 {
+        padding: 30px 0 0 6px;
+        font-size: 16px;
+        color: #333;
+      }
+      .recent-ul {
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 10px auto;
+        > li {
+          flex-shrink: 0;
+          -ms-flex-negative: 0;
+          margin: 10px 5px;
+          width: 110px;
+          > dl {
+            > dt {
+              position: relative;
+              i {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                display: block;
+                padding: 2px 5px;
+                font-size: 12px;
+                font-weight: 600;
+                color: #560805;
+                border-radius: 3px;
+                background: #fce373;
+              }
+              img {
+                width: 100%;
+                height: 150px;
+                border-radius: 4px;
+              }
+              p {
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 12px;
+              }
+            }
+            > dd {
+              font-size: 11px;
+
+              color: #999;
+              h4 {
+                line-height: 25px;
+                font-size: 12px;
+                color: #333;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+      }
+      .recent-ul:last-child {
+        padding-bottom: 50px;
+      }
+    }
+  }
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid rgba(151, 151, 151, 0.3);
+    > a {
+      width: 50%;
+      text-align: center;
+      font-weight: 400;
+      color: #333;
+    }
+    > a:first-child {
+      border-right: 1px solid rgba(151, 151, 151, 0.3);
+    }
+  }
+}
+::v-deep {
+  .nut-tabs {
+    .nut-tabs__titles {
+      width: 120px;
+      background: none;
+
+      .nut-tabs__titles-item {
+        font-size: 18px;
+        .nut-tabs__titles-item__line {
+          bottom: 10%;
+          width: 26px;
+          border-radius: 3px;
+          background: linear-gradient(137deg, #ffbb9f 0%, #9853c0 100%);
+        }
+      }
+    }
+  }
 }
 </style>
