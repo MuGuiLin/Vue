@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive } from "vue";
 import Navbar from "@/components/Navbar.vue";
 const state = reactive({

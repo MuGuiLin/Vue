@@ -1,4 +1,4 @@
-<script setup lang="ts" name="Navbar">
+<script lang="ts" setup name="Navbar">
 import { ref } from "vue";
 import { useGo } from "@hooks/usePage";
 const go = useGo();

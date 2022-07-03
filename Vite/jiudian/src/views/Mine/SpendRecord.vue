@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, reactive, onMounted, toRefs } from "vue";
 import Navbar from "@/components/Navbar.vue";
 const customHasMore = ref(true);
