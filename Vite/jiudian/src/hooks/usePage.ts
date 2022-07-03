@@ -16,7 +16,7 @@ export function useGo(_router?: Router | any) {
         router = useRouter();
     }
     const { push, replace } = _router || router;
-    
+
     function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = true) {
         if (!opt) {
             return;
@@ -29,4 +29,8 @@ export function useGo(_router?: Router | any) {
         }
     }
     return go;
-}
+};
+
+export const back = () => {
+    window.history.back();
+};

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useGo } from "@hooks/usePage";
+const go = useGo();
 </script>
 
 <template>
@@ -8,12 +10,14 @@
         <img src="@/assets/imgs/logo.png" alt="user" />
         <h2>九九</h2>
         <p>ID：8888888</p>
+        <button>签到</button>
       </div>
       <div class="info">
         <span>100鸡腿</span>
         <nut-button
           size="small"
           color="linear-gradient(to right, #FFBBA0, #C371ED)"
+          @click="go('/account')"
           >充 值</nut-button
         >
       </div>
@@ -70,15 +74,15 @@
       </nut-cell-group>
 
       <nut-cell-group>
+        <nut-cell icon="setting" title="阅读记录" to="/setting"></nut-cell>
         <nut-cell icon="edit" title="意见反馈" to="/feedback"></nut-cell>
-        <nut-cell icon="setting" title="设置" to="/setting"></nut-cell>
-        <nut-cell
+        <!-- <nut-cell
           icon="share-n"
           title="关于我们"
           desc="https://www.xxx.com"
           is-link
           url="/"
-        ></nut-cell>
+        ></nut-cell> -->
       </nut-cell-group>
     </main>
   </section>
@@ -109,7 +113,7 @@
       position: relative;
       padding-left: 80px;
       text-align: left;
-      img {
+      > img {
         position: absolute;
         top: -30px;
         left: 6px;
@@ -118,14 +122,39 @@
         border-radius: 33px;
         background: white;
       }
-      h2 {
+      > h2 {
         font-weight: 600;
         font-size: 16px;
         color: #333;
       }
-      p {
+      > p {
         font-weight: 400;
         color: #999;
+      }
+      > button {
+        position: absolute;
+        top: 10px;
+        right: -20px;
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+        color: #333;
+        font-weight: 600;
+        background: #f5edff;
+        border: none;
+        border-radius: 100px 0px 0px 100px;
+        &::before {
+          content: "";
+          position: relative;
+          top: 4px;
+          left: 0;
+          display: inline-block;
+          margin-right: 4px;
+          width: 16px;
+          height: 16px;
+          background: url(@/assets/icon/fowlleg.png) no-repeat;
+          background-size: cover;
+        }
       }
     }
     > .info {

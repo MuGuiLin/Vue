@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import Navbar from "@/components/Navbar.vue";
+import Recharge from "@/components/Recharge.vue";
 </script>
 
 <template>
-  <section class="recharge">
-    <Navbar title="充值中心" />
+  <section class="account">
+    <Navbar title="我的账户" />
+    <Recharge />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.recharge {
-  text-align: center;
-}
+.account{}
 </style>

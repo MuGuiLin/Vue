@@ -37,7 +37,7 @@ onMounted(() => {
     <main class="main">
       <div class="main-noticebar">
         <marquee class="marquee">{{ state.noticebar }}</marquee>
-        <button class="watch" type="button" @click="go('/recharge')">
+        <button class="watch" type="button" @click="go('/account')">
           去看看 <nut-icon name="right" size="10" color="#fa2c19"></nut-icon>
         </button>
       </div>

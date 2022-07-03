@@ -3,7 +3,11 @@
 <script lang="ts" setup>
 </script>
 
-<template></template>
+<template>
+<section class="book">
+
+</section>
+</template>
 
 <style lang="scss" scoped>
 </style>

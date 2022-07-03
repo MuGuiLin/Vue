@@ -146,6 +146,7 @@ onMounted(() => {
         tab-title="漫画详情"
         img="src/assets/svg/info.svg"
         activeImg="src/assets/svg/info.svg"
+        to="/details"
       ></nut-tabbar-item>
       <nut-tabbar-item
         tab-title="目录"

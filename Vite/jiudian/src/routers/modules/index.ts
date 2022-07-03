@@ -34,6 +34,14 @@ export const routes: Array<RouteRecordRaw> = [
         }
     },
     {
+        path: '/details',
+        name: 'Details',
+        component: () => import('@views/Book/Details.vue'),
+        meta: {
+            title: '漫画详情'
+        }
+    },
+    {
         path: '/mine',
         name: 'Mine',
         component: () => import('@views/Mine/Index.vue'),
@@ -60,9 +68,9 @@ export const routes: Array<RouteRecordRaw> = [
         }
     },
     {
-        path: '/recharge',
-        name: 'Recharge',
-        component: () => import('@views/Mine/Recharge.vue'),
+        path: '/account',
+        name: 'Account',
+        component: () => import('@views/Mine/Account.vue'),
         meta: {
             title: '充值中心'
         }
