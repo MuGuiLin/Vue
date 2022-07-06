@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-194.000000, -511.000000)">
+            <circle id="椭圆形备份-2" fill="#FF6C72" cx="204" cy="521" r="10"></circle>
+            <polyline id="路径-2" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="201.046069 520.312164 203.591285 522.700024 207.449715 519.130924"></polyline>
+        </g>
+    </g>
+</svg>

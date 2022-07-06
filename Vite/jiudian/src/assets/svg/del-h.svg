@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <g id="切图" transform="translate(-75.000000, -499.000000)" stroke="#FE7B80" stroke-width="1.83333333">
+            <g id="删除4_delete-four" transform="translate(79.000000, 501.000000)">
+                <line x1="0" y1="2.97916667" x2="14.6666667" y2="2.97916667" id="路径" stroke-linecap="round"></line>
+                <line x1="4.58333333" y1="0.229166667" x2="10.0833333" y2="0.229166667" id="路径" stroke-linecap="round"></line>
+                <path d="M1.83333333,5.72916667 L12.8333333,5.72916667 L12.8333333,16.2708333 C12.8333333,17.0302458 12.2177458,17.6458333 11.4583333,17.6458333 L3.20833333,17.6458333 C2.44892083,17.6458333 1.83333333,17.0302458 1.83333333,16.2708333 L1.83333333,5.72916667 Z" id="路径"></path>
+            </g>
+        </g>
+    </g>
+</svg>

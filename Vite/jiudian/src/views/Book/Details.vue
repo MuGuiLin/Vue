@@ -1,7 +1,7 @@
 
 
 <script lang="ts" setup>
-import { useGo, back } from '@hooks/usePage';
+import { useGo, back } from "@hooks/usePage";
 const go = useGo();
 </script>
 
@@ -67,8 +67,11 @@ const go = useGo();
               <h4>九九</h4>
               <p>2022-03-06</p>
             </dt>
-            <dd><h4>一次就好，我带你去看天涯海角</h4></dd>
-            <dd>点赞：666 * 888</dd>
+            <dd><h5>一次就好，一次就好，我带你去看天涯海角一次就好，我带你去看天涯海角我带你去看天涯海角。</h5></dd>
+            <dd>
+              <a class="laud">666</a>
+              <a>888</a>
+            </dd>
           </dl>
         </li>
         <li>
@@ -78,8 +81,11 @@ const go = useGo();
               <h4>九九</h4>
               <p>2022-03-06</p>
             </dt>
-            <dd><h4>一次就好，我带你去看天涯海角</h4></dd>
-            <dd>点赞：666 * 888</dd>
+            <dd><h5>一次就好，我带你去看天涯海角</h5></dd>
+            <dd>
+              <a>666</a>
+              <a class="text">888</a>
+            </dd>
           </dl>
         </li>
       </ul>
@@ -138,6 +144,7 @@ const go = useGo();
         position: absolute;
         right: 0px;
         bottom: -3px;
+        padding-left: 20px;
         width: 80px;
         height: 30px;
         font-size: 12px;
@@ -145,7 +152,19 @@ const go = useGo();
         border-radius: 40px;
         border: none;
         color: white;
+        letter-spacing: 1px;
         background: #a05bbd;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 5px;
+          left: 15px;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          background: url(@/assets/svg/like.svg) no-repeat;
+          background-size: cover;
+        }
       }
     }
   }
@@ -266,6 +285,7 @@ const go = useGo();
         > dl {
           > dt {
             position: relative;
+            margin-bottom: 5px;
             padding-left: 45px;
             img {
               position: absolute;
@@ -292,6 +312,51 @@ const go = useGo();
             line-height: 26px;
             font-size: 10px;
             color: #666;
+            > h5 {
+              line-height: 16px;
+              font-size: 12px;
+              font-weight: 400;
+              color: #999;
+              letter-spacing: 1px;
+            }
+            > a {
+              position: relative;
+              display: inline-block;
+              margin-right: 30px;
+              padding-left: 20px;
+              &::before {
+                content: "";
+                position: absolute;
+                top: 4px;
+                left: 0px;
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                background: url(@/assets/svg/laud.svg) no-repeat;
+                background-size: cover;
+              }
+            }
+            > a:last-child {
+              &::before {
+                content: "";
+                background: url(@/assets/svg/text.svg) no-repeat;
+                background-size: cover;
+              }
+            }
+            > a.laud {
+              &::before {
+                content: "";
+                background: url(@/assets/svg/laud-h.svg) no-repeat;
+                background-size: cover;
+              }
+            }
+            > a.text {
+              &::before {
+                content: "";
+                background: url(@/assets/svg/text-h.svg) no-repeat;
+                background-size: cover;
+              }
+            }
           }
         }
       }
@@ -309,12 +374,24 @@ const go = useGo();
     border-top: 1px solid #f3f3f3;
     background: white;
     .input {
+      position: relative;
       box-sizing: border-box;
-      padding-left: 30px;
+      padding-left: 40px;
       width: 220px;
       height: 35px;
       background: #f3f3f3;
       border-radius: 18px;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 15px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: url(@/assets/svg/say.svg) no-repeat;
+        background-size: cover;
+      }
       > input {
         height: 38px;
         border: none;

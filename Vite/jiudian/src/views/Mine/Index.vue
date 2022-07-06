@@ -64,18 +64,27 @@ const go = useGo();
       <nut-cell-group>
         <nut-cell title="充值记录" to="/record">
           <template v-slot:icon>
-            <img
-              class="nut-icon"
-              src="https://img11.360buyimg.com/imagetools/jfs/t1/137646/13/7132/1648/5f4c748bE43da8ddd/a3f06d51dcae7b60.png"
-            />
+            <i class="wallet"></i>
           </template>
         </nut-cell>
-        <nut-cell icon="order" title="消费记录" to="/spend"></nut-cell>
+        <nut-cell icon="order" title="消费记录" to="/spend">
+          <template v-slot:icon>
+            <i class="money"></i>
+          </template>
+        </nut-cell>
       </nut-cell-group>
 
       <nut-cell-group>
-        <nut-cell icon="setting" title="阅读记录" to="/setting"></nut-cell>
-        <nut-cell icon="edit" title="意见反馈" to="/feedback"></nut-cell>
+        <nut-cell icon="setting" title="阅读记录" to="/recent">
+          <template v-slot:icon>
+            <i class="recent"></i>
+          </template>
+        </nut-cell>
+        <nut-cell icon="edit" title="意见反馈" to="/feedback">
+          <template v-slot:icon>
+            <i class="edit"></i>
+          </template>
+        </nut-cell>
         <!-- <nut-cell
           icon="share-n"
           title="关于我们"
@@ -256,7 +265,30 @@ const go = useGo();
 ::v-deep {
   .nut-cell-group {
     .nut-cell-group__warp {
+      .nut-cell__icon {
+        i {
+          display: block;
+          margin-right: 5px;
+          width: 22px;
+          height: 22px;
+          background: url(@/assets/svg/wallet.svg) no-repeat;
+          background-size: cover;
+        }
+        i.money {
+          background: url(@/assets/svg/money.svg) no-repeat;
+          background-size: cover;
+        }
+        i.recent {
+          background: url(@/assets/svg/recent.svg) no-repeat;
+          background-size: cover;
+        }
+        i.edit {
+          background: url(@/assets/svg/edit.svg) no-repeat;
+          background-size: cover;
+        }
+      }
       .nut-cell__title {
+        padding-top: 2px;
         font-size: 14px;
         color: #333;
       }

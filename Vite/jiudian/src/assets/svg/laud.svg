@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-383.000000, -362.000000)">
+            <g id="赞_thumbs-up备份" transform="translate(383.000000, 362.000000)">
+                <rect id="矩形" fill-opacity="0.01" fill="#999999" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                <rect id="矩形" fill-opacity="0.01" fill="#999999" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                <path d="M9.19366449,6.19997276 L9.19366449,3.79998832 C9.19366449,2.80588144 8.38898015,2 7.39637971,2 L5,7.39996497 L5,14 L11.9614831,14 C12.5589471,14.0066888 13.0700749,13.5715583 13.1596729,12.9799288 L13.9864239,7.5799638 C14.0391775,7.23186606 13.9366325,6.87816836 13.7059476,6.61247008 C13.4752961,6.34680514 13.1397364,6.19597278 12.7882341,6.19997276 L9.19366449,6.19997276 Z" id="路径" stroke="#999999" stroke-width="1.25" stroke-linejoin="round"></path>
+                <path d="M5,8.00017596 L3.398,8.00017596 C2.69510667,7.98898632 2.09423333,8.51297938 2,9.1399591 L2,12.9198369 C2.09423333,13.5468166 2.69510667,14.0109916 3.398,13.9998019 L5,13.9998019 L5,8.00017596 Z" id="路径" stroke="#999999" stroke-width="1.25" stroke-linejoin="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

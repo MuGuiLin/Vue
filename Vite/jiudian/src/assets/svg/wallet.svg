@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-121.000000, -437.000000)">
+            <g id="编组-4" transform="translate(121.000000, 437.000000)">
+                <circle id="椭圆形备份-4" fill="#DBC4FF" cx="15.5" cy="15.5" r="6.5"></circle>
+                <g id="钱包_wallet备份-2">
+                    <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="21" height="21"></rect>
+                    <polygon id="路径" stroke="#333333" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" points="8 4.99248958 13.9962422 2 16 5"></polygon>
+                    <path d="M2,5.875 C2,5.3917375 2.4029435,5 2.9,5 L19.1,5 C19.59707,5 20,5.3917375 20,5.875 L20,18.125 C20,18.6082625 19.59707,19 19.1,19 L2.9,19 C2.4029435,19 2,18.6082625 2,18.125 L2,5.875 Z" id="路径" stroke="#333333" stroke-width="1.25" stroke-linejoin="round"></path>
+                    <path d="M16.25,13.9355102 L20,13.9355102 L20,9.93551018 L16.25,9.93551018 C15.0073571,9.93551018 14,10.8309502 14,11.9355102 C14,13.0400702 15.0073571,13.9355102 16.25,13.9355102 Z" id="路径" stroke="#333333" stroke-width="1.25" stroke-linejoin="round"></path>
+                    <line x1="20" y1="7" x2="20" y2="18" id="路径" stroke="#333333" stroke-width="1.25" stroke-linecap="round"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

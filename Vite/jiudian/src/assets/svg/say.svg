@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-322.000000, -448.000000)">
+            <g id="编辑_edit" transform="translate(322.000000, 448.000000)">
+                <rect id="矩形" fill-opacity="0.01" fill="#999999" fill-rule="nonzero" x="0" y="0" width="22" height="22"></rect>
+                <line x1="3.20833333" y1="19.25" x2="19.7083333" y2="19.25" id="路径" stroke="#999999" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></line>
+                <polygon id="路径" stroke="#999999" stroke-width="1.25" stroke-linejoin="round" points="5.04166667 12.2466208 5.04166667 15.5833333 8.39538333 15.5833333 17.875 6.09954583 14.5269208 2.75"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -20,7 +20,7 @@ const edit = () => {
           <li>
             <dl>
               <dt>
-                <!-- <i>VIP</i> -->
+                <i v-show="state.edit" class="radio"></i>
                 <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
                 <!-- <p>666 已助力</p> -->
               </dt>
@@ -34,7 +34,7 @@ const edit = () => {
           <li>
             <dl>
               <dt>
-                <!-- <i>VIP</i> -->
+                <i v-show="state.edit" class="radio radio-h"></i>
                 <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
                 <!-- <p>666 已助力</p> -->
               </dt>
@@ -48,7 +48,7 @@ const edit = () => {
           <li>
             <dl>
               <dt>
-                <!-- <i>VIP</i> -->
+                <i v-show="state.edit" class="radio"></i>
                 <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
                 <!-- <p>666 已助力</p> -->
               </dt>
@@ -62,7 +62,7 @@ const edit = () => {
           <li>
             <dl>
               <dt>
-                <!-- <i>VIP</i> -->
+                <i v-show="state.edit" class="radio"></i>
                 <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
                 <!-- <p>666 已助力</p> -->
               </dt>
@@ -180,8 +180,9 @@ const edit = () => {
       </nut-tabpane>
     </nut-tabs>
     <footer class="footer" v-show="state.edit">
-      <a>全 选</a>
-      <a>删 除</a>
+      <a><i></i> 全 选</a>
+      <!-- <a><i class="check"></i> 反 选</a> -->
+      <a><i class="del"></i> 删 除</a>
     </footer>
   </section>
 </template>
@@ -221,17 +222,35 @@ const edit = () => {
           > dl {
             > dt {
               position: relative;
-              i {
+              // i {
+              //   position: absolute;
+              //   top: 5px;
+              //   right: 5px;
+              //   display: block;
+              //   padding: 2px 5px;
+              //   font-size: 12px;
+              //   font-weight: 600;
+              //   color: #560805;
+              //   border-radius: 3px;
+              //   background: #fce373;
+              // }
+              i.radio {
                 position: absolute;
-                top: 5px;
-                right: 5px;
+                top: 8px;
+                right: 8px;
                 display: block;
-                padding: 2px 5px;
-                font-size: 12px;
-                font-weight: 600;
+                width: 18px;
+                height: 18px;
                 color: #560805;
-                border-radius: 3px;
-                background: #fce373;
+                border-radius: 10px;
+                border: 1px solid white;
+              }
+              i.radio-h {
+                width: 20px;
+                height: 20px;
+                background: url(@/assets/svg/radio-h.svg) no-repeat;
+                border: none;
+                background-size: cover;
               }
               img {
                 width: 100%;
@@ -283,9 +302,34 @@ const edit = () => {
       text-align: center;
       font-weight: 400;
       color: #333;
+      i {
+        position: relative;
+        top: 5px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid #333;
+      }
+      i.check {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background: url(@/assets/svg/close.svg) no-repeat;
+        border: none;
+        background-size: cover;
+      }
     }
-    > a:first-child {
-      border-right: 1px solid rgba(151, 151, 151, 0.3);
+    // > a:first-child {
+    > a:last-child {
+      border-left: 1px solid rgba(151, 151, 151, 0.3);
+      i {
+        width: 20px;
+        height: 20px;
+        background: url(@/assets/svg/del-h.svg) no-repeat;
+        border: none;
+        background-size: cover;
+      }
     }
   }
 }

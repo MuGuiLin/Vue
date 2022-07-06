@@ -30,7 +30,8 @@ onMounted(() => {
       auto-play="3000"
     >
       <nut-swiper-item v-for="item in state.list" :key="item" @click="go('/article')">
-        <img :src="item" alt="" />
+        <!-- <img :src="item" alt="" /> -->
+        <img src="@/assets/imgs/banner-1.jpg" alt="" />
       </nut-swiper-item>
     </nut-swiper>
 

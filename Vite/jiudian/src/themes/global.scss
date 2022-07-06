@@ -45,9 +45,11 @@ select {
     font-stretch: normal;
     font-family: arial, helvetica, clean, sans-serif;
     line-height: normal;
+    outline: none;
 }
 button {
     overflow: visible;
+    outline: none;
 }
 a {
     text-decoration: none;

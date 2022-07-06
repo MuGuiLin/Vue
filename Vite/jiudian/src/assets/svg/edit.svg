@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-68.000000, -436.000000)">
+            <g id="编组-9" transform="translate(68.000000, 436.000000)">
+                <circle id="椭圆形备份-3" fill="#DBC4FF" cx="15.5" cy="16.5" r="6.5"></circle>
+                <g id="编组-6备份-2">
+                    <rect id="矩形" stroke="#979797" fill="#D8D8D8" opacity="0" x="0.5" y="0.5" width="22" height="22"></rect>
+                    <g id="编辑_editor" transform="translate(4.000000, 2.000000)" stroke="#333333" stroke-linecap="round" stroke-width="1.25">
+                        <path d="M15,13.05 L15,17.1 C15,17.59707 14.5802812,18 14.0625,18 L11.015625,18" id="路径" stroke-linejoin="round"></path>
+                        <path d="M15,5.4 L15,0.9 C15,0.4029435 14.5802812,0 14.0625,0 L0.9375,0 C0.419732812,0 0,0.4029435 0,0.9 L0,17.1 C0,17.59707 0.419732812,18 0.9375,18 L3.75,18" id="路径" stroke-linejoin="round"></path>
+                        <line x1="3.75" y1="5.4" x2="10.3125" y2="5.4" id="路径"></line>
+                        <line x1="7.03125" y1="18" x2="15" y2="8.55" id="路径"></line>
+                        <line x1="3.75" y1="9" x2="7.5" y2="9" id="路径"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

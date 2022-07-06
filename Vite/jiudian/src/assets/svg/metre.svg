@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="92px" viewBox="0 0 72 92" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <defs>
+        <linearGradient x1="77.6972356%" y1="0%" x2="19.3565983%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#9955BF" offset="0%"></stop>
+            <stop stop-color="#FDB9A1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="50.1502404%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-221.000000, -369.000000)">
+            <rect id="矩形备份-21" fill="url(#linearGradient-1)" x="221" y="369" width="72.0230174" height="92"></rect>
+            <g id="编组-4备份-2" opacity="0.367868823" transform="translate(226.000000, 378.000000)" fill="url(#linearGradient-2)">
+                <polygon id="矩形" points="25 0 33 0 32 28.5955561 33 58 25 58 26 28.7819246"></polygon>
+                <polygon id="矩形备份-15" transform="translate(29.000000, 29.000000) rotate(-270.000000) translate(-29.000000, -29.000000) " points="25 -9.09494702e-13 33 -9.09494702e-13 32 28.5955561 33 58 25 58 26 28.7819246"></polygon>
+            </g>
+            <g id="编组-4备份-3" opacity="0.136673328" transform="translate(255.000000, 407.000000) rotate(-45.000000) translate(-255.000000, -407.000000) translate(226.000000, 378.000000)" fill="url(#linearGradient-2)">
+                <polygon id="矩形" points="25 0 33 0 32 28.5955561 33 58 25 58 26 28.7819246"></polygon>
+                <polygon id="矩形备份-15" transform="translate(29.000000, 29.000000) rotate(-270.000000) translate(-29.000000, -29.000000) " points="25 -9.09494702e-13 33 -9.09494702e-13 32 28.5955561 33 58 25 58 26 28.7819246"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
