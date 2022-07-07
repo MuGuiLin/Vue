@@ -212,6 +212,7 @@ const edit = () => {
       .recent-ul {
         box-sizing: border-box;
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         margin: 10px auto;
         > li {

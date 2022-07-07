@@ -100,6 +100,7 @@ const go = useGo();
 <style lang="scss" scoped>
 .mission {
   min-height: 100vh;
+  padding-bottom: 6px;
   background: #fef1fd;
   .head {
     box-sizing: border-box;
@@ -187,7 +188,7 @@ const go = useGo();
   }
   .sign {
     box-sizing: border-box;
-    margin: 15px auto 50px;
+    margin: 15px auto 8px;
     padding: 11px;
     width: 350px;
     background: #ffffff;
@@ -201,6 +202,7 @@ const go = useGo();
     > ul {
       box-sizing: border-box;
       display: flex;
+      justify-content: space-between;
       flex-wrap: wrap;
       margin: 10px auto;
       > li {
@@ -231,7 +233,7 @@ const go = useGo();
           top: 50%;
           left: 50%;
           display: block;
-          margin-top: -14px;
+          margin-top: -20px;
           margin-left: -14px;
           width: 28px;
           height: 28px;
@@ -265,9 +267,16 @@ const go = useGo();
       > li.check {
         background: url(@/assets/svg/metre.svg) no-repeat;
         border: none;
-        background-size: cover;   
+        background-size: cover;
         &::before {
-          border-top: 22px solid #F6CC50;;
+          border-top: 22px solid #f6cc50;
+        }
+        p {
+          color: white;
+          background: rgba(0, 0, 0, 0.18);
+          > b {
+            color: white;
+          }
         }
       }
       > li:last-child {
@@ -275,6 +284,7 @@ const go = useGo();
         i {
           padding-left: 30px;
           left: 36%;
+          line-height: 30px;
           font-size: 18px;
           color: #9854bf;
         }
@@ -282,7 +292,7 @@ const go = useGo();
     }
 
     > div {
-      margin: 10px auto 0;
+      margin: 10px auto 5px;
       width: 206px;
       height: 40px;
       text-align: center;
@@ -302,7 +312,7 @@ const go = useGo();
 
   .task {
     box-sizing: border-box;
-    margin: 15px auto 50px;
+    margin: 15px auto;
     padding: 15px;
     width: 350px;
     background: white;
