@@ -107,7 +107,7 @@ const submit = () => {};
         display: inline-block;
         width: 28px;
         height: 28px;
-        background: url(@/assets/icon/fowlleg.png) no-repeat;
+        background: url(@/assets/icon/fowlleg.webp) no-repeat;
         background-size: cover;
       }
     }
@@ -177,7 +177,7 @@ const submit = () => {};
           display: inline-block;
           width: 20px;
           height: 20px;
-          background: url(@/assets/icon/fowlleg.png) no-repeat;
+          background: url(@/assets/icon/fowlleg.webp) no-repeat;
           background-size: cover;
         }
       }

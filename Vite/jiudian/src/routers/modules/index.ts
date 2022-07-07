@@ -60,6 +60,14 @@ export const routes: Array<RouteRecordRaw> = [
         // ],
     },
     {
+        path: '/mission',
+        name: 'Mission',
+        component: () => import('@views/Mine/Mission.vue'),
+        meta: {
+            title: '任务中心'
+        }
+    },
+    {
         path: '/recent',
         name: 'Recent',
         component: () => import('@views/Mine/Recent.vue'),

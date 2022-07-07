@@ -235,7 +235,6 @@ onMounted(() => {
           text-align: center;
           color: #d2b8fc;
           border-radius: 30px;
-          border: none;
           background: #32395f;
           &::before {
             content: "";
@@ -269,7 +268,7 @@ onMounted(() => {
           display: inline-block;
           width: 25px;
           height: 25px;
-          background: url(@/assets/icon/fowlleg.png) no-repeat;
+          background: url(@/assets/icon/fowlleg.webp) no-repeat;
           background-size: cover;
         }
       }

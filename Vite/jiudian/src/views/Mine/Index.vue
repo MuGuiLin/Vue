@@ -10,7 +10,7 @@ const go = useGo();
         <img src="@/assets/imgs/logo.png" alt="user" />
         <h2>九九</h2>
         <p>ID：8888888</p>
-        <button>签到</button>
+        <button @click="go('/mission')">签到</button>
       </div>
       <div class="info">
         <span>100鸡腿</span>
@@ -103,7 +103,7 @@ const go = useGo();
 .mine {
   min-height: 100vh;
   padding: 10px;
-  background: #f7f7f7 url(/src/assets/imgs/bg.jpg) no-repeat;
+  background: #f7f7f7 url(@/assets/imgs/bg.jpg) no-repeat;
   background-size: 100% 160px;
   .user {
     box-sizing: border-box;
@@ -150,7 +150,6 @@ const go = useGo();
         color: #333;
         font-weight: 600;
         background: #f5edff;
-        border: none;
         border-radius: 100px 0px 0px 100px;
         &::before {
           content: "";
@@ -161,7 +160,7 @@ const go = useGo();
           margin-right: 4px;
           width: 16px;
           height: 16px;
-          background: url(@/assets/icon/fowlleg.png) no-repeat;
+          background: url(@/assets/icon/fowlleg.webp) no-repeat;
           background-size: cover;
         }
       }
@@ -187,7 +186,7 @@ const go = useGo();
           display: inline-block;
           width: 25px;
           height: 25px;
-          background: url(@/assets/icon/fowlleg.png) no-repeat;
+          background: url(@/assets/icon/fowlleg.webp) no-repeat;
           background-size: cover;
         }
       }
