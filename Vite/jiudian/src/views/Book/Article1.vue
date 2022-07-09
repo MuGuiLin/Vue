@@ -16,12 +16,13 @@ const state = reactive({
 });
 
 const handleScroll = () => {
-  console.log(123);
+  console.log(state.count);
   let arr = new Array(55).fill(0);
   const len = state.count.length;
   state.count = state.count.concat(
     arr.map((item: number, index: number) => len + index + 1)
   );
+  
 };
 
 const tabSwitch = (item: any, index: number) => {
@@ -67,24 +68,26 @@ const sort = () => {
 
 onMounted(() => {
   state.count = state.count.map((item: number, index: number) => index + 1);
-  console.log(state.count);
   init();
 });
 </script>
 
 <template>
   <section class="article">
-    <nut-cell>
+    <mian class="vlist">
       <nut-list
-        :height="336"
+        class=""
+        :height="360"
         :listData="state.count"
         @scroll-bottom="handleScroll"
       >
         <template v-slot="{ item }">
-          <img :src="`src/assets/hua/pic(${item + 1}).jpg`" :alt="item" />
+          <div class="list-item">
+            <img :src="`src/assets/hua/pic(${item + 1}).jpg`" :alt="item" />
+          </div>
         </template>
       </nut-list>
-    </nut-cell>
+    </mian>
 
     <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
       <div class="nav-top">
@@ -170,19 +173,21 @@ onMounted(() => {
 .article {
   opacity: 0;
   animation: opacity 1s forwards;
-  .nut-cell {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  .vlist {
+    position: relative;
+    display: flex;
     width: 100%;
     height: 100vh;
-    background: black;
-    .nut-list-container {
-      padding: 50px;
-    }
-    img {
-      width: 100%;
-      height: 100%;
+    .nut-list-item {
+      box-sizing: border-box;
+      padding: 0;
+      .list-item {
+        box-sizing: border-box;
+        img {
+          width: 100%;
+          height: 326px;
+        }
+      }
     }
   }
 
@@ -365,8 +370,7 @@ onMounted(() => {
       text-align: center;
       color: white;
       font-size: 10px;
-      background: rgba(210, 184, 252, 0.5) url(@/assets/svg/site.svg) center 5px
-        no-repeat;
+      background: rgba(210, 184, 252, 0.5) url(@/assets/svg/site.svg) center 5px no-repeat;
       background-size: 50%;
       border-radius: 50%;
       border: 1px solid #d2b8fc;
@@ -392,13 +396,9 @@ onMounted(() => {
   }
 }
 ::v-deep {
-  .nut-list-container {
-    margin-bottom: 60px;
-    .nut-list-item {
-      margin: 0;
-    }
+  .nut-list-item {
+    margin: 0;
   }
-
   .nut-popup {
     background: #20243c !important;
   }

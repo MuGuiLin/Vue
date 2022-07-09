@@ -13,16 +13,16 @@ const state = reactive({
   val: "",
   sort: true,
   refreshList: Array(),
+  containerHeight: document.documentElement.clientHeight + 293,
 });
 
 const handleScroll = () => {
-  console.log(state.count);
   let arr = new Array(55).fill(0);
   const len = state.count.length;
   state.count = state.count.concat(
-    arr.map((item: number, index: number) => len + index + 1)
+    // arr.map((item: number, index: number) => len + index + 1)
+    arr.map((item: number, index: number) => index)
   );
-  
 };
 
 const tabSwitch = (item: any, index: number) => {
@@ -68,26 +68,25 @@ const sort = () => {
 
 onMounted(() => {
   state.count = state.count.map((item: number, index: number) => index + 1);
+  console.log(state.count);
   init();
 });
 </script>
 
 <template>
   <section class="article">
-    <mian class="vlist">
+    <nut-cell>
       <nut-list
-        class=""
-        :height="360"
+        :height="293"
         :listData="state.count"
+        :container-height="state.containerHeight"
         @scroll-bottom="handleScroll"
       >
         <template v-slot="{ item }">
-          <div class="list-item">
-            <img :src="`src/assets/hua/pic(${item + 1}).jpg`" :alt="item" />
-          </div>
+          <img :src="`src/assets/hua/pic(${item + 1}).jpg`" :alt="item" />
         </template>
       </nut-list>
-    </mian>
+    </nut-cell>
 
     <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
       <div class="nav-top">
@@ -173,24 +172,6 @@ onMounted(() => {
 .article {
   opacity: 0;
   animation: opacity 1s forwards;
-  .vlist {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    .nut-list-item {
-      box-sizing: border-box;
-      padding: 0;
-      .list-item {
-        box-sizing: border-box;
-        img {
-          width: 100%;
-          height: 326px;
-        }
-      }
-    }
-  }
-
   @keyframes opacity {
     to {
       opacity: 1;
@@ -370,7 +351,8 @@ onMounted(() => {
       text-align: center;
       color: white;
       font-size: 10px;
-      background: rgba(210, 184, 252, 0.5) url(@/assets/svg/site.svg) center 5px no-repeat;
+      background: rgba(210, 184, 252, 0.5) url(@/assets/svg/site.svg) center 5px
+        no-repeat;
       background-size: 50%;
       border-radius: 50%;
       border: 1px solid #d2b8fc;
@@ -396,9 +378,26 @@ onMounted(() => {
   }
 }
 ::v-deep {
-  .nut-list-item {
+  .nut-cell {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    box-shadow: none;
+
+    .nut-list-container {
+      .nut-list-item {
+        margin: 0;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
+
   .nut-popup {
     background: #20243c !important;
   }
