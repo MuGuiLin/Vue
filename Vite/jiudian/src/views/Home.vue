@@ -1,23 +1,18 @@
 <script lang="ts" setup>
-import { onMounted, reactive } from 'vue';
-import { useGo } from '@hooks/usePage';
+import { onMounted, reactive } from "vue";
+import { useGo } from "@hooks/usePage";
 const go = useGo();
 
 const state = reactive({
-  noticebar: '新用户福利，首充多3块，送1000鸡腿！',
-  page: 1,
-  list: [
-    'https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg',
-    'https://storage.360buyimg.com/jdc-article/NutUItaro2.jpg',
-    'https://storage.360buyimg.com/jdc-article/welcomenutui.jpg',
-    'https://storage.360buyimg.com/jdc-article/fristfabu.jpg'
-  ]
+  noticebar: "新用户福利，首充多3块，送1000鸡腿！",
+  page: 0,
+  banner: ["", "", "", ""] as string[],
 });
 
 onMounted(() => {
-  setTimeout(() => {
-    // state.list.splice(1, 1);
-  }, 3000);
+  // setTimeout(() => {
+  // state.list.splice(1, 1);
+  // }, 3000);
 });
 </script>
 
@@ -29,7 +24,11 @@ onMounted(() => {
       pagination-color="#DB56EE"
       auto-play="3000"
     >
-      <nut-swiper-item v-for="item in state.list" :key="item" @click="go('/article')">
+      <nut-swiper-item
+        v-for="item in state.banner"
+        :key="item"
+        @click="go('/article')"
+      >
         <!-- <img :src="item" alt="" /> -->
         <img src="@/assets/imgs/banner-1.jpg" alt="" />
       </nut-swiper-item>
@@ -130,7 +129,12 @@ onMounted(() => {
         </li>
       </ul>
 
-      <nut-divider :style="{ color: '#B1B1B1', borderColor: '#D6D6D6', padding: '30px 30px 0' }"
+      <nut-divider
+        :style="{
+          color: '#B1B1B1',
+          borderColor: '#D6D6D6',
+          padding: '30px 30px 0',
+        }"
         >来自九九的邀请</nut-divider
       >
       <footer class="main-footer"></footer>
@@ -143,7 +147,7 @@ onMounted(() => {
   .nut-swiper {
     position: relative;
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       bottom: 0px;
@@ -170,7 +174,7 @@ onMounted(() => {
       width: 345px;
       overflow: hidden;
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         bottom: 0px;
@@ -267,7 +271,7 @@ onMounted(() => {
             justify-content: space-between;
             align-items: center;
             &::after {
-              content: '';
+              content: "";
               position: absolute;
               left: 0;
               bottom: 0px;

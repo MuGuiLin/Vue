@@ -60,6 +60,9 @@ const go = useGo();
     <div class="details-reviews">
       <h3>漫画点评</h3>
       <ul>
+        <li class="void">
+          <b>冲鸭 抢沙发～</b>
+        </li>
         <li>
           <dl>
             <dt>
@@ -67,7 +70,11 @@ const go = useGo();
               <h4>九九</h4>
               <p>2022-03-06</p>
             </dt>
-            <dd><h5>一次就好，一次就好，我带你去看天涯海角一次就好，我带你去看天涯海角我带你去看天涯海角。</h5></dd>
+            <dd>
+              <h5>
+                一次就好，一次就好，我带你去看天涯海角一次就好，我带你去看天涯海角我带你去看天涯海角。
+              </h5>
+            </dd>
             <dd>
               <a class="laud">666</a>
               <a>888</a>
@@ -359,6 +366,21 @@ const go = useGo();
           }
         }
       }
+
+      > li.void {
+        width: 100%;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        background: url(@/assets/imgs/void.png) center top no-repeat;
+        background-size: 44%;
+        > b {
+          font-size: 15px;
+          font-weight: 400;
+          color: #888;
+        }
+      }
     }
   }
   &-footer {
@@ -402,7 +424,7 @@ const go = useGo();
       height: 35px;
       font-size: 15px;
       font-weight: 500;
-      color: white;     
+      color: white;
       letter-spacing: 1px;
       border-radius: 18px;
       background: linear-gradient(129deg, #ffbb9f 0%, #c573e9 100%);

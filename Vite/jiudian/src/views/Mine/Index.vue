@@ -220,6 +220,7 @@ const go = useGo();
                 height: 64px;
                 line-height: 64px;
                 font-size: 25px;
+                font-style: none;
                 text-align: center;
                 border-radius: 6px;
                 color: #ffbb9f;

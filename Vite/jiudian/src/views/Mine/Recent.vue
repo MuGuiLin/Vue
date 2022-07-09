@@ -120,6 +120,9 @@ const edit = () => {
       </nut-tabpane>
       <nut-tabpane class="history" title="历史">
         <ul class="recent-ul">
+          <li class="void">
+            <b>书架是空的哦～</b>
+          </li>
           <li>
             <dl>
               <dt>
@@ -279,6 +282,20 @@ const edit = () => {
                 overflow: hidden;
               }
             }
+          }
+        }
+        > li.void {
+          width: 100%;
+          height: 186px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          background: url(@/assets/imgs/void.png) center top no-repeat;
+          background-size: 44%;
+          > b {
+            font-size: 15px;
+            font-weight: 400;
+            color: #888;
           }
         }
       }

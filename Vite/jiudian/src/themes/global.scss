@@ -52,8 +52,14 @@ button {
     outline: none;
     border: none;
 }
-a {
+a,
+a:hover,
+a:active,
+a:visited {
+    outline: none;
+    border: none;
     text-decoration: none;
+    background: none;
 }
 address,
 b,

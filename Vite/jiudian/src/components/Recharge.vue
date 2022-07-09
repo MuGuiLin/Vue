@@ -11,26 +11,26 @@ const submit = () => {};
     </div>
     <div class="recharge-units">选择充值金额（1元=100鸡腿）</div>
     <div class="recharge-recommend">
-      <h4>￥33元<b>3300鸡腿</b></h4>
+      <h4>33元<b>3300鸡腿</b></h4>
       <p>多充3元，多得1000鸡腿</p>
     </div>
     <ul class="recharge-amount">
       <li @click="select">
-        <h3>￥30元</h3>
+        <h3>30元</h3>
         <p>3000鸡腿</p>
       </li>
       <li @click="select">
-        <h3>￥59元</h3>
+        <h3>59元</h3>
         <p>5900+2500鸡腿</p>
         <i>多送25元</i>
       </li>
       <li @click="select">
-        <h3>￥66元</h3>
+        <h3>66元</h3>
         <p>6600+3300鸡腿</p>
         <i>多送33元</i>
       </li>
       <li @click="select">
-        <h3>￥100元</h3>
+        <h3>100元</h3>
         <p>10000+10000鸡腿</p>
         <i>多送100元</i>
       </li>

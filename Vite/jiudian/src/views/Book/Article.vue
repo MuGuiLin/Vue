@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, reactive } from "vue";
+import { useGo, back } from "@hooks/usePage";
+const go = useGo();
 
 interface IState {
   ["key"]: any;
@@ -14,11 +16,13 @@ const state = reactive({
 });
 
 const handleScroll = () => {
+  console.log(state.count);
   let arr = new Array(55).fill(0);
   const len = state.count.length;
   state.count = state.count.concat(
     arr.map((item: number, index: number) => len + index + 1)
   );
+  
 };
 
 const tabSwitch = (item: any, index: number) => {
@@ -64,7 +68,6 @@ const sort = () => {
 
 onMounted(() => {
   state.count = state.count.map((item: number, index: number) => index + 1);
-  console.log(state.count);
   init();
 });
 </script>
@@ -87,7 +90,7 @@ onMounted(() => {
     </mian>
 
     <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
-      <div class="infiniteTop">
+      <div class="nav-top">
         <h3>黑客漫画</h3>
         <div class="sort">
           <span>已更89话</span>
@@ -127,6 +130,7 @@ onMounted(() => {
           </li>
         </nut-infiniteloading>
       </ul>
+      <a class="nav-btn">位置</a>
     </nut-actionsheet>
 
     <nut-tabbar
@@ -140,7 +144,7 @@ onMounted(() => {
         tab-title="首页"
         img="src/assets/svg/home.svg"
         activeImg="src/assets/svg/home.svg"
-        to="/"
+        @click="go('/')"
       ></nut-tabbar-item>
       <nut-tabbar-item
         tab-title="漫画详情"
@@ -149,6 +153,7 @@ onMounted(() => {
         to="/details"
       ></nut-tabbar-item>
       <nut-tabbar-item
+        class="vip"
         tab-title="目录"
         img="src/assets/svg/item.svg"
         activeImg="src/assets/svg/item.svg"
@@ -195,7 +200,8 @@ onMounted(() => {
 .nut-popup {
   background: #20243c;
   .nut-actionsheet-panel {
-    .infiniteTop {
+    position: relative;
+    .nav-top {
       color: white;
       background: #20243c;
       h3 {
@@ -276,7 +282,7 @@ onMounted(() => {
     .nav-box {
       box-sizing: border-box;
       padding: 0 10px 10px;
-      height: 460px;
+      height: 360px;
       color: white;
       overflow-y: auto;
       overflow-x: hidden;
@@ -353,12 +359,41 @@ onMounted(() => {
         }
       }
     }
+    .nav-btn {
+      position: fixed;
+      right: 30px;
+      bottom: 50px;
+      display: block;
+      width: 40px;
+      height: 40px;
+      line-height: 60px;
+      text-align: center;
+      color: white;
+      font-size: 10px;
+      background: rgba(210, 184, 252, 0.5) url(@/assets/svg/site.svg) center 5px no-repeat;
+      background-size: 50%;
+      border-radius: 50%;
+      border: 1px solid #d2b8fc;
+    }
   }
 }
 
 .nut-tabbar {
   padding: 8px 0;
   background: rgba(255, 255, 255, 0.8);
+  .vip {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: -7px;
+      right: 16px;
+      width: 24px;
+      height: 16px;
+      background: url(@/assets/svg/vip.svg) no-repeat;
+      background-size: cover;
+    }
+  }
 }
 ::v-deep {
   .nut-list-item {
