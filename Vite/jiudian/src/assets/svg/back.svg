@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切图</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-87.000000, -548.000000)">
+            <g id="编组-15" transform="translate(87.000000, 548.000000)">
+                <circle id="椭圆形" fill="#000000" opacity="0.597429142" cx="13" cy="13" r="13"></circle>
+                <g id="左_left" transform="translate(0.000000, 1.000000)">
+                    <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="24" height="24"></rect>
+                    <polyline id="路径" stroke="#FFFFFF" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" points="15.6521739 17.7391304 9.39130435 11.4782609 15.6521739 5.2173913"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

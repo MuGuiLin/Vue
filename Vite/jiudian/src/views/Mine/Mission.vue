@@ -111,7 +111,7 @@ const go = useGo();
     width: 100%;
     height: 152px;
     background: url(@/assets/imgs/task.webp) left top no-repeat;
-    background-size: contain;
+    background-size: cover;
 
     > .days {
       position: relative;

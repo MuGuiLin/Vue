@@ -1,11 +1,10 @@
 <script lang="ts" setup name="Recharge">
-defineProps<{
-  show: {
-    type: Boolean;
-    default: false;
-    required: false;
-  };
-}>();
+interface Props {
+  show?: boolean;
+}
+
+const { show } = withDefaults(defineProps<Props>(), {});
+
 const select = () => {};
 const submit = () => {};
 </script>
@@ -97,7 +96,8 @@ const submit = () => {};
     padding-top: 100px;
     width: 100%;
     height: 200px;
-    background: rgba(0, 0, 0, 0.6) left bottom url(@/assets/imgs/plus.webp) no-repeat;
+    background: rgba(0, 0, 0, 0.6) left bottom url(@/assets/imgs/plus.webp)
+      no-repeat;
     background-size: contain;
   }
   &-main {
@@ -164,7 +164,7 @@ const submit = () => {};
       justify-content: center;
       padding-left: 26px;
       height: 92px;
-      background: rgba(152, 83, 192, 0.1) url(@/assets/imgs/recommend.png)
+      background: rgba(152, 83, 192, 0.1) url(@/assets/imgs/recommend.webp)
         no-repeat;
       background-size: contain;
       border-radius: 8px;

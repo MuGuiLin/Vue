@@ -322,7 +322,7 @@ onMounted(() => {
       width: 355px;
       height: 234px;
       border-radius: 8px;
-      background: #574d4d url(@/assets/imgs/list-bg.jpg) no-repeat;
+      background: #574d4d url(@/assets/imgs/list-bg.webp) no-repeat;
       background-size: cover;
       overflow-x: auto;
       overflow-y: hidden;

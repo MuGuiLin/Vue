@@ -8,8 +8,8 @@ const go = useGo();
 <template>
   <section class="details">
     <header class="details-header">
-      <img class="cover" src="@/assets/imgs/bg.jpg" alt="" />
-      <a class="back" @click="back()">返回</a>
+      <img class="cover" src="@/assets/imgs/banner-1.jpg" alt="" />
+      <a class="back" @click="back()"></a>
       <div class="title">
         <h1>黑客漫画</h1>
         <b>人气值：2000</b>
@@ -112,6 +112,11 @@ const go = useGo();
     }
 
     .back {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: url(@/assets/svg/back.svg) no-repeat;
+      background-size: cover;
       z-index: 1;
     }
     .title {
@@ -173,6 +178,17 @@ const go = useGo();
         font-size: 12px;
         font-weight: 400;
         color: #666;
+        &::after {
+          content: "";
+          position: relative;
+          top: 3px;
+          left: 2px;
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background: url(@/assets/svg/arrow.svg) no-repeat;
+          background-size: cover;
+        }
       }
     }
     > article {

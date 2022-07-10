@@ -290,7 +290,7 @@ const edit = () => {
           display: flex;
           justify-content: center;
           align-items: flex-end;
-          background: url(@/assets/imgs/void.webp) center top no-repeat;
+          background: url(@/assets/imgs/null.webp) center top no-repeat;
           background-size: 44%;
           > b {
             font-size: 15px;

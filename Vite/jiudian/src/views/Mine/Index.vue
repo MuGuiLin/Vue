@@ -103,11 +103,11 @@ const go = useGo();
 .mine {
   min-height: 100vh;
   padding: 10px;
-  background: #f7f7f7 url(@/assets/imgs/bg.jpg) no-repeat;
+  background: #f7f7f7 url(@/assets/imgs/mine-bg.webp) no-repeat;
   background-size: 100% 160px;
   .user {
     box-sizing: border-box;
-    margin: 55px auto 20px;
+    margin: 100px auto 20px;
     padding: 12px 20px;
     display: flex;
     flex-direction: column;
