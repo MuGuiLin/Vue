@@ -40,6 +40,14 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
             title: '漫画详情'
         }
+    }, 
+    {
+        path: '/reserve',
+        name: 'Reserve',
+        component: () => import('@views/Book/Reserve.vue'),
+        meta: {
+            title: '漫画预约'
+        }
     },
     {
         path: '/mine',

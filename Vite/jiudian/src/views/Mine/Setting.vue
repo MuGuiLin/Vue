@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar.vue";
 
 <template>
   <section class="setting">
-    <Navbar title="个人设置" />
+    <Navbar title="" />
   </section>
 </template>
 

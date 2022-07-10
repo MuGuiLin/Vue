@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref, reactive } from "vue";
+import Recharge from "@/components/Recharge.vue";
 import { useGo, back } from "@hooks/usePage";
 const go = useGo();
 
@@ -12,13 +13,15 @@ const state = reactive({
   isVisible: false,
   val: "",
   sort: true,
+  plus: false,
   refreshList: Array(),
-  containerHeight: document.documentElement.clientHeight + 293,
+  containerHeight: document.documentElement.clientHeight * 2,
 });
 
 const handleScroll = () => {
   let arr = new Array(55).fill(0);
   const len = state.count.length;
+  state.plus = true;
   state.count = state.count.concat(
     // arr.map((item: number, index: number) => len + index + 1)
     arr.map((item: number, index: number) => index)
@@ -165,6 +168,10 @@ onMounted(() => {
         to="/recent"
       ></nut-tabbar-item>
     </nut-tabbar>
+
+    <aside :class="`recharge-box ${state.plus && 'recharge-box-show'}`">
+      <Recharge :show="true" />
+    </aside>
   </section>
 </template>
 
@@ -175,6 +182,33 @@ onMounted(() => {
   @keyframes opacity {
     to {
       opacity: 1;
+    }
+  }
+
+  .recharge-box {
+    position: fixed;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 666666;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .recharge-box-show {
+    animation: show 1s forwards;
+    @keyframes show {
+      to {
+        top: 0;
+        opacity: 1;
+      }
     }
   }
 }

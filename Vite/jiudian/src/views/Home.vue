@@ -6,7 +6,7 @@ const go = useGo();
 const state = reactive({
   noticebar: "新用户福利，首充多3块，送1000鸡腿！",
   page: 0,
-  banner: ["", "", "", ""] as string[],
+  banner: ["", ""] as string[],
 });
 
 onMounted(() => {
@@ -25,12 +25,11 @@ onMounted(() => {
       auto-play="3000"
     >
       <nut-swiper-item
-        v-for="item in state.banner"
-        :key="item"
+        v-for="o in state.banner"
+        :key="o"
         @click="go('/article')"
       >
-        <!-- <img :src="item" alt="" /> -->
-        <img src="@/assets/imgs/banner-1.jpg" alt="" />
+        <img src="@/assets/imgs/banner-1.jpg" alt="Banner" />
       </nut-swiper-item>
     </nut-swiper>
 
@@ -88,7 +87,7 @@ onMounted(() => {
       <h3 class="main-h3">新作预约｜为原创漫画助力</h3>
 
       <ul class="main-reserve">
-        <li>
+        <li  @click="go('/reserve')">
           <dl>
             <dt>
               <i>VIP</i>
@@ -101,7 +100,7 @@ onMounted(() => {
             <dd>新进黑马</dd>
           </dl>
         </li>
-        <li>
+        <li @click="go('/reserve')">
           <dl>
             <dt>
               <i>VIP</i>
@@ -114,7 +113,7 @@ onMounted(() => {
             <dd>新进黑马</dd>
           </dl>
         </li>
-        <li>
+        <li @click="go('/reserve')">
           <dl>
             <dt>
               <i>VIP</i>
@@ -146,6 +145,10 @@ onMounted(() => {
 .home {
   .nut-swiper {
     position: relative;
+    height: 220px;
+    background: url(@/assets/imgs/banner-1.jpg) no-repeat;
+    background-size: cover;
+    overflow: hidden;
     &::after {
       content: "";
       position: absolute;
@@ -157,7 +160,6 @@ onMounted(() => {
       background-size: cover;
     }
     .nut-swiper-item {
-      line-height: 220px;
       img {
         width: 100%;
         height: 100%;

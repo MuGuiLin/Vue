@@ -33,7 +33,7 @@ onMounted(() => {
 
 <template>
   <section class="spend">
-    <Navbar title="消费记录" />
+    <Navbar title="" />
     <ul class="spend-list" id="recordScroll">
       <nut-infiniteloading
         pull-icon="loading1"

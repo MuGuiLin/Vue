@@ -12,49 +12,33 @@ const go = useGo();
       <a class="back" @click="back()">返回</a>
       <div class="title">
         <h1>黑客漫画</h1>
-        <b>点赞数：2000</b>
-        <button>喜欢</button>
+        <b>人气值：2000</b>
+        <button>预 约</button>
       </div>
     </header>
+
+    <div class="details-wantsee">
+      <div class="lover">
+        <h3>666,888<b>人想看</b></h3>
+        <ul>
+          <li>
+            <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+          </li>
+          <li>
+            <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+          </li>
+          <li>想看 <i>3分钟前</i></li>
+        </ul>
+        <p>王炸热血内容，引爆期待！</p>
+      </div>
+    </div>
+
     <div class="details-summary">
       <h3>简介<a>展开</a></h3>
       <article>
         <b>热血·冒险·奇幻</b
         >不知你有没有听过这么一种说法：预知前生事，今生所受事。前世之因，后世之果，如果你种下了这个因，那么无论经过多少个轮回，你都摆脱不了这个结果。该如何化解呢？
       </article>
-    </div>
-
-    <div class="details-serialize">
-      <h3>连载中<a>更新16话</a></h3>
-      <ul>
-        <li>
-          <dl>
-            <dt>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>2022-03-06</p>
-            </dt>
-            <dd>第1话-序章</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>2022-03-06</p>
-            </dt>
-            <dd>第1话-序章</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>2022-03-06</p>
-            </dt>
-            <dd>第1话-序章</dd>
-          </dl>
-        </li>
-      </ul>
     </div>
 
     <div class="details-reviews">
@@ -101,7 +85,7 @@ const go = useGo();
       <div class="input">
         <input type="text" placeholder="说一说" />
       </div>
-      <button>开始阅读</button>
+      <button>发布</button>
     </footer>
   </section>
 </template>
@@ -151,7 +135,7 @@ const go = useGo();
         position: absolute;
         right: 0px;
         bottom: -3px;
-        padding-left: 20px;
+        // padding-left: 20px;
         width: 80px;
         height: 30px;
         font-size: 12px;
@@ -160,17 +144,17 @@ const go = useGo();
         color: white;
         letter-spacing: 1px;
         background: #a05bbd;
-        &::before {
-          content: "";
-          position: absolute;
-          top: 5px;
-          left: 15px;
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          background: url(@/assets/svg/like.svg) no-repeat;
-          background-size: cover;
-        }
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   top: 5px;
+        //   left: 15px;
+        //   display: inline-block;
+        //   width: 20px;
+        //   height: 20px;
+        //   background: url(@/assets/svg/like.svg) no-repeat;
+        //   background-size: cover;
+        // }
       }
     }
   }
@@ -202,70 +186,94 @@ const go = useGo();
       }
     }
   }
-  &-serialize {
-    margin: 8px 0;
-    padding: 12px 0px;
+  &-wantsee {
+    margin-bottom: 8px;
+    padding: 13px 12px 12px;
     background: white;
-    > h3 {
-      position: relative;
-      padding: 0px 12px;
-      font-size: 16px;
-      color: #333;
-      > a {
-        position: absolute;
-        top: 3px;
-        right: 12px;
-        font-size: 12px;
-        font-weight: 400;
-        color: #4994fd;
-      }
-    }
-    > ul {
+    .lover {
       box-sizing: border-box;
+      position: relative;
       display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      align-items: center;
       padding: 12px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      > li {
-        flex-shrink: 0;
-        -ms-flex-negative: 0;
-        margin-right: 10px;
-        width: 120px;
-        > dl {
-          > dt {
-            position: relative;
-            i.defaule {
-              display: block;
-              margin-bottom: 10px;
-              width: 100%;
-              height: 64px;
-              line-height: 64px;
-              font-size: 25px;
-              text-align: center;
-              border-radius: 6px;
-              color: #ffbb9f;
-              background: #fef8f2;
-              border: 1px solid #f9cda1;
-            }
-            img {
-              width: 100%;
-              height: 70px;
-              border-radius: 6px;
-            }
-            p {
-              position: absolute;
-              bottom: 5px;
-              left: 5px;
-              color: rgba(255, 255, 255, 0.8);
-              font-size: 12px;
-            }
+      height: 132px;
+      background: #f0e8fe;
+      border-radius: 8px;
+      border: 1px solid #5c3a93;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: inline-block;
+        width: 82px;
+        height: 25px;
+        background: url(@/assets/icon/logo.webp) no-repeat;
+        background-size: contain;
+      }
+      > h3 {
+        position: relative;
+        font-size: 24px;
+        font-weight: 600;
+        color: #5c3a93;
+        > b {
+          padding-left: 2px;
+          font-size: 12px;
+          font-weight: 400;
+          color: #111;
+        }
+      }
+      > ul {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px;
+        > li {
+          margin-left: -8px;
+          font-size: 12px;
+          color: #111;
+
+          > img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
           }
-          > dd {
-            line-height: 26px;
+          > i {
+            font-weight: 300;
             font-size: 10px;
-            color: #666;
+            color: #333;
           }
+        }
+        > li:last-child {
+          margin: 0 6px 0;
+        }
+      }
+
+      > p {
+        box-sizing: border-box;
+        position: relative;
+        padding-left: 35px;
+        width: 100%;
+        line-height: 20px;
+        font-size: 10px;
+        font-weight: 400;
+        color: white;
+        background: #977ac4;
+        border-radius: 4px;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 1px;
+          left: 8px;
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          background: url(@/assets/svg/like.svg) no-repeat;
+          background-size: contain;
         }
       }
     }

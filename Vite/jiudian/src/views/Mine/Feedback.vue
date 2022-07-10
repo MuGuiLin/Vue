@@ -17,7 +17,7 @@ const submit = () => {
 
 <template>
   <section class="feedback">
-    <Navbar title="意见反馈" />
+    <Navbar title="" />
     <form class="form">
       <nut-textarea
         placeholder="亲，清在此输入反馈内容～"

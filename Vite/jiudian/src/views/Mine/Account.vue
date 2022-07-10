@@ -5,7 +5,7 @@ import Recharge from "@/components/Recharge.vue";
 
 <template>
   <section class="account">
-    <Navbar title="我的账户" />
+    <Navbar title="" />
     <Recharge />
   </section>
 </template>

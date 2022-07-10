@@ -12,7 +12,7 @@ const edit = () => {
 
 <template>
   <section class="recent">
-    <Navbar title="最近看漫" />
+    <Navbar title="" />
     <a class="edit" @click="edit">{{ state.edit ? "取消" : "编辑" }}</a>
     <nut-tabs v-model="state.active">
       <nut-tabpane class="like" title="喜欢">
@@ -290,7 +290,7 @@ const edit = () => {
           display: flex;
           justify-content: center;
           align-items: flex-end;
-          background: url(@/assets/imgs/void.png) center top no-repeat;
+          background: url(@/assets/imgs/void.webp) center top no-repeat;
           background-size: 44%;
           > b {
             font-size: 15px;
