@@ -13,9 +13,10 @@ const state = reactive({
   isVisible: false,
   val: "",
   sort: true,
+  show: false,
   plus: false,
   refreshList: Array(),
-  containerHeight: document.documentElement.clientHeight * 2,
+  containerHeight: document.documentElement.clientHeight * 3,
 });
 
 const handleScroll = () => {
@@ -52,6 +53,14 @@ const refreshLoadMore = (done: () => void) => {
   }, 500);
 };
 
+const scrollIntoView = (dom: HTMLLIElement) => {
+  dom &&
+    dom.scrollIntoView({
+      block: "center",
+      behavior: "smooth",
+    });
+};
+
 const refresh = (done: () => void) => {
   setTimeout(() => {
     // Toast.success('刷新成功');
@@ -64,9 +73,18 @@ const init = () => {
   }
 };
 
+const show = () => {
+  state.show = !state.show;
+};
+
 const sort = () => {
   state.sort = !state.sort;
   state.refreshList = state.refreshList.reverse();
+  scrollIntoView(<HTMLLIElement>document.querySelectorAll("#navScroll li")[0]);
+};
+
+const anchor = () => {
+  scrollIntoView(<HTMLLIElement>document.querySelector("#anchor-15"));
 };
 
 onMounted(() => {
@@ -78,11 +96,16 @@ onMounted(() => {
 
 <template>
   <section class="article">
+    <header class="article-header" v-show="state.show">
+      <a class="back" @click="back()"></a>
+    </header>
+
     <nut-cell>
       <nut-list
         :height="293"
         :listData="state.count"
         :container-height="state.containerHeight"
+        @click="show"
         @scroll-bottom="handleScroll"
       >
         <template v-slot="{ item }">
@@ -91,52 +114,9 @@ onMounted(() => {
       </nut-list>
     </nut-cell>
 
-    <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
-      <div class="nav-top">
-        <h3>黑客漫画</h3>
-        <div class="sort">
-          <span>已更89话</span>
-          <button v-if="state.sort" @click="sort">正序</button>
-          <button v-else class="fall" @click="sort">倒序</button>
-        </div>
-        <p class="point">漫画单张定价250鸡腿！</p>
-      </div>
-      <ul class="nav-box" id="navScroll">
-        <nut-infiniteloading
-          pull-icon="loading1"
-          load-icon="loading"
-          load-more-txt="到底啦～"
-          container-id="navScroll"
-          :use-window="false"
-          :is-open-refresh="true"
-          :has-more="refreshHasMore"
-          @load-more="refreshLoadMore"
-          @refresh="refresh"
-        >
-          <li
-            class="nav-item active"
-            v-for="(item, index) in state.refreshList"
-            :key="index"
-          >
-            <div class="cover lock">
-              <img src="@/assets/imgs/cover.jpg" alt="" />
-            </div>
-            <dl class="info">
-              <dt>
-                <h4>第{{ Number(item) + 1 }}话 - 女主登场</h4>
-              </dt>
-              <dd>
-                <time>2020-01-05</time>
-              </dd>
-            </dl>
-          </li>
-        </nut-infiniteloading>
-      </ul>
-      <a class="nav-btn">位置</a>
-    </nut-actionsheet>
-
     <nut-tabbar
       :bottom="true"
+      v-show="state.show"
       :safeAreaInsetBottom="true"
       @tab-switch="tabSwitch"
       unactive-color="#333"
@@ -169,9 +149,54 @@ onMounted(() => {
       ></nut-tabbar-item>
     </nut-tabbar>
 
-    <aside :class="`recharge-box ${state.plus && 'recharge-box-show'}`">
+    <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
+      <div class="nav-top">
+        <h3>黑客漫画</h3>
+        <div class="sort">
+          <span>已更89话</span>
+          <button v-if="state.sort" @click="sort">正序</button>
+          <button v-else class="fall" @click="sort">倒序</button>
+        </div>
+        <p class="point">漫画每话定价250鸡腿！</p>
+      </div>
+      <ul class="nav-box" id="navScroll">
+        <nut-infiniteloading
+          pull-icon="loading1"
+          load-icon="loading"
+          load-more-txt="到底啦～"
+          container-id="navScroll"
+          :use-window="false"
+          :is-open-refresh="true"
+          :has-more="refreshHasMore"
+          @load-more="refreshLoadMore"
+          @refresh="refresh"
+        >
+          <li
+            :class="`nav-item ${item == 15 && 'active'}`"
+            v-for="(item, index) in state.refreshList"
+            :key="index"
+            :id="'anchor-' + item"
+          >
+            <div class="cover lock">
+              <img src="@/assets/imgs/cover.jpg" alt="" />
+            </div>
+            <dl class="info">
+              <dt>
+                <h4>第{{ Number(item) + 1 }}话 - 女主登场</h4>
+              </dt>
+              <dd>
+                <time>2020-01-05</time>
+              </dd>
+            </dl>
+          </li>
+        </nut-infiniteloading>
+      </ul>
+      <a class="nav-btn" @click="anchor">位置</a>
+    </nut-actionsheet>
+
+    <footer :class="`recharge-box ${state.plus && 'recharge-box-show'}`">
       <Recharge :show="true" />
-    </aside>
+    </footer>
   </section>
 </template>
 
@@ -182,6 +207,22 @@ onMounted(() => {
   @keyframes opacity {
     to {
       opacity: 1;
+    }
+  }
+  &-header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 888;
+    > a.back {
+      margin: 16px;
+      display: block;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: url(@/assets/svg/back.svg) no-repeat;
+      background-size: cover;
+      z-index: 1;
     }
   }
 
@@ -343,7 +384,7 @@ onMounted(() => {
           dt {
             position: relative;
             h4 {
-              font-size: 16px;
+              font-size: 15px;
               color: white;
             }
           }
