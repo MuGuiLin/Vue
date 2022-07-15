@@ -1,5 +1,7 @@
 # Vue Cli 的使用：
 
+##  [Vue Cli官网](https://cli.vuejs.org/zh)
+
 注：在此之前请选安装好Node.js环境和npm包管理工具（注：一般在安装Node.js环境时npm默认自动就安装好了）
 
 这里实例的版本：
@@ -34,20 +36,20 @@
 
 
 ​		
-		(2)、安装完毕后：
-			cd 项目名 进入项目的目录
-			npm run serve 运行项目
-			根据提示：在浏览器中输入：http://localhost:8081/(默认)
-		例如：
-		
+​		(2)、安装完毕后：
+​			cd 项目名 进入项目的目录
+​			npm run serve 运行项目
+​			根据提示：在浏览器中输入：http://localhost:8081/(默认)
+​		例如：
+​		
 		(3)、现在就可以开始做你的项目啦，当修改文件并保存好会自动更新到浏览器上不用刷新！
 
 
 ​		
 ​		
-	2、按图形化界面创建
-		vue ui 	//图形化界面创建和管理项目
-		
+​	2、按图形化界面创建
+​		vue ui 	//图形化界面创建和管理项目
+​		
 		此时将自动打开浏览器进放项目创建界面，可根据自己的需求进行创建。
 
 
@@ -75,9 +77,9 @@
 
 
 ​		
-		ui: vue-cli-service build
+​		ui: vue-cli-service build
 
 
 ​		
-	3、检查 webpack 配置
-		ui: vue-cli-service inspect
+​	3、检查 webpack 配置
+​		ui: vue-cli-service inspect
