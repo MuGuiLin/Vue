@@ -1,19 +1,32 @@
 <script lang="ts" setup>
-import { useGo } from "@hooks/usePage";
-const go = useGo();
+  import { reactive, onMounted } from "vue";
+  import { PiniaStore } from "@/stores/modules/user";
+  import { useGo } from "@hooks/usePage";
+  import avatar from "@/assets/logo.png";
+
+  const go = useGo();
+  const { users }: any = PiniaStore();
+  const state = reactive({
+    id: "99",
+    name: "九九",
+    money: 0,
+    avatar: avatar,
+    ...users,
+  });
+  
 </script>
 
 <template>
   <section class="mine">
     <header class="user">
       <div class="name">
-        <img src="@/assets/imgs/logo.png" alt="user" />
-        <h2>九九</h2>
-        <p>ID：8888888</p>
+        <img :src="state.avatar" alt="user" />
+        <h2>{{ state.name }}</h2>
+        <p>ID：{{ state.id }}</p>
         <button @click="go('/mission')">签到</button>
       </div>
       <div class="info">
-        <span>100鸡腿</span>
+        <span>{{ state.money }}鸡腿</span>
         <nut-button
           size="small"
           color="linear-gradient(to right, #FFBBA0, #C371ED)"
@@ -130,6 +143,7 @@ const go = useGo();
         height: 66px;
         border-radius: 33px;
         background: white;
+        border: 1px solid #ffeefc;
       }
       > h2 {
         font-weight: 600;

@@ -8,14 +8,23 @@ export default defineConfig((config: UserConfig) => {
   return {
     plugins: [vue()],
 
-    base: (config.mode || process.env.NODE_ENV) === 'development' ? '/' : './',
+    base: (config.mode || process.env.NODE_ENV) === 'development' ? '/' : '/',
+
+    mode: config.mode || process.env.NODE_ENV,
+
+    publicDir: 'public',
+
+    cacheDir: 'node_modules/.vite',
 
     resolve: {
       alias: {
+        '~': resolve(__dirname, './'),
         '@': resolve(__dirname, 'src'),
+        '@api': resolve(__dirname, 'src/api'),
         '@hooks': resolve(__dirname, 'src/hooks'),
         '@views': resolve(__dirname, 'src/views'),
-      }
+      },
+      extensions: ['.js', '.ts', 'css', 'scss', '.json', '.vue', '*']
     },
 
     css: {
@@ -25,5 +34,30 @@ export default defineConfig((config: UserConfig) => {
         }
       }
     },
+
+    server: {
+      host: true,
+      port: 666,
+      strictPort: 888,
+      open: false,
+      https: false,
+      proxy: {
+        '/api': {
+          target: 'http://dev-api.xhbigdata.com',
+          cors: true,
+          changeOrigin: true,
+          rewrite(path) {
+            return path.replace(/^\/api/, '')
+          },
+        }
+      }
+    },
+
+    build: {
+      outDir: 'dist',
+      target: 'modules',
+      assetsDir: 'assets',
+      assetsInlineLimit: 360000
+    }
   }
 });

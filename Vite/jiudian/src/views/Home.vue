@@ -1,18 +1,29 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { useGo } from "@hooks/usePage";
+import { homeApi } from "@/api/home";
 const go = useGo();
-
-const state = reactive({
+const state: any = reactive({
   noticebar: "新用户福利，首充多3块，送1000鸡腿！",
   page: 0,
-  banner: ["", ""] as string[],
+  banner: [] as any[],
+  original_comics: {
+    title: "原创推荐",
+  },
+  assist_comics: {
+    title: "新作预约 | 为原创漫画助力",
+  },
 });
 
-onMounted(() => {
-  // setTimeout(() => {
-  // state.list.splice(1, 1);
-  // }, 3000);
+onMounted(async () => {
+  const { code, data }: any = await homeApi();
+  if (200 === code) {
+    if (data.carousels.length) {
+      state.banner = data.carousels;
+    }
+    state.original_comics = data.original_comics;
+    state.assist_comics = data.assist_comics;
+  }
 });
 </script>
 
@@ -29,7 +40,7 @@ onMounted(() => {
         :key="o"
         @click="go('/article')"
       >
-        <img src="@/assets/imgs/banner-1.jpg" alt="Banner" />
+        <img :src="o.img_url" :alt="o.title" />
       </nut-swiper-item>
     </nut-swiper>
 
@@ -46,84 +57,45 @@ onMounted(() => {
         <router-link to="/mine"><i></i>我的</router-link>
       </nav>
 
-      <h3 class="main-h3">原创推荐</h3>
+      <h3 class="main-h3">{{ state.original_comics.title }}</h3>
       <ul class="main-recommend">
-        <li>
-          <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+        <li v-for="o in state.original_comics.comic_items" :key="o.id">
+          <img class="cover" :src="o.list_cover" :alt="o.title" />
           <dl class="info">
             <dt>
-              <h4>黑客漫画</h4>
+              <h4>{{ o.title }}</h4>
               <nut-button
                 color="linear-gradient(to right, #FFBBA0, #C371ED)"
                 @click="go('/article')"
                 >续看</nut-button
               >
             </dt>
-            <dd class="desc">
-              黑客Y神（男主）收到粉丝红豆（女主）的请求，联手调查CW
+            <dd class="desc">{{ o.desc || "..." }}</dd>
+            <dd class="read">
+              {{ o.current_read_chapter }}/{{ o.total_chapter_number }}话
             </dd>
-            <dd class="read">未读/15话</dd>
-          </dl>
-        </li>
-        <li>
-          <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-          <dl class="info">
-            <dt>
-              <h4>黑客漫画黑客漫画黑客漫画</h4>
-              <nut-button
-                color="linear-gradient(to right, #FFBBA0, #C371ED)"
-                @click="go('/article')"
-                >续看</nut-button
-              >
-            </dt>
-            <dd class="desc">
-              黑客Y神（男主）收到粉丝红豆（女主）的请求，联手调查CW，黑客Y神（男主）收到粉丝红豆（女主）的请求，联手调查CW
-            </dd>
-            <dd class="read">未读/15话</dd>
           </dl>
         </li>
       </ul>
 
-      <h3 class="main-h3">新作预约｜为原创漫画助力</h3>
+      <h3 class="main-h3">{{ state.assist_comics.title }}</h3>
 
       <ul class="main-reserve">
-        <li  @click="go('/reserve')">
+        <li
+          v-for="o in state.assist_comics.comic_items"
+          :key="o.id"
+          @click="go('/reserve')"
+        >
           <dl>
             <dt>
               <i>VIP</i>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>666 已助力</p>
+              <img class="cover" :src="o.list_cover" :alt="o.title" />
+              <p>{{ o.assist_number }} 已助力</p>
             </dt>
             <dd>
-              <h4>黑客漫画</h4>
+              <h4>{{ o.title }}</h4>
             </dd>
-            <dd>新进黑马</dd>
-          </dl>
-        </li>
-        <li @click="go('/reserve')">
-          <dl>
-            <dt>
-              <i>VIP</i>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>666 已助力</p>
-            </dt>
-            <dd>
-              <h4>黑客漫画</h4>
-            </dd>
-            <dd>新进黑马</dd>
-          </dl>
-        </li>
-        <li @click="go('/reserve')">
-          <dl>
-            <dt>
-              <i>VIP</i>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>666 已助力</p>
-            </dt>
-            <dd>
-              <h4>黑客漫画</h4>
-            </dd>
-            <dd>新进黑马</dd>
+            <dd>{{ o.label || "..." }}</dd>
           </dl>
         </li>
       </ul>

@@ -1,31 +1,48 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, toRefs } from "vue";
 import Navbar from "@/components/Navbar.vue";
-const customHasMore = ref(true);
-const state = reactive({
-  customList: [""],
+import { getRecordApi } from "@/api/mine";
+
+interface IRecordProps {
+  asPageData?: boolean;
+  currentPage?: number;
+  items?: Array<any>;
+  total?: number;
+}
+
+const state: any = reactive({
+  has: true,
+  page: 1,
+  pageSize: 20,
+  items: [],
 });
-const customLoadMore = (done: Function): void => {
-  setTimeout(() => {
-    const curLen = state.customList.length;
-    for (let i = curLen; i < curLen + 20; i++) {
-      state.customList.push(`${i}`);
-    }
-    if (state.customList.length > 30) customHasMore.value = false;
-    done();
-  }, 500);
+
+const init = async (cb?: Function) => {
+  const { page, pageSize } = state;
+  const { items = [], asPageData }: IRecordProps | any = await getRecordApi({
+    page,
+    pageSize,
+  });
+  state.items.push(...items);
+  cb && cb(asPageData);
 };
+
 const refresh = (done: () => void) => {
-  setTimeout(() => {
-    // Toast.success('刷新成功');
+  state.page = 1;
+  init();
+  done();
+};
+
+const load = (done: Function): void => {
+  state.page++;
+  init((asPageData: boolean = true) => {
+    if (1 < state.page && !asPageData) {
+      state.has = false;
+    }
     done();
-  }, 1000);
+  });
 };
-const init = () => {
-  for (let i = 0; i < 20; i++) {
-    state.customList.push(`${i}`);
-  }
-};
+
 onMounted(() => {
   init();
 });
@@ -42,21 +59,17 @@ onMounted(() => {
         container-id="recordScroll"
         :use-window="false"
         :is-open-refresh="true"
-        :has-more="customHasMore"
-        @load-more="customLoadMore"
+        :has-more="state.has"
+        @load-more="load"
         @refresh="refresh"
       >
-        <li
-          class="record-item"
-          v-for="(item, index) in state.customList"
-          :key="index"
-        >
+        <li class="record-item" v-for="(o, i) in state.items" :key="i">
           <div class="left">
-            <h4>充值</h4>
-            <time>2022-06-26 10:30</time>
+            <h4>{{ o.desc }}</h4>
+            <time>{{ o.date }}</time>
           </div>
           <div class="right">
-            <span>+250漫币</span>
+            <span>+{{ o.money }}漫币</span>
           </div>
         </li>
       </nut-infiniteloading>
@@ -106,7 +119,6 @@ onMounted(() => {
         }
       }
     }
-    // li:first-child {}
   }
 }
 </style>
