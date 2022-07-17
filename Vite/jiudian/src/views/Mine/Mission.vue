@@ -1,95 +1,88 @@
 <script lang="ts" setup>
+import { reactive, onMounted } from "vue";
 import { useGo } from "@hooks/usePage";
+import { activeTaskApi, activeSignApi } from "@api/mine";
 const go = useGo();
+const state: any = reactive({
+  user_info: {
+    money: 0,
+    sign_days: 0,
+    gift_money: 0,
+  },
+  sign_items: [],
+  task_items: [],
+});
+const sign = async () => {
+  const { data } = await activeSignApi();
+  if (data?.gift_money) {
+    state.user_info = data;
+  }
+};
+onMounted(async () => {
+  const {
+    data: { user_info, sign_items, task_items },
+  } = await activeTaskApi();
+  state.user_info = user_info;
+  state.sign_items = sign_items;
+  state.task_items = task_items;
+});
 </script>
 
 <template>
   <section class="mission">
     <header class="head">
       <div class="days">
-        <h2>已连续签到<b>2</b>天</h2>
+        <h2>
+          已连续签到<b>{{ state.user_info.sign_days }}</b
+          >天
+        </h2>
       </div>
       <div class="vals">
         <span>当前鸡腿</span>
-        <h1>3000</h1>
+        <h1>
+          {{
+            Number(state.user_info.money) + Number(state.user_info.gift_money)
+          }}
+        </h1>
         <i></i>
       </div>
     </header>
 
     <main class="sign">
-      <h3>每日签到（2/7）</h3>
+      <h3>每日签到（{{ state.user_info.sign_days }}/7）</h3>
       <ul class="week">
-        <li class="check">
-          <i></i>
-          <p>鸡腿<b>×50</b></p>
-        </li>
-        <li>
-          <i></i>
-          <p>鸡腿<b>×100</b></p>
-        </li>
-        <li>
-          <i></i>
-          <p>鸡腿<b>×50</b></p>
-        </li>
-        <li>
-          <i></i>
-          <p>鸡腿<b>×100</b></p>
-        </li>
-        <li>
-          <i></i>
-          <p>鸡腿<b>×50</b></p>
-        </li>
-        <li>
-          <i></i>
-          <p>鸡腿<b>×100</b></p>
-        </li>
-        <li>
-          <i>×150</i>
-          <p>鸡腿大礼包</p>
+        <li
+          :class="o.is_sign && `check`"
+          v-for="(o, i) in state.sign_items"
+          :key="o.gift_money"
+        >
+          <template v-if="i === state.sign_items.length - 1 && 0 < i">
+            <i>×{{ o.gift_money }}</i>
+            <p>鸡腿大礼包</p>
+          </template>
+          <template v-else>
+            <i></i>
+            <p>
+              鸡腿<b>×{{ o.gift_money }}</b>
+            </p>
+          </template>
         </li>
       </ul>
-
       <div>
-        <button>签 到</button>
+        <nut-animate type="ripple" action="click">
+          <button type="button" @click="sign">签 到</button>
+        </nut-animate>
       </div>
     </main>
 
     <main class="task">
-      <h3>任务（2/7）</h3>
-      <div class="item">
+      <h3>任务（{{ state.user_info.sign_days }}/7）</h3>
+      <div class="item" v-for="(o, i) in state.task_items" :key="i">
         <label>
-          <b>看漫任务</b>
-          <i>+30</i>
+          <b>{{ o.title }}</b>
+          <i>+{{ o.gift_money }}</i>
         </label>
-        <button>去完成</button>
-      </div>
-      <div class="item">
-        <label>
-          <b>看漫任务</b>
-          <i>+30</i>
-        </label>
-        <button>去完成</button>
-      </div>
-      <div class="item">
-        <label>
-          <b>看漫任务</b>
-          <i>+30</i>
-        </label>
-        <button>去完成</button>
-      </div>
-      <div class="item">
-        <label>
-          <b>看漫任务</b>
-          <i>+30</i>
-        </label>
-        <button>去完成</button>
-      </div>
-      <div class="item">
-        <label>
-          <b>看漫任务</b>
-          <i>+30</i>
-        </label>
-        <button>去完成</button>
+        <button type="button" @click="go(o.to_url)">去完成</button>
       </div>
     </main>
   </section>
@@ -265,7 +258,7 @@ const go = useGo();
         }
       }
       > li.check {
-        background: url(@/assets/svg/metre.svg) no-repeat;
+        background: url(@/assets/svg/metre.svg) center no-repeat;
         border: none;
         background-size: cover;
         &::before {

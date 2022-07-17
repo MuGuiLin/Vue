@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted } from "vue";
 import Navbar from "@coms/Navbar.vue";
 import { getRecordApi } from "@api/mine";
 

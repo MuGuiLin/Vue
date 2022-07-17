@@ -1,4 +1,4 @@
-import env from '../../configs/env.config';
+import env from '~/configs/env.config';
 
 import * as user from './user';
 

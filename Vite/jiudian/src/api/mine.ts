@@ -1,15 +1,20 @@
 import { http } from "@/utils";
-import { ContentTypeEnum } from "@/enums/httpEnum";
 
-interface IRecordParams {
+export interface IRecordParams {
     page: number;
     pageSize: number;
+}
+
+export interface IFeedbackParams {
+    content: string;
+    phone: string;
 }
 
 enum Api {
     RECORD = `records/getRechargeRecord`,
     ACTIVETASK = `activeTask/index`,
-    ACTIVESIGN = `activeTask/sign`
+    ACTIVESIGN = `activeTask/sign`,
+    FEEDBACK = `feedback/submitContent`,
 }
 
 /**
@@ -47,5 +52,16 @@ export function getRecordApi(params?: IRecordParams): Promise<unknown> {
     });
 }
 
-
+/**
+ * 提交反馈内容
+ * @param data 
+ * @returns josn
+ */
+export function feedbackApi(data?: IFeedbackParams): Promise<unknown> {
+    return http({
+        method: 'POST',
+        url: Api.FEEDBACK,
+        data
+    });
+}
 

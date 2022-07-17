@@ -1,47 +1,56 @@
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import Recharge from "@coms/Recharge.vue";
-import { useGo, usePar, back } from "@hooks/usePage";
-import { getChaptersApi, getContentsApi } from "@api/book";
+import { useGo, back } from "@hooks/usePage";
 const go = useGo();
-const { query } = usePar();
 
-interface IStateProps {
+interface IState {
   ["key"]: any;
 }
 
-interface IResProps extends IStateProps {
-  data: any;
-}
-
-const state: IStateProps | any = reactive({
-  id: "",
+const state = reactive({
+  count: new Array(55).fill(0),
   isVisible: false,
   val: "",
   sort: true,
   show: false,
   plus: false,
-  chapter: {
-    chapters: [],
-    comic_item: {},
-  },
-  chapter_number: 1,
+  refreshList: Array(),
   containerHeight: document.documentElement.clientHeight * 3,
 });
 
-let out: any = null;
-const nav = ref(null);
-const content: any = ref([]);
+const handleScroll = () => {
+  let arr = new Array(55).fill(0);
+  const len = state.count.length;
+  state.plus = true;
+  state.count = state.count.concat(
+    // arr.map((item: number, index: number) => len + index + 1)
+    arr.map((item: number, index: number) => index)
+  );
+};
 
 const tabSwitch = (item: any, index: number) => {
   console.log(item, index);
 };
 
-const switchActionSheet = (param?: any) => {
+const switchActionSheet = (param: any) => {
   state.isVisible = !state.isVisible;
 };
 const chooseItem = (itemParams: { name: string }) => {
   state.val = itemParams.name;
+};
+
+const refreshHasMore = ref(true);
+
+const refreshLoadMore = (done: () => void) => {
+  setTimeout(() => {
+    const curLen = state.refreshList.length;
+    for (let i = curLen; i < curLen + 10; i++) {
+      state.refreshList.push(`${i}`);
+    }
+    if (state.refreshList.length > 20) refreshHasMore.value = false;
+    done();
+  }, 500);
 };
 
 const scrollIntoView = (dom: HTMLLIElement) => {
@@ -52,58 +61,36 @@ const scrollIntoView = (dom: HTMLLIElement) => {
     });
 };
 
+const refresh = (done: () => void) => {
+  setTimeout(() => {
+    // Toast.success('刷新成功');
+    done();
+  }, 1000);
+};
+const init = () => {
+  for (let i = 0; i < 20; i++) {
+    state.refreshList.push(`${i}`);
+  }
+};
+
 const show = () => {
   state.show = !state.show;
 };
 
 const sort = () => {
   state.sort = !state.sort;
-  state.chapter.chapters = state.chapter.chapters.reverse();
-
-  scrollIntoView(<HTMLLIElement>document.querySelectorAll("#nav-box li")[0]);
+  state.refreshList = state.refreshList.reverse();
+  scrollIntoView(<HTMLLIElement>document.querySelectorAll("#navScroll li")[0]);
 };
 
 const anchor = () => {
   scrollIntoView(<HTMLLIElement>document.querySelector("#anchor-15"));
 };
 
-const getContents = async (): Promise<void> => {
-  const { data }: any = await getContentsApi(
-    `${state.id}/${state.chapter_number || 1}`
-  );
-  if (data.content?.length) {
-    content.value = [...content.value, ...data.content];
-  } else {
-    if (1 < state.chapter_number) {
-      state.plus = true;
-    }
-  }
-};
-
-const scroll = () => {
-  clearTimeout(out);
-  out = setTimeout(() => {
-    state.chapter_number++;
-    getContents();
-  }, 60);
-};
-
-const select = (number: number) => {
-  content.value.length = 0;
-  state.chapter_number = number;
-  getContents();
-  switchActionSheet();
-  show();
-};
-
-onMounted(async () => {
-  const { id } = query;
-  if (id) {
-    state.id = id;
-    const { data }: IResProps = await getChaptersApi(state.id);
-    state.chapter = data;
-    getContents();
-  }
+onMounted(() => {
+  state.count = state.count.map((item: number, index: number) => index + 1);
+  console.log(state.count);
+  init();
 });
 </script>
 
@@ -115,14 +102,14 @@ onMounted(async () => {
 
     <nut-cell>
       <nut-list
-        :height="230"
-        :listData="content"
+        :height="293"
+        :listData="state.count"
         :container-height="state.containerHeight"
         @click="show"
-        @scroll-bottom="scroll"
+        @scroll-bottom="handleScroll"
       >
         <template v-slot="{ item }">
-          <img :src="item.url" :alt="item.sort" />
+          <img :src="`src/assets/hua/pic(${item + 1}).jpg`" :alt="item" />
         </template>
       </nut-list>
     </nut-cell>
@@ -164,36 +151,45 @@ onMounted(async () => {
 
     <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
       <div class="nav-top">
-        <h3>{{ state.chapter.comic_item.title }}</h3>
+        <h3>黑客漫画</h3>
         <div class="sort">
-          <span>已更{{ state.chapter.comic_item.chapter_number }}话</span>
+          <span>已更89话</span>
           <button v-if="state.sort" @click="sort">正序</button>
           <button v-else class="fall" @click="sort">倒序</button>
         </div>
         <p class="point">漫画每话定价250鸡腿！</p>
       </div>
-      <ul class="nav-box" ref="nav">
-        <li
-          :class="`nav-item ${
-            o.chapter_number == state.chapter_number && 'active'
-          }`"
-          v-for="o in state.chapter.chapters"
-          :key="o.chapter_number"
-          :id="'anchor-' + o.chapter_number"
-          @click="select(o.chapter_number)"
+      <ul class="nav-box" id="navScroll">
+        <nut-infiniteloading
+          pull-icon="loading1"
+          load-icon="loading"
+          load-more-txt="到底啦～"
+          container-id="navScroll"
+          :use-window="false"
+          :is-open-refresh="true"
+          :has-more="refreshHasMore"
+          @load-more="refreshLoadMore"
+          @refresh="refresh"
         >
-          <div :class="`cover ${o.locked && 'lock'}`">
-            <img :src="o.cover" :alt="o.title" />
-          </div>
-          <dl class="info">
-            <dt>
-              <h4>第{{ o.chapter_number }}话 - {{ o.title }}</h4>
-            </dt>
-            <dd>
-              <time>{{ o.date }}</time>
-            </dd>
-          </dl>
-        </li>
+          <li
+            :class="`nav-item ${item == 15 && 'active'}`"
+            v-for="(item, index) in state.refreshList"
+            :key="index"
+            :id="'anchor-' + item"
+          >
+            <div class="cover lock">
+              <img src="@/assets/imgs/cover.jpg" alt="" />
+            </div>
+            <dl class="info">
+              <dt>
+                <h4>第{{ Number(item) + 1 }}话 - 女主登场</h4>
+              </dt>
+              <dd>
+                <time>2020-01-05</time>
+              </dd>
+            </dl>
+          </li>
+        </nut-infiniteloading>
       </ul>
       <a class="nav-btn" @click="anchor">位置</a>
     </nut-actionsheet>
@@ -347,8 +343,6 @@ onMounted(async () => {
       overflow-y: auto;
       overflow-x: hidden;
       background: #20243c;
-      -webkit-overflow-scrolling: touch;
-
       &::-webkit-scrollbar {
         display: none;
       }
@@ -466,6 +460,7 @@ onMounted(async () => {
     width: 100%;
     height: 100vh;
     background: black;
+    border-radius: 0 !important;
     box-shadow: none;
 
     .nut-list-container {

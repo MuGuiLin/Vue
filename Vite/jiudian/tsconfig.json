@@ -18,15 +18,15 @@
     "baseUrl": "./",
     "paths": {
       "~/*": [
-        "/*"
+        "./*"
       ],
       "@/*": [
         "src/*"
       ],
-      "@/api*": [
+      "@api/*": [
         "src/api/*"
       ],
-      "@/coms*": [
+      "@coms/*": [
         "src/components/*"
       ],
       "@hooks/*": [

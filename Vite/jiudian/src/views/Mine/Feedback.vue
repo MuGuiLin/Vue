@@ -1,17 +1,37 @@
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, ref, getCurrentInstance } from "vue";
 import Navbar from "@coms/Navbar.vue";
-const state = reactive({
-  feed: "",
+import { IFeedbackParams, feedbackApi } from "@api/mine";
+import { is } from "@/utils";
+
+const can: any = ref<boolean>(false);
+const loading = ref<boolean>(false);
+const { proxy }: any = getCurrentInstance();
+const state: IFeedbackParams = reactive({
+  content: "",
   phone: "",
 });
 
-const change = (val: string) => {
-  console.log(val);
+const change = () => {
+  can.value = state.phone && state.content;
 };
 
-const submit = () => {
-  console.log(state);
+const submit = async () => {
+  if (!is.isPhone(state.phone)) {
+    return proxy.$notify.warn("对不起：请正确输入您的联系方式！");
+  }
+  loading.value = true;
+  const { message }: any = await feedbackApi(state);
+  if (message) {
+    proxy.$toast.success(message, {
+      duration: 8000,
+      textAlignCenter: false,
+    });
+    can.value = false;
+    state.content = "";
+    state.phone = "";
+    loading.value = false;
+  }
 };
 </script>
 
@@ -21,17 +41,29 @@ const submit = () => {
     <form class="form">
       <nut-textarea
         placeholder="亲，清在此输入反馈内容～"
-        v-model="state.feed"
+        v-model="state.content"
         rows="8"
         autosize
-        :change="change"
+        @change="change"
       />
       <nut-input
         update:model-value="change"
         v-model="state.phone"
+        type="number"
+        @change="change"
         placeholder="请输入您的联系方式"
       />
-      <nut-button block type="primary" @click="submit">提 交</nut-button>
+      <nut-button
+        v-if="can"
+        block
+        :loading="loading"
+        type="primary"
+        @click="submit"
+        >提 交</nut-button
+      >
+      <nut-button v-else block disabled type="primary" @click="submit"
+        >提 交</nut-button
+      >
     </form>
   </section>
 </template>

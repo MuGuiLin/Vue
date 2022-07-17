@@ -1,6 +1,5 @@
 import { http } from "@/utils";
 import { ContentTypeEnum } from "@/enums/httpEnum";
-import { AxiosPromise, AxiosRequestHeaders } from "axios";
 
 interface IRefresParams {
     Authorization: string;

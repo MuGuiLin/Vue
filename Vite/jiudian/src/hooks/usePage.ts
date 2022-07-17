@@ -1,4 +1,4 @@
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import type { RouteLocationRaw, Router } from 'vue-router';
 
 import { PageEnum } from '../enums/pageEnum';
@@ -17,7 +17,7 @@ export function useGo(_router?: Router | any) {
     }
     const { push, replace } = _router || router;
 
-    function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = true) {
+    function go(opt: PageEnum | RouteLocationRawEx | string | any = PageEnum.BASE_HOME, isReplace = true) {
         if (!opt) {
             return;
         }
@@ -29,6 +29,10 @@ export function useGo(_router?: Router | any) {
         }
     }
     return go;
+};
+
+export function usePar() {
+    return useRoute();
 };
 
 export const back = () => {

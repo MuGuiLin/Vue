@@ -1,8 +1,8 @@
 import type { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import { Notify } from '@nutui/nutui';
 import axios from "axios";
 import qs from "qs";
-import { Notify } from '@nutui/nutui';
-import env from "../../configs/env.config";
+import env from "~/configs/env.config";
 import { PiniaStore } from "@/stores/modules/user";
 import { ContentTypeEnum } from "@/enums/httpEnum";
 
@@ -18,9 +18,7 @@ http.interceptors.request.use(
         if (token) {
             cfg.headers['Authorization'] = token;
         }
-        if (
-            cfg.headers && cfg.headers?.["Content-Type"] === ContentTypeEnum.FORM_URLENCODED
-        ) {
+        if (cfg.headers && cfg.headers?.["Content-Type"] === ContentTypeEnum.FORM_URLENCODED) {
             cfg.data = qs.stringify(cfg.data, {
                 arrayFormat: "brackets",
             });
@@ -42,8 +40,14 @@ http.interceptors.response.use(
             Notify.warn(res.data?.message);
             return Promise.reject(res);
         }
-    }, (err: AxiosError) => {
-        Notify.warn('网络异常，请稍后再试！');
+    }, (err: AxiosError | any) => {
+        if (401 === err.response.status) {
+            localStorage.clear();
+            Notify.warn(err.response.statusText);
+            location.reload();
+        } else {
+            Notify.warn('网络异常，请稍后再试！');
+        }
         return Promise.reject(err);
     }
 );

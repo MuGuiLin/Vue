@@ -1,5 +1,4 @@
 import { http } from "@/utils";
-import { ContentTypeEnum } from "@/enums/httpEnum";
 
 interface IHomeParams {
     token: string;

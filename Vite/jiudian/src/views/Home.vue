@@ -66,7 +66,7 @@ onMounted(async () => {
               <h4>{{ o.title }}</h4>
               <nut-button
                 color="linear-gradient(to right, #FFBBA0, #C371ED)"
-                @click="go('/article')"
+                @click="go({ path: '/article', query: { id: o.id } })"
                 >续看</nut-button
               >
             </dt>
@@ -84,7 +84,7 @@ onMounted(async () => {
         <li
           v-for="o in state.assist_comics.comic_items"
           :key="o.id"
-          @click="go('/reserve')"
+          @click="go({ path: '/reserve', query: { id: o.id } })"
         >
           <dl>
             <dt>

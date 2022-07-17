@@ -1,19 +1,18 @@
 <script lang="ts" setup>
-  import { reactive, onMounted } from "vue";
-  import { PiniaStore } from "@/stores/modules/user";
-  import { useGo } from "@hooks/usePage";
-  import avatar from "@/assets/logo.png";
-
-  const go = useGo();
-  const { users }: any = PiniaStore();
-  const state = reactive({
-    id: "99",
-    name: "九九",
-    money: 0,
-    avatar: avatar,
-    ...users,
-  });
-  
+import { reactive, onMounted } from "vue";
+import { PiniaStore } from "@/stores/modules/user";
+import { useGo } from "@hooks/usePage";
+import avatar from "@/assets/logo.png";
+const go = useGo();
+const { users }: any = PiniaStore();
+const state = reactive({
+  id: "99",
+  name: "九九",
+  money: 0,
+  gift_money: 0,
+  avatar: avatar,
+  ...users,
+});
 </script>
 
 <template>
@@ -26,7 +25,7 @@
         <button @click="go('/mission')">签到</button>
       </div>
       <div class="info">
-        <span>{{ state.money }}鸡腿</span>
+        <span>{{ Number(state.money) + Number(state.gift_money) }}鸡腿</span>
         <nut-button
           size="small"
           color="linear-gradient(to right, #FFBBA0, #C371ED)"

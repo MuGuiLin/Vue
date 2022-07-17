@@ -8,9 +8,9 @@ export default defineConfig((config: UserConfig) => {
   return {
     plugins: [vue()],
 
-    base: (config.mode || process.env.NODE_ENV) === 'development' ? '/' : '/',
+    base: '/',
 
-    mode: config.mode || process.env.NODE_ENV,
+    mode: (config.mode || process.env.NODE_ENV),
 
     publicDir: 'public',
 

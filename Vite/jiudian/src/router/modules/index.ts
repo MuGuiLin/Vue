@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 
-import Home from '../../views/Home.vue';
+import Home from '@views/Home.vue';
 
 // const reqFiles = require.context('./', true, /\.ts$/);
 
@@ -40,7 +40,7 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
             title: '漫画详情'
         }
-    }, 
+    },
     {
         path: '/reserve',
         name: 'Reserve',

@@ -51,7 +51,9 @@ export function isNullOrUnDef(val: unknown): val is null | undefined {
 export function isNumber(val: unknown): val is number {
     return is(val, 'Number');
 }
-
+export function isPhone(val: string): val is string {
+    return /^1[3456789]\d{9}$/.test(val);
+}
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
     return is(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
