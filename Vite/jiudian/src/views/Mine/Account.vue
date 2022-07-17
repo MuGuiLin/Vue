@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import Navbar from "@/components/Navbar.vue";
-import Recharge from "@/components/Recharge.vue";
+import Navbar from "@coms/Navbar.vue";
+import Recharge from "@coms/Recharge.vue";
 </script>
 
 <template>

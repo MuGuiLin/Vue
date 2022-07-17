@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref, reactive } from "vue";
-import Recharge from "@/components/Recharge.vue";
+import Recharge from "@coms/Recharge.vue";
 import { useGo, back } from "@hooks/usePage";
 const go = useGo();
 

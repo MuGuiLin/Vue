@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
-import Navbar from "@/components/Navbar.vue";
+import Navbar from "@coms/Navbar.vue";
 const state = reactive({
   active: 0,
   edit: false,

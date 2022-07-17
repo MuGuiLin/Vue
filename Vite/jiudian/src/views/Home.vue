@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { useGo } from "@hooks/usePage";
-import { homeApi } from "@/api/home";
+import { homeApi } from "@api/home";
 const go = useGo();
 const state: any = reactive({
   noticebar: "新用户福利，首充多3块，送1000鸡腿！",

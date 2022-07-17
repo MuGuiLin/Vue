@@ -1,36 +1,51 @@
 import { http } from "@/utils";
 import { ContentTypeEnum } from "@/enums/httpEnum";
 
-interface ILoginParams {
-    username: string;
-    password: string;
+interface IRecordParams {
+    page: number;
+    pageSize: number;
 }
 
 enum Api {
-
-    RECORD = `records/getRechargeRecord`
+    RECORD = `records/getRechargeRecord`,
+    ACTIVETASK = `activeTask/index`,
+    ACTIVESIGN = `activeTask/sign`
 }
 
-
-export function loginApi(data?: ILoginParams): Promise<any> {
+/**
+ * 活动任务中心页面数据
+ * @returns josn
+ */
+export function activeTaskApi(): Promise<any> {
     return http({
-        method: 'POST',
-        // url: Api.LOGIN,
-        data: data || null,
-        // headers: { "Content-Type": ContentTypeEnum.FORM_DATA },
+        method: 'GET',
+        url: Api.ACTIVETASK,
     });
 }
 
+/**
+ * 签到
+ * @returns josn
+ */
+export function activeSignApi(): Promise<any> {
+    return http({
+        method: 'POST',
+        url: Api.ACTIVESIGN,
+    });
+}
 
-export function getRecordApi(params?: any): Promise<unknown> {
+/**
+ * 获取充值记录
+ * @param params 
+ * @returns josn
+ */
+export function getRecordApi(params?: IRecordParams): Promise<unknown> {
     return http({
         method: 'GET',
         url: Api.RECORD,
-        params,
-        headers: {
-            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZGV2LWFwaS54aGJpZ2RhdGEuY29tL2FwaS92MS9wdWJsaWMvd2VjaGF0T0F1dGhMb2dpbiIsImlhdCI6MTY1Nzk3MTg4OSwiZXhwIjoxNjU3OTc5MDg5LCJuYmYiOjE2NTc5NzE4ODksImp0aSI6IjJ4SElNWFVKMlJlUHIxVmMiLCJzdWIiOiI2MmNiZTlmNGY5NDE0ZmI0MGYwNzc5MzAiLCJwcnYiOiI0MDA2YzAwNmNhY2E2ZjhiY2I3NjIwNmQ4YTRmNWVjMDBiZWQzMzFlIn0.8pw04oAptWTIzEeY4ebMNRe68sJS7q4Obkx0mgtcfJo"
-        },
+        params
     });
 }
+
 
 

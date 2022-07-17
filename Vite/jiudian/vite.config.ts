@@ -21,6 +21,7 @@ export default defineConfig((config: UserConfig) => {
         '~': resolve(__dirname, './'),
         '@': resolve(__dirname, 'src'),
         '@api': resolve(__dirname, 'src/api'),
+        '@coms': resolve(__dirname, 'src/components'),
         '@hooks': resolve(__dirname, 'src/hooks'),
         '@views': resolve(__dirname, 'src/views'),
       },

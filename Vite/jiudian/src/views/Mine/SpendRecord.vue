@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, toRefs } from "vue";
-import Navbar from "@/components/Navbar.vue";
+import Navbar from "@coms/Navbar.vue";
 const customHasMore = ref(true);
 const state = reactive({
   customList: [""],

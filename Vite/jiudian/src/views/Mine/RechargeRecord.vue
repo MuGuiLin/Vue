@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, toRefs } from "vue";
-import Navbar from "@/components/Navbar.vue";
-import { getRecordApi } from "@/api/mine";
+import Navbar from "@coms/Navbar.vue";
+import { getRecordApi } from "@api/mine";
 
 interface IRecordProps {
   asPageData?: boolean;

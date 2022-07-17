@@ -23,6 +23,12 @@
       "@/*": [
         "src/*"
       ],
+      "@/api*": [
+        "src/api/*"
+      ],
+      "@/coms*": [
+        "src/components/*"
+      ],
       "@hooks/*": [
         "src/hooks/*"
       ],

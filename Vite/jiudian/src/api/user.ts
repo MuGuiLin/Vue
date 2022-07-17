@@ -1,5 +1,6 @@
 import { http } from "@/utils";
 import { ContentTypeEnum } from "@/enums/httpEnum";
+import { AxiosPromise, AxiosRequestHeaders } from "axios";
 
 interface IRefresParams {
     Authorization: string;
@@ -11,6 +12,11 @@ enum Api {
     REFRESH = `public/refresh`
 }
 
+/**
+ * 微信授权登录
+ * @param data 
+ * @returns josn
+ */
 export function loginApi(data?: any): Promise<any> {
     return http({
         method: 'POST',
@@ -20,6 +26,11 @@ export function loginApi(data?: any): Promise<any> {
     });
 }
 
+/**
+ * 获取用户信息
+ * @param Authorization 
+ * @returns josn
+ */
 export function getUserApi(Authorization: any): Promise<unknown> {
     return http({
         method: 'GET',
@@ -30,12 +41,14 @@ export function getUserApi(Authorization: any): Promise<unknown> {
     });
 }
 
-export function refreshApi(data: IRefresParams): Promise<unknown> {
+/**
+ * 刷新token
+ * @param Authorization 
+ * @returns josn
+ */
+export function refreshApi(Authorization: IRefresParams): Promise<unknown> {
     return http({
         method: 'POST',
         url: Api.REFRESH,
-        headers: {
-            ...data
-        }
     });
 }
