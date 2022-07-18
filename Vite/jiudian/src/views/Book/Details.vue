@@ -1,57 +1,91 @@
 
 
 <script lang="ts" setup>
-import { useGo, back } from "@hooks/usePage";
+import { reactive, unref, onMounted } from "vue";
+import { useGo, usePar, back } from "@hooks/usePage";
+import { getDetailsApi, getPaginateApi, starAssistApi } from "@api/book";
+
 const go = useGo();
+const { query } = usePar();
+interface IStateProps {
+  ["key"]: any;
+}
+
+interface IResProps extends IStateProps {
+  data: any;
+}
+
+const state: IStateProps | any = reactive({
+  id: "",
+  data: {
+    desc: "...",
+    tags: "",
+  },
+  chapter: {
+    total: 0,
+    items: [],
+  },
+});
+
+const chapter = async () => {
+  const { data }: IResProps = await getPaginateApi(state.id);
+  state.chapter = data;
+};
+
+const starAssist = async () => {
+  const { data }: IStateProps | any = await starAssistApi({
+    comic_id: state.id,
+  });
+  console.log(data);
+};
+
+onMounted(async () => {
+  const { id } = query;
+  if (id) {
+    state.id = id;
+    const { data }: IResProps | any = await getDetailsApi(state.id);
+    chapter();
+    state.data = data;
+    if (data.tags.length) {
+      state.data.tags = data.tags.join("·");
+    }
+  }
+});
 </script>
 
 <template>
   <section class="details">
     <header class="details-header">
-      <img class="cover" src="@/assets/imgs/banner-1.jpg" alt="" />
+      <img class="cover" :src="state.data.detail_cover" alt="" />
       <a class="back" @click="back()"></a>
       <div class="title">
-        <h1>黑客漫画</h1>
-        <b>点赞数：2000</b>
-        <button>喜欢</button>
+        <h1>{{ state.data.title }}</h1>
+        <b>点赞数：{{ state.data.star_number }}</b>
+        <nut-animate type="jump" action="click">
+          <button type="button" @click="starAssist">喜欢</button>
+        </nut-animate>
       </div>
     </header>
     <div class="details-summary">
       <h3>简介<a>展开</a></h3>
       <article>
-        <b>热血·冒险·奇幻</b
-        >不知你有没有听过这么一种说法：预知前生事，今生所受事。前世之因，后世之果，如果你种下了这个因，那么无论经过多少个轮回，你都摆脱不了这个结果。该如何化解呢？
+        <b>{{ state.data.tags }}</b>
+        {{ state.data.desc }}
       </article>
     </div>
 
     <div class="details-serialize">
-      <h3>连载中<a>更新16话</a></h3>
+      <h3>
+        连载中<a>更新{{ state.chapter.total }}话</a>
+      </h3>
       <ul>
-        <li>
+        <li v-for="o in state.chapter.items" :key="o.chapter_number">
           <dl>
             <dt>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>2022-03-06</p>
+              <img class="cover" :src="o.cover" :alt="o.chapter_number" />
+              <p>{{ o.date }}</p>
             </dt>
-            <dd>第1话-序章</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>2022-03-06</p>
-            </dt>
-            <dd>第1话-序章</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>
-              <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-              <p>2022-03-06</p>
-            </dt>
-            <dd>第1话-序章</dd>
+            <dd>第{{ o.chapter_number }}话-{{ o.title }}</dd>
           </dl>
         </li>
       </ul>
@@ -152,29 +186,31 @@ const go = useGo();
         border-radius: 2px;
         background: rgba(0, 0, 0, 0.5);
       }
-      > button {
+      .nut-animate {
         position: absolute;
         right: 0px;
         bottom: -3px;
-        padding-left: 20px;
-        width: 80px;
-        height: 30px;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 40px;
-        color: white;
-        letter-spacing: 1px;
-        background: #a05bbd;
-        &::before {
-          content: "";
-          position: absolute;
-          top: 5px;
-          left: 15px;
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          background: url(@/assets/svg/like.svg) no-repeat;
-          background-size: cover;
+        button {
+          padding-left: 20px;
+          width: 80px;
+          height: 30px;
+          font-size: 12px;
+          font-weight: 600;
+          border-radius: 40px;
+          color: white;
+          letter-spacing: 1px;
+          background: #a05bbd;
+          &::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 15px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url(@/assets/svg/like.svg) no-repeat;
+            background-size: cover;
+          }
         }
       }
     }
@@ -211,6 +247,7 @@ const go = useGo();
       line-height: 20px;
       font-size: 12px;
       color: #666;
+      text-align: justify;
 
       > b {
         color: #a05bbd;

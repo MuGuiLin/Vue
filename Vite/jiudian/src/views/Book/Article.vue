@@ -3,8 +3,11 @@ import { ref, reactive, onMounted } from "vue";
 import Recharge from "@coms/Recharge.vue";
 import { useGo, usePar, back } from "@hooks/usePage";
 import { getChaptersApi, getContentsApi } from "@api/book";
+let out: any = null;
 const go = useGo();
 const { query } = usePar();
+const navul: any = ref(null);
+const content: any = ref([]);
 
 interface IStateProps {
   ["key"]: any;
@@ -16,11 +19,11 @@ interface IResProps extends IStateProps {
 
 const state: IStateProps | any = reactive({
   id: "",
-  isVisible: false,
-  val: "",
   sort: true,
   show: false,
-  plus: false,
+  locked: false,
+  vsible: false,
+  ispush: true,
   chapter: {
     chapters: [],
     comic_item: {},
@@ -29,22 +32,19 @@ const state: IStateProps | any = reactive({
   containerHeight: document.documentElement.clientHeight * 3,
 });
 
-let out: any = null;
-const nav = ref(null);
-const content: any = ref([]);
-
-const tabSwitch = (item: any, index: number) => {
-  console.log(item, index);
+const getContents = async (): Promise<void> => {
+  state.ispush = false;
+  const { data }: any = await getContentsApi(
+    `${state.id}/${state.chapter_number || 1}`
+  );
+  state.locked = data.locked;
+  if (data.content?.length) {
+    state.ispush = true;
+    content.value = [...content.value, ...data.content];
+  }
 };
 
-const switchActionSheet = (param?: any) => {
-  state.isVisible = !state.isVisible;
-};
-const chooseItem = (itemParams: { name: string }) => {
-  state.val = itemParams.name;
-};
-
-const scrollIntoView = (dom: HTMLLIElement) => {
+const scrollPot = (dom: HTMLLIElement) => {
   dom &&
     dom.scrollIntoView({
       block: "center",
@@ -52,39 +52,39 @@ const scrollIntoView = (dom: HTMLLIElement) => {
     });
 };
 
+const sort = () => {
+  state.sort = !state.sort;
+  state.chapter.chapters = state.chapter.chapters.reverse();
+  scrollPot(
+    navul.value.children[0] ||
+      <HTMLLIElement>document.querySelectorAll("#nav-box li")[0]
+  );
+};
+
 const show = () => {
   state.show = !state.show;
 };
 
-const sort = () => {
-  state.sort = !state.sort;
-  state.chapter.chapters = state.chapter.chapters.reverse();
-
-  scrollIntoView(<HTMLLIElement>document.querySelectorAll("#nav-box li")[0]);
-};
-
 const anchor = () => {
-  scrollIntoView(<HTMLLIElement>document.querySelector("#anchor-15"));
-};
-
-const getContents = async (): Promise<void> => {
-  const { data }: any = await getContentsApi(
-    `${state.id}/${state.chapter_number || 1}`
+  scrollPot(
+    <HTMLLIElement>document.querySelector(`#anchor-${state.chapter_number}`)
   );
-  if (data.content?.length) {
-    content.value = [...content.value, ...data.content];
-  } else {
-    if (1 < state.chapter_number) {
-      state.plus = true;
-    }
-  }
 };
 
 const scroll = () => {
-  clearTimeout(out);
-  out = setTimeout(() => {
-    state.chapter_number++;
-    getContents();
+  if (state.ispush) {
+    clearTimeout(out);
+    out = setTimeout(() => {
+      state.chapter_number++;
+      getContents();
+    }, 60);
+  }
+};
+
+const toggle = (param?: any) => {
+  state.vsible = !state.vsible;
+  setTimeout(() => {
+    state.vsible && anchor();
   }, 60);
 };
 
@@ -92,7 +92,7 @@ const select = (number: number) => {
   content.value.length = 0;
   state.chapter_number = number;
   getContents();
-  switchActionSheet();
+  toggle();
   show();
 };
 
@@ -113,7 +113,7 @@ onMounted(async () => {
       <a class="back" @click="back()"></a>
     </header>
 
-    <nut-cell>
+    <main class="nut-cell">
       <nut-list
         :height="230"
         :listData="content"
@@ -125,13 +125,12 @@ onMounted(async () => {
           <img :src="item.url" :alt="item.sort" />
         </template>
       </nut-list>
-    </nut-cell>
+    </main>
 
     <nut-tabbar
       :bottom="true"
       v-show="state.show"
       :safeAreaInsetBottom="true"
-      @tab-switch="tabSwitch"
       unactive-color="#333"
       active-color="#333"
     >
@@ -145,14 +144,14 @@ onMounted(async () => {
         tab-title="漫画详情"
         img="src/assets/svg/info.svg"
         activeImg="src/assets/svg/info.svg"
-        to="/details"
+        :to="`/details?id=${state.id}`"
       ></nut-tabbar-item>
       <nut-tabbar-item
         class="vip"
         tab-title="目录"
         img="src/assets/svg/item.svg"
         activeImg="src/assets/svg/item.svg"
-        @click="switchActionSheet"
+        @click="toggle"
       ></nut-tabbar-item>
       <nut-tabbar-item
         tab-title="最近看漫"
@@ -162,7 +161,7 @@ onMounted(async () => {
       ></nut-tabbar-item>
     </nut-tabbar>
 
-    <nut-actionsheet v-model:visible="state.isVisible" @choose="chooseItem">
+    <nut-actionsheet v-model:visible="state.vsible">
       <div class="nav-top">
         <h3>{{ state.chapter.comic_item.title }}</h3>
         <div class="sort">
@@ -172,7 +171,7 @@ onMounted(async () => {
         </div>
         <p class="point">漫画每话定价250鸡腿！</p>
       </div>
-      <ul class="nav-box" ref="nav">
+      <ul class="nav-box" id="nav-box" ref="navul">
         <li
           :class="`nav-item ${
             o.chapter_number == state.chapter_number && 'active'
@@ -198,7 +197,7 @@ onMounted(async () => {
       <a class="nav-btn" @click="anchor">位置</a>
     </nut-actionsheet>
 
-    <footer :class="`recharge-box ${state.plus && 'recharge-box-show'}`">
+    <footer :class="`recharge-box ${state.locked && 'recharge-box-show'}`">
       <Recharge :show="true" />
     </footer>
   </section>
@@ -465,9 +464,9 @@ onMounted(async () => {
     padding: 0;
     width: 100%;
     height: 100vh;
-    background: black;
+    border-radius: 0;
     box-shadow: none;
-
+    background: black;
     .nut-list-container {
       .nut-list-item {
         margin: 0;
