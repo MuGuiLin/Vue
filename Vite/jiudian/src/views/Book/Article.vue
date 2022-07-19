@@ -169,7 +169,7 @@ onMounted(async () => {
           <button v-if="state.sort" @click="sort">正序</button>
           <button v-else class="fall" @click="sort">倒序</button>
         </div>
-        <p class="point">漫画每话定价250鸡腿！</p>
+        <p class="point">漫画每话定价200鸡腿！</p>
       </div>
       <ul class="nav-box" id="nav-box" ref="navul">
         <li
