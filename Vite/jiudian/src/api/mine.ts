@@ -10,15 +10,22 @@ export interface IFeedbackParams {
     phone: string;
 }
 
+export interface IHistoryParams {
+    history_ids?: Array<string>;
+    follow_ids?: Array<string>;
+}
+
 enum Api {
     RECORD = `records/getRechargeRecord`,
     ACTIVETASK = `activeTask/index`,
     ACTIVESIGN = `activeTask/sign`,
     FEEDBACK = `feedback/submitContent`,
+    HISTORYS = `historys/getItems`,
+    HISTORYSOPS = `historys/delRecords`,
 }
 
 /**
- * 活动任务中心页面数据
+ * 活动任务中心
  * @returns josn
  */
 export function activeTaskApi(): Promise<any> {
@@ -65,3 +72,28 @@ export function feedbackApi(data?: IFeedbackParams): Promise<unknown> {
     });
 }
 
+/**最近阅读/历史
+ * 
+ * @param params 
+ * @returns josn
+ */
+export function historysApi(params?: any): Promise<unknown> {
+    return http({
+        method: 'GET',
+        url: Api.HISTORYS,
+        params
+    });
+}
+
+/**
+ * 历史记录-喜欢/删除
+ * @param data 
+ * @returns josn
+ */
+export function historysOpsApi(data?: IHistoryParams): Promise<unknown> {
+    return http({
+        method: 'POST',
+        url: Api.HISTORYSOPS,
+        data
+    });
+}

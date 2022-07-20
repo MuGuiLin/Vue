@@ -6,12 +6,17 @@ import { isString } from '../utils/is';
 
 export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & { path: PageEnum };
 
+let router: Router;
+
 function handleError(e: Error) {
     console.error(e);
-}
+};
+
+export function usePar() {
+    return useRoute();
+};
 
 export function useGo(_router?: Router | any) {
-    let router;
     if (!_router) {
         router = useRouter();
     }
@@ -31,10 +36,11 @@ export function useGo(_router?: Router | any) {
     return go;
 };
 
-export function usePar() {
-    return useRoute();
-};
-
 export const back = () => {
-    window.history.back();
+    const { back } = router;
+    if (router && back) {
+        back();
+    } else {
+        window.history.back();
+    }
 };

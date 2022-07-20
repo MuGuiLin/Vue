@@ -1,13 +1,43 @@
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import Navbar from "@coms/Navbar.vue";
-const state = reactive({
+import { historysApi, historysOpsApi } from "@api/mine";
+
+interface IStateProps {
+  ["key"]: any;
+}
+
+interface IResProps extends IStateProps {
+  data: any;
+}
+
+const state: any = reactive({
   active: 0,
   edit: false,
+  follow_ids: [],
+  history_ids: [],
+  recent: {
+    history_items: [],
+    follows_items: [],
+    recommend_items: [],
+  },
 });
+
+const ops = async () => {
+  await historysOpsApi({
+    follow_ids: state.follow_ids,
+    history_ids: state.history_ids,
+  });
+};
+
 const edit = () => {
   state.edit = !state.edit;
 };
+
+onMounted(async () => {
+  const { data }: IResProps | any = await historysApi();
+  state.recent = data;
+});
 </script>
 
 <template>
@@ -17,21 +47,7 @@ const edit = () => {
     <nut-tabs v-model="state.active">
       <nut-tabpane class="like" title="喜欢">
         <ul class="recent-ul">
-          <li>
-            <dl>
-              <dt>
-                <i v-show="state.edit" class="radio"></i>
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
-            </dl>
-          </li>
-          <li>
+          <li v-for="o in state.recent.follows_items" :key="o.id">
             <dl>
               <dt>
                 <i v-show="state.edit" class="radio radio-h"></i>
@@ -39,79 +55,25 @@ const edit = () => {
                 <!-- <p>666 已助力</p> -->
               </dt>
               <dd>
-                <h4>黑客漫画</h4>
+                <h4>{{ o.title }}</h4>
               </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <i v-show="state.edit" class="radio"></i>
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <i v-show="state.edit" class="radio"></i>
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
+              <dd>阅读到：第{{ o.current_read_chapter }}话</dd>
+              <dd>更新至：第{{ o.total_chapter_number }}话</dd>
             </dl>
           </li>
         </ul>
 
         <h3 class="recent-h3">九九推荐</h3>
         <ul class="recent-ul">
-          <li>
+          <li v-for="o in state.recent.recommend_items" :key="o.id">
             <dl>
               <dt>
                 <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <img class="cover" src="@/assets/imgs/cover.jpg" alt="cover" />
                 <!-- <p>666 已助力</p> -->
               </dt>
               <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>玄幻 科幻 异能</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>玄幻 科幻 异能</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
+                <h4>{{ o.title }}</h4>
               </dd>
               <dd>玄幻 科幻 异能</dd>
             </dl>
@@ -123,7 +85,7 @@ const edit = () => {
           <li class="void">
             <b>书架是空的哦～</b>
           </li>
-          <li>
+          <li v-for="o in state.recent.history_items" :key="o.id">
             <dl>
               <dt>
                 <!-- <i>VIP</i> -->
@@ -131,52 +93,10 @@ const edit = () => {
                 <!-- <p>666 已助力</p> -->
               </dt>
               <dd>
-                <h4>黑客漫画</h4>
+                <h4>{{ o.title }}</h4>
               </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>黑客漫画</h4>
-              </dd>
-              <dd>阅读到：第2话</dd>
-              <dd>更新至：第16话</dd>
+              <dd>阅读到：第{{ o.current_read_chapter }}话</dd>
+              <dd>更新至：第{{ o.total_chapter_number }}话</dd>
             </dl>
           </li>
         </ul>
@@ -185,7 +105,7 @@ const edit = () => {
     <footer class="footer" v-show="state.edit">
       <a><i></i> 全 选</a>
       <!-- <a><i class="check"></i> 反 选</a> -->
-      <a><i class="del"></i> 删 除</a>
+      <a @click="ops"><i class="del"></i> 删 除</a>
     </footer>
   </section>
 </template>

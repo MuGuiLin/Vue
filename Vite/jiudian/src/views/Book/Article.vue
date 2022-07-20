@@ -341,7 +341,7 @@ onMounted(async () => {
     .nav-box {
       box-sizing: border-box;
       padding: 0 10px 10px;
-      height: 360px;
+      height: 380px;
       color: white;
       overflow-y: auto;
       overflow-x: hidden;

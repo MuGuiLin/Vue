@@ -36,10 +36,10 @@ const state = reactive({
     </header>
 
     <main class="navs">
-      <nut-cell-group>
+      <!-- <nut-cell-group>
         <h3 class="history-h3">阅读历史</h3>
         <ul class="history-ul">
-          <!-- <li>
+          <li>
             <dl>
               <dt>
                 <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
@@ -60,7 +60,7 @@ const state = reactive({
               </dd>
               <dd>5话/20话</dd>
             </dl>
-          </li> -->
+          </li>
           <li>
             <dl>
               <dt>
@@ -71,7 +71,7 @@ const state = reactive({
             </dl>
           </li>
         </ul>
-      </nut-cell-group>
+      </nut-cell-group> -->
 
       <nut-cell-group>
         <nut-cell title="充值记录" to="/record">
