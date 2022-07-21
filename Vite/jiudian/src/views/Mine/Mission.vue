@@ -2,6 +2,7 @@
 import { reactive, onMounted } from "vue";
 import { useGo } from "@hooks/usePage";
 import { activeTaskApi, activeSignApi } from "@api/mine";
+
 const go = useGo();
 const state: any = reactive({
   user_info: {
@@ -12,19 +13,23 @@ const state: any = reactive({
   sign_items: [],
   task_items: [],
 });
-const sign = async () => {
-  const { data } = await activeSignApi();
-  if (data?.gift_money) {
-    state.user_info = data;
-  }
-};
-onMounted(async () => {
+
+const init = async () => {
   const {
     data: { user_info, sign_items, task_items },
   } = await activeTaskApi();
   state.user_info = user_info;
   state.sign_items = sign_items;
   state.task_items = task_items;
+};
+
+const sign = async () => {
+  await activeSignApi();
+  init();
+};
+
+onMounted(async () => {
+  init();
 });
 </script>
 
@@ -38,18 +43,27 @@ onMounted(async () => {
         </h2>
       </div>
       <div class="vals">
-        <span>当前鸡腿</span>
-        <h1>
-          {{
-            Number(state.user_info.money) + Number(state.user_info.gift_money)
-          }}
-        </h1>
-        <i></i>
+        <div>
+          <h1>
+            {{ state.user_info.money }}
+          </h1>
+          <p>当前鸡腿</p>
+        </div>
+        <div>
+          <h1>
+            {{ state.user_info.gift_money }}
+          </h1>
+          <p>赠送鸡腿</p>
+        </div>
       </div>
     </header>
 
     <main class="sign">
       <h3>每日签到（{{ state.user_info.sign_days }}/7）</h3>
+      <p>
+        已经连续签到<b>{{ state.user_info.sign_days }}</b
+        >天
+      </p>
       <ul class="week">
         <li
           :class="o.is_sign && `check`"
@@ -85,6 +99,13 @@ onMounted(async () => {
         <button type="button" @click="go(o.to_url)">去完成</button>
       </div>
     </main>
+
+    <main class="rule">
+      <h5>签到规则：</h5>
+      <p>1. 本签到为累计签到，用户若中途中断签到，签到记录将自动从新开始</p>
+      <p>2. 签到周期为7天</p>
+      <p>3. 签到领取的书币有效期为5天</p>
+    </main>
   </section>
 </template>
 
@@ -100,14 +121,12 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    margin-bottom: 20px;
     width: 100%;
-    height: 152px;
+    height: 173px;
     background: url(@/assets/imgs/task.webp) left top no-repeat;
     background-size: cover;
 
     > .days {
-      position: relative;
       padding-left: 40px;
       text-align: left;
       > h2 {
@@ -117,19 +136,19 @@ onMounted(async () => {
         color: white;
         letter-spacing: 2px;
         > b {
+          padding: 0 2px;
           font-size: 26px;
         }
       }
     }
 
     > .vals {
-      position: relative;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       margin: 0 auto;
-      width: 356px;
-      height: 68px;
+      width: 352px;
+      height: 88px;
       background: linear-gradient(
         90deg,
         #ffffff 0%,
@@ -138,59 +157,95 @@ onMounted(async () => {
         #ffffff 100%
       );
       box-shadow: 0px 2px 6px 0px rgba(161, 93, 189, 0.22);
-      border-radius: 100px;
+      border-radius: 16px;
 
-      > span {
+      > div {
+        flex: auto;
         position: relative;
-        width: 110px;
-        font-size: 14px;
-        font-weight: 600;
-        color: #666;
         text-align: center;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: -9px;
-          right: 0;
-          display: inline-block;
-          margin-right: 0px;
-          width: 1px;
-          height: 36px;
-          background: linear-gradient(
-            180deg,
-            rgba(249, 180, 175, 0) 0%,
-            #f8b4a1 53%,
-            rgba(249, 180, 164, 0) 100%
-          );
+        > h1 {
+          font-size: 32px;
+          font-weight: 600;
+          color: #333;
         }
-      }
-      > h1 {
-        font-size: 32px;
-        font-weight: 600;
-        color: #333;
-      }
-      > i {
-        display: inline-block;
-        width: 50px;
-        height: 28px;
-        background: url(@/assets/icon/fowlleg.webp) no-repeat;
-        background-size: contain;
+        p {
+          position: relative;
+          font-size: 14px;
+          font-weight: 600;
+          color: #666;
+          text-align: center;
+        }
+        &:nth-child(1) {
+          &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: inline-block;
+            margin-right: 0px;
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(
+              180deg,
+              rgba(249, 180, 175, 0) 0%,
+              #f8b4a1 53%,
+              rgba(249, 180, 164, 0) 100%
+            );
+          }
+        }
       }
     }
   }
   .sign {
     box-sizing: border-box;
-    margin: 15px auto 8px;
+    position: relative;
+    margin: 15px auto 6px;
     padding: 11px;
     width: 350px;
+    height: 360px;
     background: #ffffff;
     box-shadow: 0px 2px 6px 0px rgba(157, 89, 189, 0.22);
     border-radius: 16px;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -22px;
+      right: 33px;
+      display: block;
+      width: 31px;
+      height: 31px;
+      background: url(@/assets/icon/pushpin.webp) no-repeat;
+      background-size: cover;
+      z-index: 1;
+    }
     > h3 {
+      position: relative;
+      padding-left: 15px;
       font-size: 16px;
       font-weight: 600;
       color: #111;
+      letter-spacing: 2px;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 4px;
+        display: block;
+        width: 4px;
+        height: 20px;
+        border-radius: 2px;
+        background: #977ac4;
+      }
+    }
+    > p {
+      margin-top: 6px;
+      line-height: 15px;
+      font-weight: 400;
+      color: #999;
+      letter-spacing: 1px;
+      > b {
+        color: #9854bf;
+      }
     }
     > ul {
       box-sizing: border-box;
@@ -283,7 +338,6 @@ onMounted(async () => {
         }
       }
     }
-
     > div {
       margin: 10px auto 5px;
       width: 206px;
@@ -302,19 +356,44 @@ onMounted(async () => {
       }
     }
   }
-
   .task {
     box-sizing: border-box;
-    margin: 15px auto;
+    position: relative;
+    margin: 13px auto;
     padding: 15px;
     width: 350px;
     background: white;
     box-shadow: 0px 2px 6px 0px rgba(157, 89, 189, 0.22);
     border-radius: 16px;
+    &::before {
+      content: "";
+      position: absolute;
+      top: -24px;
+      left: 33px;
+      display: block;
+      width: 31px;
+      height: 31px;
+      background: url(@/assets/icon/pushpin.webp) no-repeat;
+      background-size: cover;
+    }
     > h3 {
+      position: relative;
+      padding-left: 12px;
       font-size: 16px;
       font-weight: 600;
       color: #111;
+      letter-spacing: 2px;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 2px;
+        display: block;
+        width: 4px;
+        height: 20px;
+        border-radius: 2px;
+        background: #977ac4;
+      }
     }
     .item {
       display: flex;
@@ -367,6 +446,22 @@ onMounted(async () => {
         background: linear-gradient(131deg, #fbb7a1 0%, #9c58be 100%);
         border-radius: 100px;
       }
+    }
+  }
+  .rule {
+    margin: 0 0 15px 0;
+    padding: 0 15px;
+    h5 {
+      line-height: 26px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+    > p {
+      line-height: 20px;
+      font-size: 11px;
+      font-weight: 400;
+      color: #666;
     }
   }
 }

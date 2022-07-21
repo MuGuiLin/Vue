@@ -51,7 +51,7 @@ onMounted(async () => {
             <dl>
               <dt>
                 <i v-show="state.edit" class="radio radio-h"></i>
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <img class="cover" :src="o.list_cover" alt="cover" />
                 <!-- <p>666 已助力</p> -->
               </dt>
               <dd>
@@ -69,13 +69,13 @@ onMounted(async () => {
             <dl>
               <dt>
                 <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="cover" />
+                <img class="cover" :src="o.list_cover" alt="cover" />
                 <!-- <p>666 已助力</p> -->
               </dt>
               <dd>
                 <h4>{{ o.title }}</h4>
               </dd>
-              <dd>玄幻 科幻 异能</dd>
+              <dd>{{ o.tags.join(" ") }}</dd>
             </dl>
           </li>
         </ul>
@@ -89,7 +89,7 @@ onMounted(async () => {
             <dl>
               <dt>
                 <!-- <i>VIP</i> -->
-                <img class="cover" src="@/assets/imgs/cover.jpg" alt="" />
+                <img class="cover" :src="o.list_cover" alt="cover" />
                 <!-- <p>666 已助力</p> -->
               </dt>
               <dd>

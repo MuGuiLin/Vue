@@ -4,21 +4,21 @@ const config: EnvType = {
     env: `localhost`,
     localhost: {
         __URL__: `/api`,
-        __NET__: `//dev-wxh5.xhbigdata.com`,
+        __NET__: `https://dev-wxh5.xhbigdata.com`,
         __API__VERSION: `/api/v1`,
     },
     development: {
-        __URL__: `//dev-api.xhbigdata.com`,
+        __URL__: `https://dev-api.xhbigdata.com`,
         __NET__: location.origin,
         __API__VERSION: `/api/v1`,
     },
     test: {
-        __URL__: `//test-api.xhbigdata.com`,
+        __URL__: `https://test-api.xhbigdata.com`,
         __NET__: location.origin,
         __API__VERSION: `/api/v1`,
     },
     production: {
-        __URL__: `//api.xhbigdata.com`,
+        __URL__: `https://api.xhbigdata.com`,
         __NET__: location.origin,
         __API__VERSION: `/api/v1`,
     }

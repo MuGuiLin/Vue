@@ -165,9 +165,10 @@ const submit = () => {};
       padding-left: 26px;
       height: 92px;
       background: rgba(152, 83, 192, 0.1) url(@/assets/imgs/recommend.webp)
-        no-repeat;
-      background-size: contain;
+        170px center no-repeat;
+      background-size: 46%;
       border-radius: 8px;
+      border: 2px solid #9854bf;
       > h4 {
         font-size: 14px;
         color: #370909;
