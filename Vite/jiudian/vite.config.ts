@@ -44,7 +44,7 @@ export default defineConfig((config: UserConfig) => {
       https: false,
       proxy: {
         '/api': {
-          target: 'http://dev-api.xhbigdata.com',
+          target: 'https://dev-api.xhbigdata.com',
           cors: true,
           changeOrigin: true,
           rewrite(path) {

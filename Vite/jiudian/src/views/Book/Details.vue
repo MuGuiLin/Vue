@@ -17,6 +17,7 @@ interface IResProps extends IStateProps {
 
 const state: IStateProps | any = reactive({
   id: "",
+  show: false,
   data: {
     desc: "...",
     tags: "",
@@ -30,6 +31,10 @@ const state: IStateProps | any = reactive({
 const chapter = async () => {
   const { data }: IResProps = await getPaginateApi(state.id);
   state.chapter = data;
+};
+
+const toggle = () => {
+  state.show = !state.show;
 };
 
 const starAssist = async () => {
@@ -66,8 +71,8 @@ onMounted(async () => {
         </nut-animate>
       </div>
     </header>
-    <div class="details-summary">
-      <h3>简介<a>展开</a></h3>
+    <div class="details-summary" :class="state.show && 'show'">
+      <h3>简介<a @click="toggle">展开</a></h3>
       <article>
         <b>{{ state.data.tags }}</b>
         {{ state.data.desc }}
@@ -240,19 +245,43 @@ onMounted(async () => {
           height: 16px;
           background: url(@/assets/svg/arrow.svg) no-repeat;
           background-size: cover;
+          transition: transform 0.6s;
         }
       }
     }
     > article {
+      display: -webkit-box;
+      height: 60px;
       line-height: 20px;
       font-size: 12px;
       color: #666;
       text-align: justify;
+      white-space: break-spaces;
+      overflow: hidden;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      transition: height 0.6s;
 
       > b {
         color: #a05bbd;
         padding-right: 3px;
       }
+    }
+  }
+  .show {
+    > h3 {
+      a {
+        &::after {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    > article {
+      display: block;
+      height: 500px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
   &-serialize {
