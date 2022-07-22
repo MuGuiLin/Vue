@@ -15,6 +15,10 @@ export interface IHistoryParams {
     follow_ids?: Array<string>;
 }
 
+export interface IPayParams {
+    chargeId: string;
+}
+
 enum Api {
     RECORD = `records/getRechargeRecord`,
     ACTIVETASK = `activeTask/index`,
@@ -22,6 +26,8 @@ enum Api {
     FEEDBACK = `feedback/submitContent`,
     HISTORYS = `historys/getItems`,
     HISTORYSOPS = `historys/delRecords`,
+    RECHARGE = `recharge/getItems`,
+    WXPAYMENT = `recharge/wechatPayment`,
 }
 
 /**
@@ -94,6 +100,25 @@ export function historysOpsApi(data?: IHistoryParams): Promise<unknown> {
     return http({
         method: 'POST',
         url: Api.HISTORYSOPS,
+        data
+    });
+}
+
+/**
+ * 充值选项
+ * @returns josn
+ */
+export function rechargeApi(): Promise<unknown> {
+    return http({
+        method: 'GET',
+        url: Api.RECHARGE
+    });
+}
+
+export function paymentApi(data: IPayParams): Promise<unknown> {
+    return http({
+        method: 'POST',
+        url: Api.WXPAYMENT,
         data
     });
 }

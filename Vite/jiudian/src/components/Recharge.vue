@@ -1,12 +1,52 @@
 <script lang="ts" setup name="Recharge">
+import { reactive, onMounted, getCurrentInstance } from "vue";
+import { rechargeApi, paymentApi } from "@api/mine";
+
 interface Props {
   show?: boolean;
 }
 
+const { proxy }: any = getCurrentInstance();
+
+const state: any = reactive({
+  money: 0,
+  item: {
+    id: "",
+    money: 0,
+  },
+  recharge_item: [],
+});
+
 const { show } = withDefaults(defineProps<Props>(), {});
 
-const select = () => {};
-const submit = () => {};
+const recheck = (arr: any) => {
+  return arr.map((o: any) => {
+    o.check = false;
+    return o;
+  });
+};
+
+const select = (o: any, i: number) => {
+  state.recharge_item = recheck(state.recharge_item);
+  state.recharge_item[i].check = true;
+  state.item = o;
+};
+
+const submit = async () => {
+  const { id } = state.item;
+  if (id) {
+    const { data }: any = await paymentApi({ chargeId: id });
+    console.log(data);
+  } else {
+    proxy.$notify.warn("您还没有选择充值金额哦！");
+  }
+};
+
+onMounted(async () => {
+  const { data }: any = await rechargeApi();
+  state.money = data.money;
+  state.recharge_item = recheck(data.recharge_item);
+});
 </script>
 
 <template>
@@ -17,33 +57,29 @@ const submit = () => {};
         :class="`recharge-main-balance ${show && 'recharge-main-balance-show'}`"
       >
         <label>{{ show ? "剩余：" : "我的账户" }}</label>
-        <strong>￥500</strong>
+        <strong>￥{{ state.money }}</strong>
       </div>
       <div class="recharge-main-units">选择充值金额（1元=100鸡腿）</div>
-      <div class="recharge-main-recommend">
-        <h4>33元<b>3300鸡腿</b></h4>
-        <p>多充3元，多得1000鸡腿</p>
-      </div>
       <ul class="recharge-main-amount">
-        <li @click="select">
-          <h3>30元</h3>
-          <p>3000鸡腿</p>
-        </li>
-        <li @click="select">
-          <h3>59元</h3>
-          <p>5900+2500鸡腿</p>
-          <i>多送25元</i>
-        </li>
-        <li @click="select">
-          <h3>66元</h3>
-          <p>6600+3300鸡腿</p>
-          <i>多送33元</i>
-        </li>
-        <li @click="select">
-          <h3>100元</h3>
-          <p>10000+10000鸡腿</p>
-          <i>多送100元</i>
-        </li>
+        <template v-for="(o, i) in state.recharge_item">
+          <li
+            class="recommend"
+            v-if="o.is_recommend"
+            :class="o.check && 'select'"
+            @click="select(o, i)"
+          >
+            <h3>
+              {{ o.money }}元<b>{{ o.subdesc }}</b>
+            </h3>
+            <p>{{ o.desc }}</p>
+            <img src="@/assets/imgs/recommend.webp" alt="" />
+          </li>
+          <li v-else :class="o.check && 'select'" @click="select(o, i)">
+            <h3>{{ o.money }}元</h3>
+            <p>{{ o.subdesc }}</p>
+            <i>{{ o.desc }}</i>
+          </li>
+        </template>
       </ul>
       <div class="recharge-main-topupnow">
         <nut-button
@@ -51,7 +87,7 @@ const submit = () => {};
           size="large"
           color="linear-gradient(293deg, #9853C0 0%, #A869BF 24%, #FFBBA0 100%)"
           @click="submit"
-          >立即充值：33元</nut-button
+          >立即充值：{{ state.item.money }}元</nut-button
         >
       </div>
       <div class="recharge-main-explanation">
@@ -107,7 +143,7 @@ const submit = () => {};
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       height: 66px;
       border-bottom: 1px solid #f6f6f6;
       > label {
@@ -158,39 +194,16 @@ const submit = () => {};
       font-weight: 400;
       color: #333;
     }
-    &-recommend {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-left: 26px;
-      height: 92px;
-      background: rgba(152, 83, 192, 0.1) url(@/assets/imgs/recommend.webp)
-        170px center no-repeat;
-      background-size: 46%;
-      border-radius: 8px;
-      border: 2px solid #9854bf;
-      > h4 {
-        font-size: 14px;
-        color: #370909;
-        b {
-          padding-left: 10px;
-          font-size: 12px;
-          font-weight: 400;
-        }
-      }
-      > p {
-        font-size: 12px;
-        color: #370909;
-      }
-    }
     &-amount {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 0;
+      padding: 0 0 18px 0;
+      min-height: 340px;
       > li {
         display: flex;
+        position: relative;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -199,6 +212,7 @@ const submit = () => {};
         height: 100px;
         background: #f4f8fc;
         border-radius: 8px;
+        overflow: hidden;
         > h3 {
           font-size: 18px;
           font-weight: 600;
@@ -228,6 +242,63 @@ const submit = () => {};
           font-size: 10px;
           font-weight: 400;
           color: #e9544f;
+        }
+      }
+      > li.recommend {
+        align-items: flex-start;
+        padding-left: 26px;
+        width: 100%;
+        height: 92px;
+        // background: rgba(152, 83, 192, 0.1) url(@/assets/imgs/recommend.webp) 170px center no-repeat;
+        // background-size: 46%;
+        border: 2px solid #9854bf;
+        > h3 {
+          font-size: 14px;
+          color: #370909;
+          b {
+            padding-left: 10px;
+            font-size: 12px;
+            font-weight: 400;
+          }
+        }
+        > p {
+          font-size: 12px;
+          color: #370909;
+          &::after {
+            background: none;
+          }
+        }
+        > img {
+          position: absolute;
+          right: 20px;
+          width: 160px;
+        }
+      }
+
+      > li.select {
+        background: #f2edf5;
+        border: 1px solid #9854bf;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 0;
+          height: 0;
+          border-top: 36px solid #9854bf;
+          border-left: 36px solid transparent;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          top: 4px;
+          right: 2px;
+          display: block;
+          width: 16px;
+          height: 16px;
+          background: rgba(152, 83, 192, 0.1) url(@/assets/icon/hooks.webp)
+            center no-repeat;
+          background-size: contain;
         }
       }
     }

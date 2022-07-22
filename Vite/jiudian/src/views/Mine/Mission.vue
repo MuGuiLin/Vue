@@ -209,7 +209,7 @@ onMounted(async () => {
     &::after {
       content: "";
       position: absolute;
-      bottom: -22px;
+      bottom: -20px;
       right: 33px;
       display: block;
       width: 31px;
@@ -247,7 +247,7 @@ onMounted(async () => {
         color: #9854bf;
       }
     }
-    > ul {
+    > ul.week {
       box-sizing: border-box;
       display: flex;
       justify-content: space-between;
