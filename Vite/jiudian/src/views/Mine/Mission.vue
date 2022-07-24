@@ -96,7 +96,7 @@ onMounted(async () => {
           <b>{{ o.title }}</b>
           <i>+{{ o.gift_money }}</i>
         </label>
-        <button type="button" @click="go(o.to_url)">去完成</button>
+        <button type="button" @click="go('/')">去完成</button>
       </div>
     </main>
 
@@ -337,6 +337,10 @@ onMounted(async () => {
           color: #9854bf;
         }
       }
+      > li.check:last-child {
+        background: url(@/assets/svg/metre.svg) center -40px no-repeat;
+        background-size: cover;
+      }
     }
     > div {
       margin: 10px auto 5px;
@@ -442,6 +446,7 @@ onMounted(async () => {
       > button {
         width: 62px;
         height: 26px;
+        font-size: 12px;
         color: white;
         background: linear-gradient(131deg, #fbb7a1 0%, #9c58be 100%);
         border-radius: 100px;

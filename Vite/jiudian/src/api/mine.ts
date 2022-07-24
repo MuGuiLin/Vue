@@ -1,8 +1,8 @@
 import { http } from "@/utils";
 
-export interface IRecordParams {
+export interface IPaginationParams {
     page: number;
-    pageSize: number;
+    pageSize?: number;
 }
 
 export interface IFeedbackParams {
@@ -11,8 +11,8 @@ export interface IFeedbackParams {
 }
 
 export interface IHistoryParams {
-    history_ids?: Array<string>;
     follow_ids?: Array<string>;
+    history_ids?: Array<string>;
 }
 
 export interface IPayParams {
@@ -20,12 +20,14 @@ export interface IPayParams {
 }
 
 enum Api {
-    RECORD = `records/getRechargeRecord`,
+
     ACTIVETASK = `activeTask/index`,
     ACTIVESIGN = `activeTask/sign`,
+    RECORDS = `records/getRechargeRecord`,
+    SPENDS = `records/getConsumeRecord`,
     FEEDBACK = `feedback/submitContent`,
     HISTORYS = `historys/getItems`,
-    HISTORYSOPS = `historys/delRecords`,
+    DELRECORDS = `historys/delRecords`,
     RECHARGE = `recharge/getItems`,
     WXPAYMENT = `recharge/wechatPayment`,
 }
@@ -57,10 +59,23 @@ export function activeSignApi(): Promise<any> {
  * @param params 
  * @returns josn
  */
-export function getRecordApi(params?: IRecordParams): Promise<unknown> {
+export function getRecordApi(params?: IPaginationParams): Promise<unknown> {
     return http({
         method: 'GET',
-        url: Api.RECORD,
+        url: Api.RECORDS,
+        params
+    });
+}
+
+/**
+ * 获取消费记录 
+ * @param params 
+ * @returns josn
+ */
+export function getSpendsApi(params?: IPaginationParams): Promise<unknown> {
+    return http({
+        method: 'GET',
+        url: Api.SPENDS,
         params
     });
 }
@@ -92,14 +107,14 @@ export function historysApi(params?: any): Promise<unknown> {
 }
 
 /**
- * 历史记录-喜欢/删除
+ * 喜欢/历史-删除
  * @param data 
  * @returns josn
  */
-export function historysOpsApi(data?: IHistoryParams): Promise<unknown> {
+export function delRecordsApi(data?: IHistoryParams): Promise<unknown> {
     return http({
         method: 'POST',
-        url: Api.HISTORYSOPS,
+        url: Api.DELRECORDS,
         data
     });
 }

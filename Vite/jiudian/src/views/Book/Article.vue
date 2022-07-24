@@ -24,6 +24,7 @@ const state: IStateProps | any = reactive({
   locked: false,
   vsible: false,
   ispush: true,
+  naturalHeight: 286,
   chapter: {
     chapters: [],
     comic_item: {},
@@ -32,11 +33,23 @@ const state: IStateProps | any = reactive({
   containerHeight: document.documentElement.clientHeight * 3,
 });
 
+const getImgHeight = (src: string, cb: Function) => {
+  const img = new Image();
+  img.src = src;
+  img.onload = () => {
+    // img.naturalHeight;
+    cb(img);
+  };
+};
+
 const getContents = async (): Promise<void> => {
   state.ispush = false;
   const { data }: any = await getContentsApi(
     `${state.id}/${state.chapter_number || 1}`
   );
+  getImgHeight(data.content[0].url, (img: any) => {
+    state.naturalHeight = img.naturalHeight / 2 || 300;
+  });
   state.locked = data.locked;
   if (data.content?.length) {
     state.ispush = true;
@@ -115,7 +128,8 @@ onMounted(async () => {
 
     <main class="nut-cell">
       <nut-list
-        :height="230"
+        id="nut-list"
+        :height="state.naturalHeight"
         :listData="content"
         :container-height="state.containerHeight"
         @click="show"

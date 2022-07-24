@@ -1,6 +1,7 @@
 <script lang="ts" setup name="Recharge">
 import { reactive, onMounted, getCurrentInstance } from "vue";
 import { rechargeApi, paymentApi } from "@api/mine";
+import { is, pay } from "@/utils";
 
 interface Props {
   show?: boolean;
@@ -14,12 +15,16 @@ const state: any = reactive({
     id: "",
     money: 0,
   },
+  pay: {},
   recharge_item: [],
 });
 
 const { show } = withDefaults(defineProps<Props>(), {});
 
-const recheck = (arr: any) => {
+const setCheck = (arr: any) => {
+  if (!is.isArray(arr)) {
+    return [];
+  }
   return arr.map((o: any) => {
     o.check = false;
     return o;
@@ -27,25 +32,29 @@ const recheck = (arr: any) => {
 };
 
 const select = (o: any, i: number) => {
-  state.recharge_item = recheck(state.recharge_item);
+  state.recharge_item = setCheck(state.recharge_item);
   state.recharge_item[i].check = true;
   state.item = o;
+};
+
+const recharge = async () => {
+  const { data }: any = await rechargeApi();
+  state.money = data.money;
+  state.recharge_item = setCheck(data.recharge_item);
 };
 
 const submit = async () => {
   const { id } = state.item;
   if (id) {
     const { data }: any = await paymentApi({ chargeId: id });
-    console.log(data);
+    pay.request(data, (o: any) => recharge());
   } else {
     proxy.$notify.warn("您还没有选择充值金额哦！");
   }
 };
 
 onMounted(async () => {
-  const { data }: any = await rechargeApi();
-  state.money = data.money;
-  state.recharge_item = recheck(data.recharge_item);
+  recharge();
 });
 </script>
 
@@ -63,6 +72,7 @@ onMounted(async () => {
       <ul class="recharge-main-amount">
         <template v-for="(o, i) in state.recharge_item">
           <li
+            :key="i"
             class="recommend"
             v-if="o.is_recommend"
             :class="o.check && 'select'"
@@ -211,6 +221,7 @@ onMounted(async () => {
         width: 166px;
         height: 100px;
         background: #f4f8fc;
+        border: 1px solid #f4f8fc;
         border-radius: 8px;
         overflow: hidden;
         > h3 {
@@ -249,9 +260,7 @@ onMounted(async () => {
         padding-left: 26px;
         width: 100%;
         height: 92px;
-        // background: rgba(152, 83, 192, 0.1) url(@/assets/imgs/recommend.webp) 170px center no-repeat;
-        // background-size: 46%;
-        border: 2px solid #9854bf;
+        border: 2px solid #9854bf !important;
         > h3 {
           font-size: 14px;
           color: #370909;
@@ -281,8 +290,8 @@ onMounted(async () => {
         &::before {
           content: "";
           position: absolute;
-          top: 0;
-          right: 0;
+          top: -1px;
+          right: -1px;
           width: 0;
           height: 0;
           border-top: 36px solid #9854bf;

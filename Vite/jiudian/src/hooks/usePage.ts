@@ -44,3 +44,9 @@ export const back = () => {
         window.history.back();
     }
 };
+
+export const reload = (time = 3000) => {
+    setTimeout(() => {
+        location.reload();
+    }, time);
+};

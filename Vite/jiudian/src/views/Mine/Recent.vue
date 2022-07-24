@@ -1,111 +1,238 @@
 <script lang="ts" setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, getCurrentInstance } from "vue";
 import Navbar from "@coms/Navbar.vue";
-import { historysApi, historysOpsApi } from "@api/mine";
+import { historysApi, delRecordsApi } from "@api/mine";
+import { setCheck, getCheck, getCheckFalse } from "@/utils";
 
 interface IStateProps {
   ["key"]: any;
 }
 
 interface IResProps extends IStateProps {
-  data: any;
+  data: {
+    history_items: Array<any>;
+    follows_items: Array<any>;
+    recommend_items: Array<any>;
+  };
 }
+
+const { proxy }: any = getCurrentInstance();
 
 const state: any = reactive({
   active: 0,
   edit: false,
-  follow_ids: [],
-  history_ids: [],
-  recent: {
-    history_items: [],
-    follows_items: [],
-    recommend_items: [],
-  },
+  isEdit: false,
+  all: false,
+  isAll: false,
+  follows_items: [],
+  history_items: [],
+  recommend_items: [],
 });
-
-const ops = async () => {
-  await historysOpsApi({
-    follow_ids: state.follow_ids,
-    history_ids: state.history_ids,
-  });
-};
 
 const edit = () => {
   state.edit = !state.edit;
 };
 
+const change = (vl: any) => {
+  if (vl.paneKey != state.active) {
+    state.edit = false;
+    state.all = false;
+    state.isAll = false;
+    state.follows_items = setCheck(state.follows_items, false);
+    state.history_items = setCheck(state.history_items, false);
+  }
+  if (vl.paneKey) {
+    state.isEdit = state.history_items.length ? true : false;
+  } else {
+    state.isEdit = state.follows_items.length ? true : false;
+  }
+};
+
+const remove = async () => {
+  if (state.edit) {
+    const follows_items = getCheck(state.follows_items);
+    const history_items = getCheck(state.history_items);
+    if (follows_items.length || history_items.length) {
+      proxy.$dialog({
+        title: "温馨提示",
+        content: "您确定要删除吗？",
+        onOk: async () => {
+          const follow_ids = follows_items.map((o) => o.follow_id);
+          const history_ids = history_items.map((o) => o.hisory_id);
+          await delRecordsApi({ follow_ids, history_ids });
+          proxy.$notify.success("删除成功！");
+          if (follows_items.length) {
+            state.follows_items = getCheckFalse(state.follows_items);
+          }
+          if (history_items.length) {
+            state.history_items = getCheckFalse(state.history_items);
+          }
+        },
+      });
+    }
+  }
+};
+
+const select = (o: any, i: number) => {
+  if (state.edit) {
+    if (state.active) {
+      state.history_items[i].check = !state.history_items[i].check;
+      if (state.history_items.some((o: { check: any }) => o.check)) {
+        state.all = false;
+        state.isAll = true;
+      }
+      if (state.history_items.every((o: { check: any }) => o.check)) {
+        state.all = true;
+        state.isAll = true;
+      }
+    } else {
+      state.follows_items[i].check = !state.follows_items[i].check;
+      if (state.follows_items.some((o: { check: any }) => o.check)) {
+        state.all = false;
+        state.isAll = true;
+      }
+      if (state.follows_items.every((o: { check: any }) => o.check)) {
+        state.all = true;
+        state.isAll = true;
+      }
+    }
+  }
+};
+
+const setSelect = (check: boolean) => {
+  if (state.edit) {
+    if (state.active) {
+      state.history_items = setCheck(state.history_items, check);
+    } else {
+      state.follows_items = setCheck(state.follows_items, check);
+    }
+  }
+};
+
+const selectAll: any = (o: any, i: number): void => {
+  state.all = !state.all;
+  state.isAll = state.all;
+  setSelect(state.all);
+};
+
 onMounted(async () => {
   const { data }: IResProps | any = await historysApi();
-  state.recent = data;
+  state.follows_items = setCheck(data.follows_items);
+  state.history_items = setCheck(data.history_items);
+  state.recommend_items = setCheck(data.recommend_items);
+  state.isEdit = state.follows_items.length ? true : false;
 });
 </script>
 
 <template>
   <section class="recent">
     <Navbar title="" />
-    <a class="edit" @click="edit">{{ state.edit ? "取消" : "编辑" }}</a>
-    <nut-tabs v-model="state.active">
+    <a v-show="state.isEdit" class="edit" @click="edit">{{
+      state.edit ? "取消" : "编辑"
+    }}</a>
+    <nut-tabs v-model="state.active" @click="change">
       <nut-tabpane class="like" title="喜欢">
         <ul class="recent-ul">
-          <li v-for="o in state.recent.follows_items" :key="o.id">
-            <dl>
-              <dt>
-                <i v-show="state.edit" class="radio radio-h"></i>
-                <img class="cover" :src="o.list_cover" alt="cover" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>{{ o.title }}</h4>
-              </dd>
-              <dd>阅读到：第{{ o.current_read_chapter }}话</dd>
-              <dd>更新至：第{{ o.total_chapter_number }}话</dd>
-            </dl>
-          </li>
+          <template v-if="state.follows_items.length">
+            <li
+              v-for="(o, i) in state.follows_items"
+              :key="o.id"
+              @click="select(o, i)"
+            >
+              <dl>
+                <dt>
+                  <i
+                    v-show="state.edit"
+                    class="radio"
+                    :class="o.check && 'radio-h'"
+                  ></i>
+                  <img class="cover" :src="o.list_cover" alt="cover" />
+                </dt>
+                <dd>
+                  <h4>{{ o.title }}</h4>
+                </dd>
+                <dd>阅读到：第{{ o.current_read_chapter }}话</dd>
+                <dd>更新至：第{{ o.total_chapter_number }}话</dd>
+              </dl>
+            </li>
+          </template>
+          <template v-else>
+            <li class="void">
+              <b>书架是空的哦～</b>
+            </li>
+          </template>
         </ul>
 
         <h3 class="recent-h3">九九推荐</h3>
         <ul class="recent-ul">
-          <li v-for="o in state.recent.recommend_items" :key="o.id">
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" :src="o.list_cover" alt="cover" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>{{ o.title }}</h4>
-              </dd>
-              <dd>{{ o.tags.join(" ") }}</dd>
-            </dl>
-          </li>
+          <template v-if="state.recommend_items.length">
+            <li v-for="o in state.recommend_items" :key="o.id">
+              <dl>
+                <dt>
+                  <img class="cover" :src="o.list_cover" alt="cover" />
+                  <!-- <p>666 已助力</p> -->
+                </dt>
+                <dd>
+                  <h4>{{ o.title }}</h4>
+                </dd>
+                <dd>{{ o.tags.join(" ") }}</dd>
+              </dl>
+            </li>
+          </template>
+          <template v-else>
+            <li class="void">
+              <b>九九正在为您推荐哦～</b>
+            </li>
+          </template>
         </ul>
       </nut-tabpane>
       <nut-tabpane class="history" title="历史">
         <ul class="recent-ul">
-          <li class="void">
-            <b>书架是空的哦～</b>
-          </li>
-          <li v-for="o in state.recent.history_items" :key="o.id">
-            <dl>
-              <dt>
-                <!-- <i>VIP</i> -->
-                <img class="cover" :src="o.list_cover" alt="cover" />
-                <!-- <p>666 已助力</p> -->
-              </dt>
-              <dd>
-                <h4>{{ o.title }}</h4>
-              </dd>
-              <dd>阅读到：第{{ o.current_read_chapter }}话</dd>
-              <dd>更新至：第{{ o.total_chapter_number }}话</dd>
-            </dl>
-          </li>
+          <template v-if="state.history_items.length">
+            <li
+              v-for="(o, i) in state.history_items"
+              :key="o.id"
+              @click="select(o, i)"
+            >
+              <dl>
+                <dt>
+                  <i
+                    v-show="state.edit"
+                    class="radio"
+                    :class="o.check && 'radio-h'"
+                  ></i>
+                  <img class="cover" :src="o.list_cover" alt="cover" />
+                </dt>
+                <dd>
+                  <h4>{{ o.title }}</h4>
+                </dd>
+                <dd>阅读到：第{{ o.current_read_chapter }}话</dd>
+                <dd>更新至：第{{ o.total_chapter_number }}话</dd>
+              </dl>
+            </li>
+          </template>
+          <template v-else>
+            <li class="void">
+              <b>书架是空的哦～</b>
+            </li>
+          </template>
         </ul>
       </nut-tabpane>
     </nut-tabs>
     <footer class="footer" v-show="state.edit">
-      <a><i></i> 全 选</a>
-      <!-- <a><i class="check"></i> 反 选</a> -->
-      <a @click="ops"><i class="del"></i> 删 除</a>
+      <template v-if="state.isAll">
+        <a @click="selectAll">
+          <template v-if="state.all">
+            <i class="check"></i> 取 消 全 选
+          </template>
+          <template v-else> <i></i> 全 选 </template>
+        </a>
+        <a @click="remove" class="del"><i></i> 删 除</a>
+      </template>
+      <template v-else>
+        <a @click="selectAll"><i></i> 全 选</a>
+        <a @click="remove">删 除</a>
+      </template>
     </footer>
   </section>
 </template>
@@ -135,7 +262,6 @@ onMounted(async () => {
       .recent-ul {
         box-sizing: border-box;
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap;
         margin: 10px auto;
         > li {
@@ -146,18 +272,6 @@ onMounted(async () => {
           > dl {
             > dt {
               position: relative;
-              // i {
-              //   position: absolute;
-              //   top: 5px;
-              //   right: 5px;
-              //   display: block;
-              //   padding: 2px 5px;
-              //   font-size: 12px;
-              //   font-weight: 600;
-              //   color: #560805;
-              //   border-radius: 3px;
-              //   background: #fce373;
-              // }
               i.radio {
                 position: absolute;
                 top: 8px;
@@ -251,8 +365,8 @@ onMounted(async () => {
       }
       i.check {
         display: inline-block;
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         background: url(@/assets/svg/close.svg) no-repeat;
         border: none;
         background-size: cover;
@@ -260,10 +374,14 @@ onMounted(async () => {
     }
     // > a:first-child {
     > a:last-child {
+      color: #999;
       border-left: 1px solid rgba(151, 151, 151, 0.3);
+    }
+    > a.del:last-child {
+      color: #fe7b80;
       i {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         background: url(@/assets/svg/del-h.svg) no-repeat;
         border: none;
         background-size: cover;

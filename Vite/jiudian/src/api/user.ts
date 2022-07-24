@@ -19,7 +19,7 @@ enum Api {
 export function loginApi(data?: any): Promise<any> {
     return http({
         method: 'POST',
-        url: Api.LOGIN,
+        url: `${Api.LOGIN}?code=${data.code}`,
         data: data || null,
         headers: { "Content-Type": ContentTypeEnum.FORM_DATA },
     });

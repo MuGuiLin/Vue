@@ -1,31 +1,51 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, toRefs } from "vue";
 import Navbar from "@coms/Navbar.vue";
-const customHasMore = ref(true);
-const state = reactive({
-  customList: [""],
+import { getSpendsApi } from "@api/mine";
+
+interface IRecordProps {
+  asPageData?: boolean;
+  currentPage?: number;
+  items?: Array<any>;
+  total?: number;
+}
+
+const state: any = reactive({
+  has: true,
+  page: 1,
+  pageSize: 20,
+  items: [],
 });
-const customLoadMore = (done: Function): void => {
-  setTimeout(() => {
-    const curLen = state.customList.length;
-    for (let i = curLen; i < curLen + 20; i++) {
-      state.customList.push(`${i}`);
-    }
-    if (state.customList.length > 30) customHasMore.value = false;
-    done();
-  }, 500);
+
+const init = async (cb?: Function) => {
+  const { page, pageSize } = state;
+  const {
+    data: { items = [], asPageData },
+  }: IRecordProps | any = await getSpendsApi({
+    page,
+    pageSize,
+  });
+  state.items.push(...items);
+  cb && cb(asPageData);
 };
+
 const refresh = (done: () => void) => {
-  setTimeout(() => {
-    // Toast.success('刷新成功');
+  state.page = 1;
+  state.items = [];
+  init();
+  done();
+};
+
+const load = (done: Function): void => {
+  state.page++;
+  init((asPageData: boolean = true) => {
+    if (1 < state.page && !asPageData) {
+      state.has = false;
+    }
     done();
-  }, 1000);
+  });
 };
-const init = () => {
-  for (let i = 0; i < 20; i++) {
-    state.customList.push(`${i}`);
-  }
-};
+
 onMounted(() => {
   init();
 });
@@ -34,31 +54,34 @@ onMounted(() => {
 <template>
   <section class="spend">
     <Navbar title="" />
-    <ul class="spend-list" id="recordScroll">
+    <ul class="spend-list" id="spend-scroll">
       <nut-infiniteloading
         pull-icon="loading1"
         load-icon="loading"
         load-more-txt="已经到底啦～"
-        container-id="recordScroll"
+        container-id="spend-scroll"
         :use-window="false"
         :is-open-refresh="true"
-        :has-more="customHasMore"
-        @load-more="customLoadMore"
+        :has-more="state.has"
+        @load-more="load"
         @refresh="refresh"
       >
-        <li
-          class="spend-item"
-          v-for="(item, index) in state.customList"
-          :key="index"
-        >
-          <div class="left">
-            <h4>黑客漫画（第86话）</h4>
-            <time>2022-06-26 10:30</time>
-          </div>
-          <div class="right">
-            <span>250漫币</span>
-          </div>
-        </li>
+        <template v-if="state.items.length">
+          <li class="item" v-for="(o, i) in state.items" :key="i">
+            <div class="left">
+              <h4>{{ o.desc }}</h4>
+              <time>{{ o.date }}</time>
+            </div>
+            <div class="right">
+              <span>+{{ o.money }}漫币</span>
+            </div>
+          </li>
+        </template>
+        <template v-else>
+          <li class="void">
+            <b>消费记录是空的哦～</b>
+          </li>
+        </template>
       </nut-infiniteloading>
     </ul>
   </section>
@@ -75,7 +98,7 @@ onMounted(() => {
     overflow-y: auto;
     overflow-x: hidden;
     background: white;
-    li.spend-item {
+    li.item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -104,6 +127,22 @@ onMounted(() => {
           font-weight: 500;
           color: #333;
         }
+      }
+    }
+    li.void {
+      box-sizing: border-box;
+      margin-top: 50%;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      background: url(@/assets/imgs/void.webp) center top no-repeat;
+      background-size: 50%;
+      > b {
+        font-size: 15px;
+        font-weight: 400;
+        color: #888;
       }
     }
     // li:first-child {}

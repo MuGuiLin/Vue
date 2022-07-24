@@ -30,17 +30,19 @@ onMounted(async () => {
 <template>
   <section class="home">
     <nut-swiper
+      height="240"
+      auto-play="3000"
       :init-page="state.page"
+      :is-preventDefault="false"
       :pagination-visible="true"
       pagination-color="#DB56EE"
-      auto-play="3000"
     >
-      <nut-swiper-item
-        v-for="o in state.banner"
-        :key="o"
-        @click="go('/article')"
-      >
-        <img :src="o.img_url" :alt="o.title" />
+      <nut-swiper-item v-for="o in state.banner" :key="o">
+        <img
+          :src="o.img_url"
+          :alt="o.title"
+          v-on:click="go({ path: '/article', query: { id: o.to_url } })"
+        />
       </nut-swiper-item>
     </nut-swiper>
 
@@ -84,7 +86,7 @@ onMounted(async () => {
         <li
           v-for="o in state.assist_comics.comic_items"
           :key="o.id"
-          @click="go({ path: '/reserve', query: { id: o.id } })"
+          @click="go({ path: '/details', query: { id: o.id } })"
         >
           <dl>
             <dt>

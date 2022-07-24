@@ -4,7 +4,6 @@ import Home from '@views/Home.vue';
 
 // const reqFiles = require.context('./', true, /\.ts$/);
 
-
 export const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -14,7 +13,7 @@ export const routes: Array<RouteRecordRaw> = [
         // which is lazy-loaded when the route is visited.
         component: Home,
         meta: {
-            title: "首页"
+            title: "九点漫画"
         }
     },
     {

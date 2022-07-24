@@ -19,7 +19,9 @@ const state: any = reactive({
 
 const init = async (cb?: Function) => {
   const { page, pageSize } = state;
-  const { items = [], asPageData }: IRecordProps | any = await getRecordApi({
+  const {
+    data: { items = [], asPageData },
+  }: IRecordProps | any = await getRecordApi({
     page,
     pageSize,
   });
@@ -29,6 +31,7 @@ const init = async (cb?: Function) => {
 
 const refresh = (done: () => void) => {
   state.page = 1;
+  state.items = [];
   init();
   done();
 };
@@ -51,27 +54,34 @@ onMounted(() => {
 <template>
   <section class="record">
     <Navbar title="" />
-    <ul class="record-list" id="recordScroll">
+    <ul class="record-list" id="record-scroll">
       <nut-infiniteloading
         pull-icon="loading1"
         load-icon="loading"
         load-more-txt="已经到底啦～"
-        container-id="recordScroll"
+        container-id="record-scroll"
         :use-window="false"
         :is-open-refresh="true"
         :has-more="state.has"
         @load-more="load"
         @refresh="refresh"
       >
-        <li class="record-item" v-for="(o, i) in state.items" :key="i">
-          <div class="left">
-            <h4>{{ o.desc }}</h4>
-            <time>{{ o.date }}</time>
-          </div>
-          <div class="right">
-            <span>+{{ o.money }}漫币</span>
-          </div>
-        </li>
+        <template v-if="state.items.length">
+          <li class="item" v-for="(o, i) in state.items" :key="i">
+            <div class="left">
+              <h4>{{ o.desc }}</h4>
+              <time>{{ o.date }}</time>
+            </div>
+            <div class="right">
+              <span>+{{ o.money }}漫币</span>
+            </div>
+          </li>
+        </template>
+        <template v-else>
+          <li class="void">
+            <b>充值记录是空的哦～</b>
+          </li>
+        </template>
       </nut-infiniteloading>
     </ul>
   </section>
@@ -88,7 +98,7 @@ onMounted(() => {
     overflow-y: auto;
     overflow-x: hidden;
     background: white;
-    li.record-item {
+    li.item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -117,6 +127,22 @@ onMounted(() => {
           font-weight: 500;
           color: #333;
         }
+      }
+    }
+    li.void {
+      box-sizing: border-box;
+      margin-top: 50%;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      background: url(@/assets/imgs/void.webp) center top no-repeat;
+      background-size: 50%;
+      > b {
+        font-size: 15px;
+        font-weight: 400;
+        color: #888;
       }
     }
   }
