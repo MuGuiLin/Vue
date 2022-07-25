@@ -3,6 +3,7 @@ import { reactive, onMounted, getCurrentInstance } from "vue";
 import Navbar from "@coms/Navbar.vue";
 import { historysApi, delRecordsApi } from "@api/mine";
 import { setCheck, getCheck, getCheckFalse } from "@/utils";
+import { useGo } from "@hooks/usePage";
 
 interface IStateProps {
   ["key"]: any;
@@ -15,6 +16,7 @@ interface IResProps extends IStateProps {
     recommend_items: Array<any>;
   };
 }
+const go = useGo();
 
 const { proxy }: any = getCurrentInstance();
 
@@ -96,6 +98,8 @@ const select = (o: any, i: number) => {
         state.isAll = true;
       }
     }
+  } else {
+    go({ path: "/article", query: { id: o.id } });
   }
 };
 
@@ -166,7 +170,11 @@ onMounted(async () => {
         <h3 class="recent-h3">九九推荐</h3>
         <ul class="recent-ul">
           <template v-if="state.recommend_items.length">
-            <li v-for="o in state.recommend_items" :key="o.id">
+            <li
+              v-for="(o, i) in state.recommend_items"
+              :key="o.id"
+              @click="select(o, i)"
+            >
               <dl>
                 <dt>
                   <img class="cover" :src="o.list_cover" alt="cover" />

@@ -222,7 +222,10 @@ onMounted(async () => {
       </ul>
     </div>
     <footer class="details-footer">
-      <div class="input" :class="state.setItems.content && 'input-set'">
+      <div
+        class="input"
+        :class="(state.setItems.content || state.data.is_assist) && 'input-set'"
+      >
         <input
           type="text"
           v-model="state.setItems.content"
@@ -235,10 +238,20 @@ onMounted(async () => {
           :placeholder="state.placeholder"
         />
       </div>
-      <button type="button" v-if="state.setItems.content" @click="setItems">
+      <button
+        type="button"
+        v-if="state.setItems.content || state.data.is_assist"
+        @click="setItems"
+      >
         发 送
       </button>
-      <button type="button" v-else @click="back()">开始阅读</button>
+      <button
+        type="button"
+        v-else
+        @click="go({ path: '/article', query: { id: state.id } })"
+      >
+        开始阅读
+      </button>
     </footer>
   </section>
 </template>

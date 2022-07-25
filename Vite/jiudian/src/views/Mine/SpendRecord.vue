@@ -73,7 +73,7 @@ onMounted(() => {
               <time>{{ o.date }}</time>
             </div>
             <div class="right">
-              <span>+{{ o.money }}漫币</span>
+              <span>-{{ o.money }}漫币</span>
             </div>
           </li>
         </template>
@@ -109,13 +109,13 @@ onMounted(() => {
         text-align: left;
         h4 {
           line-height: 28px;
-          font-size: 15px;
+          font-size: 14px;
           font-weight: 400;
           color: #333;
         }
         time {
           line-height: 16px;
-          font-size: 12px;
+          font-size: 11px;
           font-weight: 400;
           color: #666;
         }
@@ -123,7 +123,7 @@ onMounted(() => {
       > .right {
         span {
           line-height: 20px;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 500;
           color: #333;
         }

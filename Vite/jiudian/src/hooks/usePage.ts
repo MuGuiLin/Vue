@@ -37,10 +37,10 @@ export function useGo(_router?: Router | any) {
 };
 
 export const back = () => {
-    const { back } = router;
-    if (router && back) {
-        back();
-    } else {
+    try {
+        const { back } = router;
+        back && back();
+    } catch (_err) {
         window.history.back();
     }
 };

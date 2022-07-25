@@ -129,9 +129,9 @@ onMounted(async () => {
       left: 0;
       bottom: 0px;
       width: 100%;
-      height: 100px;
-      background: url(@/assets/svg/catear.svg) 0 23px no-repeat;
-      background-size: cover;
+      height: 101px;
+      background: url(@/assets/imgs/catear.webp) 0 23px no-repeat;
+      background-size: contain;
     }
     .nut-swiper-item {
       img {

@@ -1,7 +1,8 @@
 <script lang="ts" setup name="Recharge">
 import { reactive, onMounted, getCurrentInstance } from "vue";
 import { rechargeApi, paymentApi } from "@api/mine";
-import { is, pay } from "@/utils";
+import { pinia } from "@/stores";
+import { is, bridge } from "@/utils";
 
 interface Props {
   show?: boolean;
@@ -15,7 +16,6 @@ const state: any = reactive({
     id: "",
     money: 0,
   },
-  pay: {},
   recharge_item: [],
 });
 
@@ -47,7 +47,12 @@ const submit = async () => {
   const { id } = state.item;
   if (id) {
     const { data }: any = await paymentApi({ chargeId: id });
-    pay.request(data, (o: any) => recharge());
+    bridge.request(data, (o: any) => {
+      const { getUser } = pinia();
+      getUser(() => {
+        recharge();
+      });
+    });
   } else {
     proxy.$notify.warn("您还没有选择充值金额哦！");
   }

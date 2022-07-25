@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { PiniaStore } from "@/stores/modules/user";
+import { pinia } from "@/stores";
 import { query } from "@/utils";
 import { routes } from './modules'
 
@@ -13,7 +13,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next): any => {
-    const { token, login } = PiniaStore();
+    const { token, login } = pinia();
     document.title = <string>to.meta.title as '九点漫画';
     if (!token) {
         return login(() => {

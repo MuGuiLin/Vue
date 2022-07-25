@@ -14,7 +14,7 @@ export const onBridgeReady = (type: string = 'hideToolbar') => {
     try {
         WeixinJSBridge.call(type); // showToolbar、hideOptionMenu、showOptionMenu、closeWindow
 
-        parent.WeixinJSBridge.call('closeWindow');
+        // parent.WeixinJSBridge.call('closeWindow');
 
         // WeixinJSBridge.on(type, (args) => {});
     } catch (err) {
@@ -38,8 +38,12 @@ export const request = (par: IPayProps, cb: Function): void => {
     }
 };
 
-if (WeixinJSBridge in window) {
-    onBridgeReady();
-} else {
-    addEvents(document, 'WeixinJSBridgeReady', onBridgeReady);
-};
+try {
+    if (WeixinJSBridge in window) {
+        onBridgeReady();
+    } else {
+        addEvents(document, 'WeixinJSBridgeReady', onBridgeReady);
+    };
+} catch (err) {
+    console.log(err);
+}
