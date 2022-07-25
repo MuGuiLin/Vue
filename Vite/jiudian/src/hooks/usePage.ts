@@ -22,7 +22,7 @@ export function useGo(_router?: Router | any) {
     }
     const { push, replace } = _router || router;
 
-    function go(opt: PageEnum | RouteLocationRawEx | string | any = PageEnum.BASE_HOME, isReplace = true) {
+    function go(opt: PageEnum | RouteLocationRawEx | string | any = PageEnum.BASE_HOME, isReplace?: false) {
         if (!opt) {
             return;
         }
