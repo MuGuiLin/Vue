@@ -285,6 +285,7 @@ onMounted(async () => {
           margin-left: -14px;
           width: 28px;
           height: 28px;
+          font-style: normal;
           background: url(@/assets/icon/fowlleg.webp) no-repeat;
           background-size: contain;
         }

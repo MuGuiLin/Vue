@@ -90,7 +90,7 @@ onMounted(async () => {
         >
           <dl>
             <dt>
-              <i>VIP</i>
+              <!-- <i>VIP</i> -->
               <img class="cover" :src="o.list_cover" :alt="o.title" />
               <p>{{ o.assist_number }} 已助力</p>
             </dt>
@@ -224,15 +224,15 @@ onMounted(async () => {
         justify-content: space-between;
         > .cover {
           width: 100px;
-          height: 116px;
-          border-radius: 8px;
+          height: 130px;
+          border-radius: 5px;
         }
         > .info {
           box-sizing: border-box;
           padding: 10px;
           width: 245px;
-          height: 116px;
-          border-radius: 8px;
+          height: 130px;
+          border-radius: 5px;
           background: linear-gradient(
             180deg,
             #fff5eb 0%,
@@ -256,28 +256,32 @@ onMounted(async () => {
               background: #e6d4cd;
             }
             h4 {
-              font-size: 15px;
+              font-size: 16px;
+              font-weight: 600;
               color: #333;
               white-space: nowrap;
               text-overflow: ellipsis;
               overflow: hidden;
             }
             > .nut-button {
-              font-size: 15px;
+              padding: auto 6px;
+              height: 30px;
+              font-size: 14px;
+              font-weight: 600;
             }
           }
           > dd.desc {
             padding: 8px 0;
             display: -webkit-box;
-            height: 34px;
+            height: 56px;
             font-size: 12px;
-            line-height: 20px;
+            line-height: 22px;
             font-weight: 400;
             color: #9f9f9f;
             text-overflow: ellipsis;
             overflow: hidden;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
           }
           > dd.read {
             font-size: 11px;
@@ -294,8 +298,8 @@ onMounted(async () => {
       margin: 10px auto;
       padding: 10px;
       width: 355px;
-      height: 234px;
-      border-radius: 8px;
+      height: 236px;
+      border-radius: 5px;
       background: #574d4d url(@/assets/imgs/list-bg.webp) no-repeat;
       background-size: cover;
       overflow-x: auto;
@@ -323,18 +327,32 @@ onMounted(async () => {
             }
             img {
               width: 100%;
-              height: 170px;
-              border-radius: 8px;
+              height: 174px;
+              border-radius: 5px;
             }
             p {
+              box-sizing: border-box;
               position: absolute;
-              bottom: 5px;
-              right: 5px;
-              color: rgba(255, 255, 255, 0.8);
+              left: 0;
+              bottom: 0;
+              padding-right: 5px;
+              width: 100%;
+              height: 30px;
+              line-height: 38px;
+              text-align: right;
               font-size: 12px;
+              color: rgba(255, 255, 255, 0.8);
+              background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 10%,
+                rgba(0, 0, 0, 0.34) 60%,
+                rgba(0, 0, 0, 0.64) 100%
+              );
+              border-radius: 0px 0px 5px 5px;
             }
           }
           > dd {
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.8);
             h4 {
               line-height: 25px;

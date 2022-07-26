@@ -22,7 +22,7 @@ const state = reactive({
         <img :src="state.avatar" alt="user" />
         <h2>{{ state.name }}</h2>
         <p>ID：{{ state.id }}</p>
-        <button @click="go('/mission')">签到</button>
+        <button type="button" @click="go('/mission')">签到</button>
       </div>
       <div class="info">
         <span>{{ Number(state.money) + Number(state.gift_money) }}鸡腿</span>
@@ -30,7 +30,7 @@ const state = reactive({
           size="small"
           color="linear-gradient(to right, #FFBBA0, #C371ED)"
           @click="go('/account')"
-          >充 值</nut-button
+          >充值</nut-button
         >
       </div>
     </header>
@@ -78,10 +78,16 @@ const state = reactive({
           <template v-slot:icon>
             <i class="wallet"></i>
           </template>
+          <template v-slot:link>
+            <i class="arrow"></i>
+          </template>
         </nut-cell>
         <nut-cell icon="order" title="消费记录" to="/spend">
           <template v-slot:icon>
             <i class="money"></i>
+          </template>
+          <template v-slot:link>
+            <i class="arrow"></i>
           </template>
         </nut-cell>
       </nut-cell-group>
@@ -91,10 +97,16 @@ const state = reactive({
           <template v-slot:icon>
             <i class="recent"></i>
           </template>
+          <template v-slot:link>
+            <i class="arrow"></i>
+          </template>
         </nut-cell>
         <nut-cell icon="edit" title="意见反馈" to="/feedback">
           <template v-slot:icon>
             <i class="edit"></i>
+          </template>
+          <template v-slot:link>
+            <i class="arrow"></i>
           </template>
         </nut-cell>
         <!-- <nut-cell
@@ -119,8 +131,8 @@ const state = reactive({
   background-size: 100% 160px;
   .user {
     box-sizing: border-box;
-    margin: 100px auto 20px;
-    padding: 12px 20px;
+    margin: 95px auto 20px;
+    padding: 8px 20px 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -132,12 +144,12 @@ const state = reactive({
 
     > .name {
       position: relative;
-      padding-left: 80px;
+      padding-left: 70px;
       text-align: left;
       > img {
         position: absolute;
-        top: -30px;
-        left: 6px;
+        top: -25px;
+        left: -4px;
         width: 66px;
         height: 66px;
         border-radius: 33px;
@@ -145,6 +157,7 @@ const state = reactive({
         border: 1px solid #ffeefc;
       }
       > h2 {
+        line-height: 26px;
         font-weight: 600;
         font-size: 16px;
         color: #333;
@@ -157,11 +170,12 @@ const state = reactive({
         position: absolute;
         top: 10px;
         right: -20px;
-        width: 70px;
+        width: 76px;
         height: 30px;
+        font-size: 16px;
         line-height: 30px;
         color: #333;
-        font-weight: 600;
+        font-weight: 400;
         background: #f5edff;
         border-radius: 100px 0px 0px 100px;
         &::before {
@@ -202,6 +216,11 @@ const state = reactive({
           background: url(@/assets/icon/fowlleg.webp) no-repeat;
           background-size: cover;
         }
+      }
+      .nut-button {
+        padding: 5px 14px;
+        font-size: 14px;
+        font-weight: 600;
       }
     }
   }
@@ -303,7 +322,15 @@ const state = reactive({
       .nut-cell__title {
         padding-top: 2px;
         font-size: 14px;
+        font-weight: 400px;
         color: #333;
+      }
+      i.arrow {
+        display: block;
+        width: 15px;
+        height: 15px;
+        background: url(@/assets/icon/arrow-r.webp) no-repeat;
+        background-size: cover;
       }
     }
   }

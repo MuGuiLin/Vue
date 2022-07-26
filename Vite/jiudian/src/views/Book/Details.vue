@@ -130,7 +130,7 @@ onMounted(async () => {
       <a class="back" @click="back()"></a>
       <div class="title">
         <h1>{{ state.data.title }}</h1>
-        <b v-if="state.data.is_assist">人气值：{{ state.data.star_number }}</b>
+        <b v-if="state.data.is_assist">人气值：{{ state.data.popularity_value }}</b>
         <b v-else>点赞数：{{ state.data.star_number }}</b>
         <nut-animate type="jump" action="click">
           <button
@@ -208,8 +208,8 @@ onMounted(async () => {
                 <h5>{{ o.content }}</h5>
               </dd>
               <dd>
-                <a class="laud" @click="starItems(o)">{{ o.star_number }}</a>
-                <a class="text">{{ o.comment_number }}</a>
+                <a :class="o.star_number && 'laud'" @click="starItems(o)">{{ o.star_number }}</a>
+                <a>{{ o.comment_number }}</a>
               </dd>
             </dl>
           </li>
