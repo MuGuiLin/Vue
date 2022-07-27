@@ -1,5 +1,5 @@
 <script lang="ts" setup name="Recharge">
-import { reactive, onMounted, getCurrentInstance } from "vue";
+import { reactive, onMounted, defineEmits, getCurrentInstance } from "vue";
 import { rechargeApi, paymentApi } from "@api/mine";
 import { pinia } from "@/stores";
 import { is, bridge } from "@/utils";
@@ -18,6 +18,8 @@ const state: any = reactive({
   },
   recharge_item: [],
 });
+
+const emits = defineEmits(["plus"]);
 
 const { show } = withDefaults(defineProps<Props>(), {});
 
@@ -65,7 +67,9 @@ onMounted(async () => {
 
 <template>
   <section class="recharge">
-    <div class="recharge-plus" v-show="show"></div>
+    <div class="recharge-plus" v-show="show">
+      <a class="back" @click="emits('plus', false)"></a>
+    </div>
     <main class="recharge-main">
       <div
         :class="`recharge-main-balance ${show && 'recharge-main-balance-show'}`"
@@ -108,30 +112,36 @@ onMounted(async () => {
       <div class="recharge-main-explanation">
         <h4>购买漫币说明：</h4>
         <article>
-          <p>1. 本平台人民币与漫币兑换比率：1元=100漫币。</p>
-          <p>2. 有“VIP”标识的漫画，为付费章节。</p>
           <p>
-            3.
-            为了您的阅读体验，您同意在您的漫币余额足够的情况下，当你继续阅读下一章节时，则为您同意购买下一章节并同意系统从您的书币余额中自动扣除相应的书币。点击充值即表示您已同意并接受上述漫画章节购买规则。
+            <b>1.</b>
+            本平台人民币与漫币兑换比率：1元=100漫币。
           </p>
           <p>
-            4.
-            购买漫币时所赠送的漫币存在有效期，有效期：自您成功购买书币之日起5个自然日。逾期未消费的，将自动失效；消费时优先扣除所赠送的书币。
+            <b>2.</b>
+            有“<i></i>”标识的漫画，为付费章节。
           </p>
           <p>
-            5.
-            若您是未满十八周岁的未成年人，在本平台进行购买书币前需获得家长同意或其他法定监护人的同意，点击购买书币后即视为您已经得您的家长或其他法定监护人的明确同意。
+            <b>3.</b>
+            为了您的阅读体验，您同意在您的漫币余额足够的情况下，当你继续阅读下一章节时，则为您同意购买下一章节并同意系统从您的鸡腿余额中自动扣除相应的书币。点击充值即表示您已同意并接受上述漫画章节购买规则。
           </p>
           <p>
-            6.
-            本平台倡导理性消费。购买成功后，平台即时收取相应费用，漫币为虚拟币，非因法定事由，不提供退费服务，敬请谅解。
+            <b>4.</b>
+            购买鸡腿时所赠送的鸡腿存在有效期，有效期：自您成功购买鸡腿之日起5个自然日。逾期未消费的，将自动失效；消费时优先扣除所赠送的鸡腿。
           </p>
           <p>
-            7.
-            若您在使用本平台服务过程中存在以盈利、经营等非个人使用目的购买/使用漫币、利用网络漏洞、作弊工具进行购买消费等违法违规或其他不正当行为的，本平台有权中断或终止向您提供相应的服务，不予返还您购买书币时的现金余额。
+            <b>5.</b>
+            若您是未满十八周岁的未成年人，在本平台进行购买鸡腿前需获得家长同意或其他法定监护人的同意，点击购买鸡腿后即视为您已经得您的家长或其他法定监护人的明确同意。
           </p>
           <p>
-            8.
+            <b>6.</b>
+            本平台倡导理性消费。购买成功后，平台即时收取相应费用，鸡腿为虚拟币，非因法定事由，不提供退费服务，敬请谅解。
+          </p>
+          <p>
+            <b>7.</b>
+            若您在使用本平台服务过程中存在以盈利、经营等非个人使用目的购买/使用鸡腿、利用网络漏洞、作弊工具进行购买消费等违法违规或其他不正当行为的，本平台有权中断或终止向您提供相应的服务，不予返还您购买鸡腿时的现金余额。
+          </p>
+          <p>
+            <b>8.</b>
             本平台可根据运营情况调整相关服务规则，具体请以平台页面显示的为准。
           </p>
         </article>
@@ -146,10 +156,23 @@ onMounted(async () => {
   &-plus {
     padding-top: 100px;
     width: 100%;
-    height: 200px;
+    height: 212px;
     background: rgba(0, 0, 0, 0.6) left bottom url(@/assets/imgs/plus.webp)
       no-repeat;
     background-size: contain;
+
+    .back {
+      position: relative;
+      top: -86px;
+      left: 15px;
+      display: block;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: url(@/assets/svg/back.svg) no-repeat;
+      background-size: cover;
+      z-index: 1;
+    }
   }
   &-main {
     padding: 15px;
@@ -158,6 +181,7 @@ onMounted(async () => {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-top: -10px;
       margin-bottom: 10px;
       height: 66px;
       border-bottom: 1px solid #f6f6f6;
@@ -187,7 +211,8 @@ onMounted(async () => {
     }
     &-balance-show {
       justify-content: flex-start;
-      margin: -68px 0 0 0;
+      margin: -50px 0 0 0;
+      height: 40px;
       border-bottom: none;
       > label {
         font-size: 16px;
@@ -204,7 +229,7 @@ onMounted(async () => {
       }
     }
     &-units {
-      line-height: 35px;
+      line-height: 30px;
       font-size: 12px;
       font-weight: 400;
       color: #333;
@@ -295,8 +320,8 @@ onMounted(async () => {
         &::before {
           content: "";
           position: absolute;
-          top: -1px;
-          right: -1px;
+          top: -2px;
+          right: -2px;
           width: 0;
           height: 0;
           border-top: 36px solid #9854bf;
@@ -305,8 +330,8 @@ onMounted(async () => {
         &::after {
           content: "";
           position: absolute;
-          top: 4px;
-          right: 2px;
+          top: 3px;
+          right: 1px;
           display: block;
           width: 16px;
           height: 16px;
@@ -329,11 +354,27 @@ onMounted(async () => {
         color: #333;
       }
       p {
+        position: relative;
+        padding-left: 15px;
         line-height: 20px;
         font-size: 11px;
         font-weight: 400;
         color: #666;
         text-align: justify;
+        b {
+          position: absolute;
+          left: 0px;
+          font-weight: 400;
+        }
+        i {
+          position: relative;
+          top: 3px;
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background: url(@/assets/svg/lock.svg) center center no-repeat;
+          background-size: contain;
+        }
       }
     }
   }

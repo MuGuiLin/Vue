@@ -75,10 +75,14 @@ const remove = async () => {
   }
 };
 
-const select = (o: any, i: number) => {
-  if (state.edit) {
+const select = (o: any, i: number, g: boolean = false) => {
+  if (state.edit && !g) {
     if (state.active) {
       state.history_items[i].check = !state.history_items[i].check;
+      const history_items = getCheck(state.history_items);
+      if (!history_items.length) {
+        state.isAll = false;
+      }
       if (state.history_items.some((o: { check: any }) => o.check)) {
         state.all = false;
         state.isAll = true;
@@ -89,6 +93,10 @@ const select = (o: any, i: number) => {
       }
     } else {
       state.follows_items[i].check = !state.follows_items[i].check;
+      const follows_items = getCheck(state.follows_items);
+      if (!follows_items.length) {
+        state.isAll = false;
+      }
       if (state.follows_items.some((o: { check: any }) => o.check)) {
         state.all = false;
         state.isAll = true;
@@ -173,7 +181,7 @@ onMounted(async () => {
             <li
               v-for="(o, i) in state.recommend_items"
               :key="o.id"
-              @click="select(o, i)"
+              @click="select(o, i, true)"
             >
               <dl>
                 <dt>

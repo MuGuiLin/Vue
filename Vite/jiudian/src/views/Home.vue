@@ -62,7 +62,10 @@ onMounted(async () => {
       <h3 class="main-h3">{{ state.original_comics.title }}</h3>
       <ul class="main-recommend">
         <li v-for="o in state.original_comics.comic_items" :key="o.id">
-          <img class="cover" :src="o.list_cover" :alt="o.title" />
+          <div class="cover">
+            <i v-if="4 > o.sort">NO.{{ o.sort }}</i>
+            <img :src="o.list_cover" :alt="o.title" />
+          </div>
           <dl class="info">
             <dt>
               <h4>{{ o.title }}</h4>
@@ -97,7 +100,7 @@ onMounted(async () => {
             <dd>
               <h4>{{ o.title }}</h4>
             </dd>
-            <dd>{{ o.label || "..." }}</dd>
+            <dd><i class="arrow"></i>{{ o.label || "..." }}</dd>
           </dl>
         </li>
       </ul>
@@ -130,7 +133,7 @@ onMounted(async () => {
       bottom: 0px;
       width: 100%;
       height: 101px;
-      background: url(@/assets/imgs/catear.webp) 0 23px no-repeat;
+      background: url(@/assets/imgs/catear.webp) 0 53px no-repeat;
       background-size: contain;
     }
     .nut-swiper-item {
@@ -222,10 +225,34 @@ onMounted(async () => {
         margin: 12px 0;
         display: flex;
         justify-content: space-between;
+
         > .cover {
+          position: relative;
           width: 100px;
           height: 130px;
           border-radius: 5px;
+          overflow: hidden;
+          > i {
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            padding-left: 4px;
+            font-style: normal;
+            width: 40px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            background: url(@/assets/icon/sort.webp) left top no-repeat;
+            background-size: contain;
+          }
+          > img {
+            width: 100px;
+            height: 130px;
+          }
         }
         > .info {
           box-sizing: border-box;
@@ -300,7 +327,7 @@ onMounted(async () => {
       width: 355px;
       height: 236px;
       border-radius: 5px;
-      background: #574d4d url(@/assets/imgs/list-bg.webp) no-repeat;
+      background: url(@/assets/imgs/list-bg.webp) no-repeat;
       background-size: cover;
       overflow-x: auto;
       overflow-y: hidden;
@@ -334,7 +361,7 @@ onMounted(async () => {
               box-sizing: border-box;
               position: absolute;
               left: 0;
-              bottom: 0;
+              bottom: 2px;
               padding-right: 5px;
               width: 100%;
               height: 30px;
@@ -354,6 +381,15 @@ onMounted(async () => {
           > dd {
             font-size: 10px;
             color: rgba(255, 255, 255, 0.8);
+            i.arrow {
+              box-sizing: border-box;
+              margin-right: 3px;
+              display: inline-block;
+              width: 8px;
+              height: 8px;
+              background: url(@/assets/icon/arrow-t.webp) left top no-repeat;
+              background-size: cover;
+            }
             h4 {
               line-height: 25px;
               font-size: 14px;
@@ -377,12 +413,12 @@ onMounted(async () => {
   ::v-deep {
     .nut-swiper-pagination {
       z-index: 1;
-      bottom: 6px;
+      bottom: 2px;
       i {
         width: 6px;
-        height: 6px;
+        height: 4px;
         color: #db56ee;
-        border-radius: 6px;
+        border-radius: 4px;
         background-color: #db56ee;
         &.active {
           width: 18px;

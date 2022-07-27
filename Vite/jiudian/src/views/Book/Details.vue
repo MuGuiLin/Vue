@@ -130,7 +130,9 @@ onMounted(async () => {
       <a class="back" @click="back()"></a>
       <div class="title">
         <h1>{{ state.data.title }}</h1>
-        <b v-if="state.data.is_assist">人气值：{{ state.data.popularity_value }}</b>
+        <b v-if="state.data.is_assist"
+          >人气值：{{ state.data.popularity_value }}</b
+        >
         <b v-else>点赞数：{{ state.data.star_number }}</b>
         <nut-animate type="jump" action="click">
           <button
@@ -183,9 +185,16 @@ onMounted(async () => {
       </h3>
       <ul>
         <li v-for="o in state.chapter.items" :key="o.chapter_number">
-          <dl>
+          <dl
+            @click="
+              go({
+                path: '/article',
+                query: { id: state.id, chapter_number: o.chapter_number },
+              })
+            "
+          >
             <dt>
-              <img class="cover" :src="o.cover" :alt="o.chapter_number" />
+              <img :src="o.cover" :alt="o.chapter_number" />
               <p>{{ o.date }}</p>
             </dt>
             <dd>第{{ o.chapter_number }}话-{{ o.title }}</dd>
@@ -200,7 +209,7 @@ onMounted(async () => {
           <li v-for="(o, i) in state.getItems.items" :key="i">
             <dl>
               <dt>
-                <img class="cover" :src="o.userInfo.avatar" alt="头像" />
+                <img :src="o.userInfo.avatar" alt="头像" />
                 <h4>{{ o.userInfo.name }}</h4>
                 <p>{{ o.date }}</p>
               </dt>
@@ -208,7 +217,9 @@ onMounted(async () => {
                 <h5>{{ o.content }}</h5>
               </dd>
               <dd>
-                <a :class="o.star_number && 'laud'" @click="starItems(o)">{{ o.star_number }}</a>
+                <a :class="o.star_number && 'laud'" @click="starItems(o)">{{
+                  o.star_number
+                }}</a>
                 <a>{{ o.comment_number }}</a>
               </dd>
             </dl>
@@ -278,6 +289,8 @@ onMounted(async () => {
     }
 
     .back {
+      display: inline-block;
+      margin: -4px 0 0 -3px;
       width: 26px;
       height: 26px;
       border-radius: 50%;
@@ -600,15 +613,16 @@ onMounted(async () => {
               position: absolute;
               top: 5px;
               left: 5px;
-              width: 34px;
-              height: 34px;
+              width: 35px;
+              height: 35px;
               border-radius: 50%;
             }
             h4 {
-              line-height: 26px;
+              padding-top: 3px;
+              line-height: 23px;
               font-size: 14px;
               font-weight: 400;
-              color: #999;
+              color: #333;
               letter-spacing: 1px;
             }
             p {
@@ -620,12 +634,13 @@ onMounted(async () => {
             padding-left: 45px;
             line-height: 26px;
             font-size: 10px;
-            color: #666;
+            color: #888;
             > h5 {
-              line-height: 16px;
-              font-size: 12px;
+              padding: 6px 0;
+              line-height: 18px;
+              font-size: 14px;
               font-weight: 400;
-              color: #999;
+              color: #222;
               letter-spacing: 1px;
             }
             > a {

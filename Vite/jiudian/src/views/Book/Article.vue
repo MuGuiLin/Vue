@@ -21,6 +21,7 @@ const state: IStateProps | any = reactive({
   id: "",
   sort: true,
   show: false,
+  plus: false,
   locked: false,
   vsible: false,
   ispush: true,
@@ -50,7 +51,9 @@ const getContents = async (): Promise<void> => {
   getImgHeight(data.content[0].url, (img: any) => {
     state.naturalHeight = img.naturalHeight / 2 || 300;
   });
-  state.locked = data.locked;
+  state.plus = data.locked;
+  state.plus = true;
+  state.chapter.chapters[data.chapter_number].locked = data.locked;
   if (data.content?.length) {
     state.ispush = true;
     content.value = [...content.value, ...data.content];
@@ -65,6 +68,10 @@ const scrollPot = (dom: HTMLLIElement) => {
     });
 };
 
+const code = (o: number) => {
+  return o ? (1 === o ? "已完结" : "已停更") : "连载中";
+};
+
 const sort = () => {
   state.sort = !state.sort;
   state.chapter.chapters = state.chapter.chapters.reverse();
@@ -76,6 +83,12 @@ const sort = () => {
 
 const show = () => {
   state.show = !state.show;
+};
+
+const plus = (is: boolean = true) => {
+  console.log(is);
+
+  state.plus = !is ? is : !state.plus;
 };
 
 const anchor = () => {
@@ -110,9 +123,10 @@ const select = (number: number) => {
 };
 
 onMounted(async () => {
-  const { id } = query;
+  const { id, chapter_number } = query;
   if (id) {
     state.id = id;
+    chapter_number && (state.chapter_number = chapter_number);
     const { data }: IResProps = await getChaptersApi(state.id);
     state.chapter = data;
     getContents();
@@ -179,9 +193,13 @@ onMounted(async () => {
       <div class="nav-top">
         <h3>{{ state.chapter.comic_item.title }}</h3>
         <div class="sort">
-          <span>已更{{ state.chapter.comic_item.chapter_number }}话</span>
-          <button v-if="state.sort" @click="sort">正序</button>
-          <button v-else class="fall" @click="sort">倒序</button>
+          <span
+            >已更 {{ state.chapter.comic_item.total_chapter_number }} 话<i>{{
+              code(state.chapter.comic_item.update_status_code)
+            }}</i></span
+          >
+          <button type="button" v-if="state.sort" @click="sort">正序</button>
+          <button type="button" v-else class="fall" @click="sort">倒序</button>
         </div>
         <p class="point">漫画每话定价200鸡腿！</p>
       </div>
@@ -211,8 +229,8 @@ onMounted(async () => {
       <a class="nav-btn" @click="anchor">位置</a>
     </nut-actionsheet>
 
-    <footer :class="`recharge-box ${state.locked && 'recharge-box-show'}`">
-      <Recharge :show="true" />
+    <footer :class="`recharge-box ${state.plus && 'plus-show'}`">
+      <Recharge :show="true" @plus="plus" />
     </footer>
   </section>
 </template>
@@ -249,24 +267,18 @@ onMounted(async () => {
     right: 0;
     bottom: 0;
     left: 0;
-    opacity: 0;
     width: 100%;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    z-index: 666666;
+    z-index: 6666666;
+    transition: top 0.5s ease-out;
     -webkit-overflow-scrolling: touch;
     &::-webkit-scrollbar {
       display: none;
     }
-  }
-  .recharge-box-show {
-    animation: show 1s forwards;
-    @keyframes show {
-      to {
-        top: 0;
-        opacity: 1;
-      }
+    &.plus-show {
+      top: 0;
     }
   }
 }
@@ -281,6 +293,7 @@ onMounted(async () => {
         height: 40px;
         line-height: 60px;
         font-size: 18px;
+        font-weight: 500;
         text-align: center;
       }
       .sort {
@@ -291,17 +304,23 @@ onMounted(async () => {
         border-bottom: 1px solid rgba(238, 238, 238, 0.2);
         > span {
           position: relative;
-          font-size: 16px;
+          font-size: 15px;
           color: white;
-          &::after {
-            content: "";
+          > i {
             position: absolute;
-            top: -8px;
+            top: 2px;
             right: -45px;
             display: inline-block;
-            width: 40px;
-            height: 30px;
-            background: url(@/assets/svg/even.svg) no-repeat;
+            width: 38px;
+            height: 18px;
+            font-size: 7px;
+            font-weight: 500;
+            line-height: 19px;
+            font-style: normal;
+            color: #000;
+            text-align: center;
+            letter-spacing: 1px;
+            background: url(@/assets/icon/even.webp) no-repeat;
             background-size: cover;
           }
         }
@@ -403,19 +422,28 @@ onMounted(async () => {
           dt {
             position: relative;
             h4 {
-              font-size: 15px;
+              font-size: 14px;
+              font-weight: 600;
               color: white;
             }
           }
           dd {
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 400;
             color: #c6c6c6;
           }
+        }
+        &:first-child {
+          margin: 2px 0;
         }
       }
       li.active {
         .info {
           dt {
+            h4 {
+              font-size: 15px;
+              color: #faac5d;
+            }
             &::after {
               content: "";
               position: absolute;
@@ -425,10 +453,6 @@ onMounted(async () => {
               height: 16px;
               background: url(@/assets/svg/mark.svg) no-repeat;
               background-size: cover;
-            }
-            h4 {
-              font-size: 16px;
-              color: #faac5d;
             }
           }
         }
