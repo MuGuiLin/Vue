@@ -1,7 +1,7 @@
 
 
 <script lang="ts" setup>
-import { reactive, onMounted, getCurrentInstance } from "vue";
+import { ref, reactive, nextTick, onMounted, getCurrentInstance } from "vue";
 import { useGo, usePar, back } from "@hooks/usePage";
 import {
   getDetailsApi,
@@ -13,6 +13,7 @@ import {
 } from "@api/book";
 
 const go = useGo();
+const input = ref();
 const { query } = usePar();
 interface IStateProps {
   ["key"]: any;
@@ -26,6 +27,7 @@ const { proxy }: any = getCurrentInstance();
 
 const state: IStateProps | any = reactive({
   id: "",
+  fid: "",
   show: false,
   data: {
     desc: "...",
@@ -38,30 +40,56 @@ const state: IStateProps | any = reactive({
     items: [],
   },
   setItems: {
-    comicId: "",
     content: "",
-    parentId: "",
   },
   getItems: {
+    has: true,
     page: 1,
-    pageSize: 20,
+    pageSize: 6,
     items: [],
   },
   placeholder: "说一说",
 });
+
+const focus = (o: any) => {
+  state.fid = o.id;
+  nextTick(() => {
+    input.value.focus();
+  });
+};
 
 const chapter = async () => {
   const { data }: IResProps = await getPaginateApi(state.id);
   state.chapter = data;
 };
 
-const getItems = async () => {
+const getItems = async (cb?: Function) => {
   const { page, pageSize } = state.getItems;
-  const { data }: IResProps | any = await getItemsApi(state.id, {
+  const {
+    data: { items = [], asPageData },
+  }: IResProps | any = await getItemsApi(state.id, {
     page,
     pageSize,
   });
-  state.getItems.items = data.items;
+  state.getItems.items.push(...items);
+  cb && cb(asPageData);
+};
+
+const refresh = (done: () => void) => {
+  state.getItems.page = 1;
+  state.getItems.items = [];
+  getItems();
+  done();
+};
+
+const load = (done: Function): void => {
+  state.getItems.page++;
+  getItems((asPageData: boolean = true) => {
+    if (1 < state.getItems.page && !asPageData) {
+      state.getItems.has = false;
+    }
+    done();
+  });
 };
 
 const getDetails = async () => {
@@ -71,6 +99,8 @@ const getDetails = async () => {
   } else {
     chapter();
   }
+  state.getItems.page = 1;
+  state.getItems.items = [];
   getItems();
   state.data = data;
   if (data.tags.length) {
@@ -80,13 +110,19 @@ const getDetails = async () => {
 
 const setItems = async () => {
   if (state.setItems.content) {
-    state.setItems.comicId = state.id;
-    state.setItems.parentId = state.id;
+    const data: any = {
+      comicId: state.id,
+      content: state.setItems.content,
+    };
+    if (state.fid) {
+      data.parentId = state.fid;
+    }
     const { success, message }: IResProps | any = await setItemsApi({
-      ...state.setItems,
+      ...data,
     });
     if (success) {
       getDetails();
+      state.fid = "";
       state.setItems.content = "";
       proxy.$notify.success(message);
     }
@@ -204,32 +240,49 @@ onMounted(async () => {
     </div>
     <div class="details-reviews">
       <h3>漫画点评</h3>
-      <ul>
-        <template v-if="state.getItems.items.length">
-          <li v-for="(o, i) in state.getItems.items" :key="i">
-            <dl>
-              <dt>
-                <img :src="o.userInfo.avatar" alt="头像" />
-                <h4>{{ o.userInfo.name }}</h4>
-                <p>{{ o.date }}</p>
-              </dt>
-              <dd>
-                <h5>{{ o.content }}</h5>
-              </dd>
-              <dd>
-                <a :class="o.star_number && 'laud'" @click="starItems(o)">{{
-                  o.star_number
-                }}</a>
-                <a>{{ o.comment_number }}</a>
-              </dd>
-            </dl>
-          </li>
-        </template>
-        <template v-else>
-          <li class="void">
-            <b>冲鸭 抢沙发～</b>
-          </li>
-        </template>
+      <ul id="reviews-scroll">
+        <nut-infiniteloading
+          pull-icon="loading1"
+          load-icon="loading"
+          load-more-txt="已经到底啦～"
+          container-id="reviews-scroll"
+          :use-window="false"
+          :is-open-refresh="false"
+          :has-more="state.getItems.has"
+          @load-more="load"
+          @refresh="refresh"
+        >
+          <template v-if="state.getItems.items.length">
+            <li v-for="(o, i) in state.getItems.items" :key="i">
+              <dl>
+                <dt>
+                  <img :src="o.userInfo.avatar" alt="头像" />
+                  <h4>{{ o.userInfo.name }}</h4>
+                  <p>{{ o.date }}</p>
+                </dt>
+                <dd>
+                  <h5 @click="focus(o)">
+                    <b>{{
+                      o.parent_comment_user && "@" + o.parent_comment_user.name
+                    }}</b>
+                    {{ o.content }}
+                  </h5>
+                </dd>
+                <dd>
+                  <a :class="o.is_user_star && 'laud'" @click="starItems(o)">{{
+                    o.star_number
+                  }}</a>
+                  <a @click="focus(o)">{{ o.comment_number }}</a>
+                </dd>
+              </dl>
+            </li>
+          </template>
+          <template v-else>
+            <li class="void">
+              <b>冲鸭 抢沙发～</b>
+            </li>
+          </template>
+        </nut-infiniteloading>
       </ul>
     </div>
     <footer class="details-footer">
@@ -239,6 +292,7 @@ onMounted(async () => {
       >
         <input
           type="text"
+          ref="input"
           v-model="state.setItems.content"
           @focus="state.placeholder = '神评尽在眼前～'"
           @blur="
@@ -587,20 +641,22 @@ onMounted(async () => {
     }
   }
   &-reviews {
-    margin: 9px 0 45px;
+    margin: 9px 0 65px;
     padding: 12px 0px;
     background: white;
     > h3 {
       position: relative;
-      padding: 0px 12px;
+      padding: 0px 12px 5px;
       font-size: 16px;
       color: #333;
     }
     > ul {
       box-sizing: border-box;
       background: white;
-
-      > li {
+      height: calc(100vh - 182px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      li {
         padding: 10px;
         border-bottom: 1px solid #f3f3f3;
 
@@ -642,6 +698,10 @@ onMounted(async () => {
               font-weight: 400;
               color: #222;
               letter-spacing: 1px;
+              > b {
+                font-weight: 500;
+                color: #5298fd;
+              }
             }
             > a {
               position: relative;
@@ -684,8 +744,7 @@ onMounted(async () => {
           }
         }
       }
-
-      > li.void {
+      li.void {
         box-sizing: border-box;
         width: 100%;
         height: 200px;

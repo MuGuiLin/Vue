@@ -157,7 +157,7 @@ onMounted(async () => {
     padding-top: 100px;
     width: 100%;
     height: 212px;
-    background: rgba(0, 0, 0, 0.6) left bottom url(@/assets/imgs/plus.webp)
+    background: rgba(0, 0, 0, 0.1) left bottom url(@/assets/imgs/plus.webp)
       no-repeat;
     background-size: contain;
 

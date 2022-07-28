@@ -303,19 +303,19 @@ const state = reactive({
           margin-right: 5px;
           width: 22px;
           height: 22px;
-          background: url(@/assets/svg/wallet.svg) no-repeat;
+          background: url(@/assets/icon/wallet.webp) no-repeat;
           background-size: cover;
         }
         i.money {
-          background: url(@/assets/svg/money.svg) no-repeat;
+          background: url(@/assets/icon/money.webp) no-repeat;
           background-size: cover;
         }
         i.recent {
-          background: url(@/assets/svg/recent.svg) no-repeat;
+          background: url(@/assets/icon/recent.webp) no-repeat;
           background-size: cover;
         }
         i.edit {
-          background: url(@/assets/svg/edit.svg) no-repeat;
+          background: url(@/assets/icon/edit.webp) no-repeat;
           background-size: cover;
         }
       }

@@ -189,7 +189,12 @@ onMounted(async () => {
       ></nut-tabbar-item>
     </nut-tabbar>
 
-    <nut-actionsheet v-model:visible="state.vsible">
+    <nut-popup
+      round
+      position="bottom"
+      :safe-area-inset-bottom="false"
+      v-model:visible="state.vsible"
+    >
       <div class="nav-top">
         <h3>{{ state.chapter.comic_item.title }}</h3>
         <div class="sort">
@@ -213,7 +218,7 @@ onMounted(async () => {
           :id="'anchor-' + o.chapter_number"
           @click="select(o.chapter_number)"
         >
-          <div :class="`cover ${o.locked && 'lock'}`">
+          <div :class="`cover ${o.locked && 'lock'} ${o.is_free && 'free'}`">
             <img :src="o.cover" :alt="o.title" />
           </div>
           <dl class="info">
@@ -227,11 +232,20 @@ onMounted(async () => {
         </li>
       </ul>
       <a class="nav-btn" @click="anchor">位置</a>
-    </nut-actionsheet>
+    </nut-popup>
 
-    <footer :class="`recharge-box ${state.plus && 'plus-show'}`">
+    <nut-popup
+      position="bottom"
+      :style="{
+        '-webkit-backdrop-filter': 'blur(2px)',
+        'backdrop-filter': 'blur(2px)',
+        background: 'none',
+      }"
+      :safe-area-inset-bottom="false"
+      v-model:visible="state.plus"
+    >
       <Recharge :show="true" @plus="plus" />
-    </footer>
+    </nut-popup>
   </section>
 </template>
 
@@ -255,7 +269,7 @@ onMounted(async () => {
       width: 26px;
       height: 26px;
       border-radius: 50%;
-      background: url(@/assets/svg/back.svg) no-repeat;
+      background: url(@/assets/icon/back.webp) no-repeat;
       background-size: cover;
       z-index: 1;
     }
@@ -284,202 +298,214 @@ onMounted(async () => {
 }
 .nut-popup {
   background: #20243c;
-  .nut-actionsheet-panel {
-    position: relative;
-    .nav-top {
-      color: white;
-      background: #20243c;
-      h3 {
-        height: 40px;
-        line-height: 60px;
-        font-size: 18px;
-        font-weight: 500;
-        text-align: center;
-      }
-      .sort {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 10px;
-        border-bottom: 1px solid rgba(238, 238, 238, 0.2);
-        > span {
-          position: relative;
-          font-size: 15px;
-          color: white;
-          > i {
-            position: absolute;
-            top: 2px;
-            right: -45px;
-            display: inline-block;
-            width: 38px;
-            height: 18px;
-            font-size: 7px;
-            font-weight: 500;
-            line-height: 19px;
-            font-style: normal;
-            color: #000;
-            text-align: center;
-            letter-spacing: 1px;
-            background: url(@/assets/icon/even.webp) no-repeat;
-            background-size: cover;
-          }
-        }
-        > button {
-          position: relative;
-          padding-left: 18px;
-          width: 68px;
-          height: 30px;
-          line-height: 30px;
-          text-align: center;
-          color: #d2b8fc;
-          border-radius: 30px;
-          background: #32395f;
-          &::before {
-            content: "";
-            position: absolute;
-            top: 8px;
-            left: 10px;
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: url(@/assets/svg/rise.svg) no-repeat;
-            background-size: cover;
-          }
-        }
-        > button.fall {
-          &::before {
-            background: url(@/assets/svg/fall.svg) no-repeat;
-            background-size: cover;
-          }
-        }
-      }
-      p {
+  position: relative;
+  .nav-top {
+    color: white;
+    background: #20243c;
+    h3 {
+      height: 40px;
+      line-height: 60px;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .sort {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      border-bottom: 1px solid rgba(238, 238, 238, 0.2);
+      > span {
         position: relative;
-        padding: 10px 10px 10px 40px;
-        font-size: 12px;
-
+        font-size: 15px;
+        color: white;
+        > i {
+          position: absolute;
+          top: 2px;
+          right: -45px;
+          display: inline-block;
+          width: 38px;
+          height: 18px;
+          font-size: 8px;
+          font-weight: 500;
+          line-height: 19px;
+          font-style: normal;
+          color: #000;
+          text-align: center;
+          letter-spacing: 1px;
+          background: url(@/assets/icon/even.webp) no-repeat;
+          background-size: cover;
+        }
+      }
+      > button {
+        position: relative;
+        padding-left: 18px;
+        width: 68px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #d2b8fc;
+        border-radius: 30px;
+        background: #32395f;
         &::before {
           content: "";
           position: absolute;
-          top: 5px;
+          top: 8px;
           left: 10px;
           display: inline-block;
-          width: 25px;
-          height: 25px;
-          background: url(@/assets/icon/fowlleg.webp) no-repeat;
+          width: 15px;
+          height: 15px;
+          background: url(@/assets/icon/rise.webp) no-repeat;
+          background-size: cover;
+        }
+      }
+      > button.fall {
+        &::before {
+          background: url(@/assets/icon/fall.webp) no-repeat;
           background-size: cover;
         }
       }
     }
-    .nav-box {
-      box-sizing: border-box;
-      padding: 0 10px 10px;
-      height: 380px;
-      color: white;
-      overflow-y: auto;
-      overflow-x: hidden;
-      background: #20243c;
-      -webkit-overflow-scrolling: touch;
+    p {
+      position: relative;
+      padding: 10px 10px 10px 40px;
+      font-size: 12px;
 
-      &::-webkit-scrollbar {
-        display: none;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: url(@/assets/icon/fowlleg.webp) no-repeat;
+        background-size: cover;
       }
-      .nav-item {
-        margin: 20px 0;
+    }
+  }
+  .nav-box {
+    box-sizing: border-box;
+    padding: 0 10px 10px;
+    height: 380px;
+    color: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #20243c;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-item {
+      margin: 20px 0;
+      display: flex;
+      div.cover {
+        width: 100px;
+        height: 60px;
+        border-radius: 4px;
+        box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.6);
+        overflow: hidden;
+        > img {
+          width: 100%;
+          height: 100%;
+          -webkit-object-fit: cover;
+          object-fit: cover;
+        }
+      }
+      div.lock {
+        position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 24px;
+          background: rgba(0, 0, 0, 0.6) url(@/assets/icon/lock.webp) center
+            center no-repeat;
+          background-size: 20%;
+        }
+      }
+      div.free {
+        position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 24px;
+          background: rgba(0, 0, 0, 0.6) url(@/assets/icon/free.webp) center
+            center no-repeat;
+          background-size: 20%;
+        }
+      }
+      dl.info {
+        flex: auto;
         display: flex;
-        div.cover {
-          width: 100px;
-          height: 60px;
-          border-radius: 4px;
-          box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.6);
-          overflow: hidden;
-          > img {
-            width: 100%;
-            height: 100%;
-            -webkit-object-fit: cover;
-            object-fit: cover;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-left: 20px;
+        dt {
+          position: relative;
+          h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
           }
         }
-        div.lock {
-          position: relative;
+        dd {
+          font-size: 11px;
+          font-weight: 400;
+          color: #c6c6c6;
+        }
+      }
+      &:first-child {
+        margin: 2px 0;
+      }
+    }
+    li.active {
+      .info {
+        dt {
+          h4 {
+            font-size: 15px;
+            color: #faac5d;
+          }
           &::after {
             content: "";
             position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 24px;
-            background: rgba(0, 0, 0, 0.6) url(@/assets/svg/lock.svg) center
-              center no-repeat;
-          }
-        }
-        dl.info {
-          flex: auto;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          padding-left: 20px;
-          dt {
-            position: relative;
-            h4 {
-              font-size: 14px;
-              font-weight: 600;
-              color: white;
-            }
-          }
-          dd {
-            font-size: 11px;
-            font-weight: 400;
-            color: #c6c6c6;
-          }
-        }
-        &:first-child {
-          margin: 2px 0;
-        }
-      }
-      li.active {
-        .info {
-          dt {
-            h4 {
-              font-size: 15px;
-              color: #faac5d;
-            }
-            &::after {
-              content: "";
-              position: absolute;
-              top: 3px;
-              right: 0;
-              width: 16px;
-              height: 16px;
-              background: url(@/assets/svg/mark.svg) no-repeat;
-              background-size: cover;
-            }
+            top: 3px;
+            right: 0;
+            width: 16px;
+            height: 16px;
+            background: url(@/assets/icon/mark.webp) no-repeat;
+            background-size: cover;
           }
         }
       }
     }
-    .nav-btn {
-      position: fixed;
-      right: 30px;
-      bottom: 50px;
-      display: block;
-      width: 40px;
-      height: 40px;
-      line-height: 60px;
-      text-align: center;
-      color: white;
-      font-size: 10px;
-      background: rgba(210, 184, 252, 0.5) url(@/assets/svg/site.svg) center 5px
-        no-repeat;
-      background-size: 50%;
-      border-radius: 50%;
-      border: 1px solid #d2b8fc;
-    }
+  }
+  .nav-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 50px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 60px;
+    text-align: center;
+    color: white;
+    font-size: 10px;
+    background: rgba(210, 184, 252, 0.5) url(@/assets/icon/site.webp) center 5px
+      no-repeat;
+    background-size: 50%;
+    border-radius: 50%;
+    border: 1px solid #d2b8fc;
   }
 }
 
 .nut-tabbar {
-  padding: 8px 0;
   background: rgba(255, 255, 255, 0.8);
   .vip {
     position: relative;

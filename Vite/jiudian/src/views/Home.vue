@@ -160,7 +160,7 @@ onMounted(async () => {
         width: 40px;
         height: 32px;
         border-radius: 16px 0px 0px 16px;
-        background: #feecf3 url(@/assets/svg/noticebar.svg) center center
+        background: #feecf3 url(@/assets/icon/noticebar.webp) center center
           no-repeat;
         background-size: 40%;
       }
@@ -202,14 +202,14 @@ onMounted(async () => {
           width: 38px;
           height: 38px;
           vertical-align: middle;
-          background: url(@/assets/svg/recent.svg) no-repeat;
+          background: url(@/assets/icon/recent.webp) no-repeat;
           background-size: contain;
         }
       }
       > a:nth-child(2) {
         i {
           padding-right: 2px;
-          background: url(@/assets/svg/mine.svg) no-repeat;
+          background: url(@/assets/icon/mine.webp) no-repeat;
           background-size: contain;
         }
       }
@@ -221,6 +221,7 @@ onMounted(async () => {
     }
     &-recommend {
       margin-bottom: 36px;
+      min-height: 141px;
       > li {
         margin: 12px 0;
         display: flex;
