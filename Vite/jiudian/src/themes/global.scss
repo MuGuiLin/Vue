@@ -1,13 +1,17 @@
 body {
-    font-style             : normal;
-    font-variant           : normal;
-    font-size              : 12px;
-    font-weight            : 400;
-    font-size-adjust       : none;
-    font-stretch           : normal;
-    font-family            : PingFangSC-Regular, PingFang SC, Arial, Helvetica, sans-serif;
-    -webkit-font-smoothing : antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-style                 : normal;
+    font-variant               : normal;
+    font-size                  : 12px;
+    font-weight                : 400;
+    font-size-adjust           : none;
+    font-stretch               : normal;
+    font-family                : PingFangSC-Regular, PingFang SC, Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing     : antialiased;
+    -moz-osx-font-smoothing    : grayscale;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout      : none;
+    -webkit-user-select        : none;
+    user-selec                 : none;
 }
 
 html,

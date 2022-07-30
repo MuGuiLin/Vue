@@ -31,7 +31,7 @@ const state: IStateProps | any = reactive({
     comic_item: {},
   },
   chapter_number: 1,
-  containerHeight: document.documentElement.clientHeight * 3,
+  containerHeight: document.documentElement.clientHeight * 10,
 });
 
 const getImgHeight = (src: string, cb: Function) => {
@@ -51,6 +51,7 @@ const getContents = async (): Promise<void> => {
   getImgHeight(data.content[0].url, (img: any) => {
     state.naturalHeight = img.naturalHeight / 2 || 300;
   });
+  document.title = `第${data.chapter_number}话-${data.title}`;
   state.plus = data.locked;
   state.plus = true;
   state.chapter.chapters[data.chapter_number].locked = data.locked;
@@ -275,7 +276,7 @@ onMounted(async () => {
     }
   }
 
-  .recharge-box {
+  &-mainre {
     position: fixed;
     top: 100%;
     right: 0;
@@ -535,8 +536,11 @@ onMounted(async () => {
       .nut-list-item {
         margin: 0;
         img {
+          display: block;
           width: 100%;
           height: 100%;
+          object-fit: cover;
+          object-position: center top;
         }
       }
     }

@@ -4,7 +4,8 @@ import { PiniaStore } from "@/stores/modules/user";
 import { useGo } from "@hooks/usePage";
 import avatar from "@/assets/logo.png";
 const go = useGo();
-const { users }: any = PiniaStore();
+const { users, getUser }: any = PiniaStore();
+getUser();
 const state = reactive({
   id: "99",
   name: "九九",
@@ -120,8 +121,6 @@ const state = reactive({
     </main>
   </section>
 </template>
-
-
 
 <style lang="scss" scoped>
 .mine {
