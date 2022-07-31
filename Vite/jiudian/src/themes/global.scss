@@ -11,7 +11,13 @@ body {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout      : none;
     -webkit-user-select        : none;
-    user-selec                 : none;
+    overflow-x                 : hidden;
+    overflow-y                 : auto;
+    scrollbar-width            : none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 html,

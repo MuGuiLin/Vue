@@ -3,6 +3,13 @@ import { ref, reactive, onMounted } from "vue";
 import Recharge from "@coms/Recharge.vue";
 import { useGo, usePar, back } from "@hooks/usePage";
 import { getChaptersApi, getContentsApi } from "@api/book";
+import { zoomImage, clientHeight, scrollIntoView } from "@/utils";
+
+import home from "@/assets/icon/home.webp";
+import info from "@/assets/icon/info.webp";
+import item from "@/assets/icon/item.webp";
+import time from "@/assets/icon/time.webp";
+
 let out: any = null;
 const go = useGo();
 const { query } = usePar();
@@ -22,25 +29,25 @@ const state: IStateProps | any = reactive({
   sort: true,
   show: false,
   plus: false,
-  locked: false,
-  vsible: false,
   ispush: true,
-  naturalHeight: 286,
+  vsible: false,
+  locked: false,
   chapter: {
     chapters: [],
     comic_item: {},
   },
   chapter_number: 1,
-  containerHeight: document.documentElement.clientHeight * 10,
+  naturalHeight: 286,
+  containerHeight: clientHeight * 10,
 });
 
-const getImgHeight = (src: string, cb: Function) => {
-  const img = new Image();
-  img.src = src;
-  img.onload = () => {
-    // img.naturalHeight;
-    cb(img);
-  };
+const title = () => {
+  if (state.chapter.chapters.length) {
+    const chapter = state.chapter.chapters[state.chapter_number - 1];
+    document.title = `第${chapter.chapter_number || 1}话 - ${
+      chapter.title || "九点漫画"
+    }`;
+  }
 };
 
 const getContents = async (): Promise<void> => {
@@ -48,38 +55,18 @@ const getContents = async (): Promise<void> => {
   const { data }: any = await getContentsApi(
     `${state.id}/${state.chapter_number || 1}`
   );
-  getImgHeight(data.content[0].url, (img: any) => {
-    state.naturalHeight = img.naturalHeight / 2 || 300;
-  });
-  document.title = `第${data.chapter_number}话-${data.title}`;
-  state.plus = data.locked;
-  state.plus = true;
-  state.chapter.chapters[data.chapter_number].locked = data.locked;
   if (data.content?.length) {
     state.ispush = true;
+    state.plus = data.locked;
+    state.plus = true;
+    state.naturalHeight = parseInt(zoomImage(data.content[0])?.height || 286);
+    state.chapter.chapters[data.chapter_number - 1].locked = data.locked;
     content.value = [...content.value, ...data.content];
   }
 };
 
-const scrollPot = (dom: HTMLLIElement) => {
-  dom &&
-    dom.scrollIntoView({
-      block: "center",
-      behavior: "smooth",
-    });
-};
-
 const code = (o: number) => {
   return o ? (1 === o ? "已完结" : "已停更") : "连载中";
-};
-
-const sort = () => {
-  state.sort = !state.sort;
-  state.chapter.chapters = state.chapter.chapters.reverse();
-  scrollPot(
-    navul.value.children[0] ||
-      <HTMLLIElement>document.querySelectorAll("#nav-box li")[0]
-  );
 };
 
 const show = () => {
@@ -87,18 +74,25 @@ const show = () => {
 };
 
 const plus = (is: boolean = true) => {
-  console.log(is);
-
   state.plus = !is ? is : !state.plus;
 };
 
+const sort = () => {
+  state.sort = !state.sort;
+  state.chapter.chapters = state.chapter.chapters.reverse();
+  scrollIntoView(
+    navul.value.children[0] ||
+      <HTMLLIElement>document.querySelectorAll("#nav-box li")[0]
+  );
+};
+
 const anchor = () => {
-  scrollPot(
+  scrollIntoView(
     <HTMLLIElement>document.querySelector(`#anchor-${state.chapter_number}`)
   );
 };
 
-const scroll = () => {
+const scrollBottom = () => {
   if (state.ispush) {
     clearTimeout(out);
     out = setTimeout(() => {
@@ -108,7 +102,18 @@ const scroll = () => {
   }
 };
 
-const toggle = (param?: any) => {
+const scroll = (o: any) => {
+  if (o && 10 < o?.length) {
+    state.naturalHeight = parseInt(zoomImage(o[0])?.height) || 286;
+    state.chapter_number = o[0]?.chapter_number;
+    title();
+  }
+  if (state.show) {
+    state.show = false;
+  }
+};
+
+const toggle = () => {
   state.vsible = !state.vsible;
   setTimeout(() => {
     state.vsible && anchor();
@@ -120,6 +125,7 @@ const select = (number: number) => {
   state.chapter_number = number;
   getContents();
   toggle();
+  title();
   show();
 };
 
@@ -131,6 +137,7 @@ onMounted(async () => {
     const { data }: IResProps = await getChaptersApi(state.id);
     state.chapter = data;
     getContents();
+    title();
   }
 });
 </script>
@@ -141,20 +148,20 @@ onMounted(async () => {
       <a class="back" @click="back()"></a>
     </header>
 
-    <main class="nut-cell">
+    <nut-cell>
       <nut-list
-        id="nut-list"
         :height="state.naturalHeight"
         :listData="content"
         :container-height="state.containerHeight"
         @click="show"
-        @scroll-bottom="scroll"
+        @scroll-bottom="scrollBottom"
+        @scroll="scroll"
       >
         <template v-slot="{ item }">
           <img :src="item.url" :alt="item.sort" />
         </template>
       </nut-list>
-    </main>
+    </nut-cell>
 
     <nut-tabbar
       :bottom="true"
@@ -165,27 +172,27 @@ onMounted(async () => {
     >
       <nut-tabbar-item
         tab-title="首页"
-        img="src/assets/svg/home.svg"
-        activeImg="src/assets/svg/home.svg"
+        :img="home"
+        :activeImg="home"
         @click="go('/')"
       ></nut-tabbar-item>
       <nut-tabbar-item
         tab-title="漫画详情"
-        img="src/assets/svg/info.svg"
-        activeImg="src/assets/svg/info.svg"
+        :img="info"
+        :activeImg="info"
         :to="`/details?id=${state.id}`"
       ></nut-tabbar-item>
       <nut-tabbar-item
         class="vip"
         tab-title="目录"
-        img="src/assets/svg/item.svg"
-        activeImg="src/assets/svg/item.svg"
+        :img="item"
+        :activeImg="item"
         @click="toggle"
       ></nut-tabbar-item>
       <nut-tabbar-item
         tab-title="最近看漫"
-        img="src/assets/svg/time.svg"
-        activeImg="src/assets/svg/time.svg"
+        :img="time"
+        :activeImg="time"
         to="/recent"
       ></nut-tabbar-item>
     </nut-tabbar>
@@ -194,6 +201,7 @@ onMounted(async () => {
       round
       position="bottom"
       :safe-area-inset-bottom="false"
+      style="background: #20243c"
       v-model:visible="state.vsible"
     >
       <div class="nav-top">
@@ -237,13 +245,13 @@ onMounted(async () => {
 
     <nut-popup
       position="bottom"
+      v-model:visible="state.plus"
       :style="{
         '-webkit-backdrop-filter': 'blur(2px)',
         'backdrop-filter': 'blur(2px)',
         background: 'none',
       }"
-      :safe-area-inset-bottom="false"
-      v-model:visible="state.plus"
+      :safe-area-inset-bottom="true"
     >
       <Recharge :show="true" @plus="plus" />
     </nut-popup>
@@ -276,6 +284,17 @@ onMounted(async () => {
     }
   }
 
+  .nut-cell {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    background: wheat;
+  }
+
   &-mainre {
     position: fixed;
     top: 100%;
@@ -298,11 +317,8 @@ onMounted(async () => {
   }
 }
 .nut-popup {
-  background: #20243c;
-  position: relative;
   .nav-top {
     color: white;
-    background: #20243c;
     h3 {
       height: 40px;
       line-height: 60px;
@@ -328,7 +344,7 @@ onMounted(async () => {
           width: 38px;
           height: 18px;
           font-size: 8px;
-          font-weight: 500;
+          font-weight: bold;
           line-height: 19px;
           font-style: normal;
           color: #000;
@@ -388,11 +404,10 @@ onMounted(async () => {
   .nav-box {
     box-sizing: border-box;
     padding: 0 10px 10px;
-    height: 380px;
+    height: 386px;
     color: white;
     overflow-y: auto;
     overflow-x: hidden;
-    background: #20243c;
     -webkit-overflow-scrolling: touch;
 
     &::-webkit-scrollbar {
@@ -523,31 +538,18 @@ onMounted(async () => {
   }
 }
 ::v-deep {
-  .nut-cell {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    border-radius: 0;
-    box-shadow: none;
-    background: black;
-    .nut-list-container {
-      .nut-list-item {
-        margin: 0;
-        img {
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center top;
-        }
-      }
-    }
+  .nut-tabbar-item {
+    margin-bottom: 5px;
   }
-
-  .nut-popup {
-    background: #20243c !important;
+  .nut-list-item {
+    margin: 0;
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
   }
 }
 </style>

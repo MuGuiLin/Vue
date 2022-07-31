@@ -39,11 +39,16 @@ export const request = (par: IPayProps, cb: Function): void => {
 };
 
 try {
-    if (WeixinJSBridge in window) {
-        onBridgeReady();
-    } else {
-        addEvents(document, 'WeixinJSBridgeReady', onBridgeReady);
-    };
+    setTimeout(() => {
+        if (WeixinJSBridge in window) {
+            onBridgeReady();
+        } else {
+            addEvents(document, 'WeixinJSBridgeReady', onBridgeReady);
+        };
+        // document.body.addEventListener('touchmove', function (e) {
+        //     e.preventDefault();
+        // }, { passive: false });
+    }, 300);
 } catch (err) {
     console.log(err);
 }

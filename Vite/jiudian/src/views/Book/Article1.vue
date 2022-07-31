@@ -379,7 +379,6 @@ onMounted(() => {
 }
 
 .nut-tabbar {
-  padding: 8px 0;
   background: rgba(255, 255, 255, 0.8);
   .vip {
     position: relative;

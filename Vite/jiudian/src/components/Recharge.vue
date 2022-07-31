@@ -43,6 +43,8 @@ const recharge = async () => {
   const { data }: any = await rechargeApi();
   state.money = data.money;
   state.recharge_item = setCheck(data.recharge_item);
+  state.item.money = data.recharge_item[0].money;
+  state.recharge_item[0].check = true;
 };
 
 const submit = async () => {
@@ -162,13 +164,12 @@ onMounted(async () => {
     background-size: contain;
 
     .back {
-      position: relative;
-      top: -86px;
-      left: 15px;
+      position: fixed;
+      top: 16px;
+      left: 16px;
       display: block;
       width: 26px;
       height: 26px;
-      border-radius: 50%;
       background: url(@/assets/svg/back.svg) no-repeat;
       background-size: cover;
       z-index: 1;
@@ -251,7 +252,7 @@ onMounted(async () => {
         width: 166px;
         height: 100px;
         background: #f4f8fc;
-        border: 1px solid #f4f8fc;
+        // border: 1px solid #f4f8fc;
         border-radius: 8px;
         overflow: hidden;
         > h3 {
@@ -290,7 +291,8 @@ onMounted(async () => {
         padding-left: 26px;
         width: 100%;
         height: 92px;
-        border: 2px solid #9854bf !important;
+        // border: 2px solid #9854bf !important;
+        box-shadow: 0px 0px 4px 2px #9854bf !important;
         > h3 {
           font-size: 14px;
           color: #370909;
@@ -316,12 +318,13 @@ onMounted(async () => {
 
       > li.select {
         background: #f2edf5;
-        border: 1px solid #9854bf;
+        // border: 1px solid #9854bf;
+        box-shadow: 0px 0px 2px 1px #9854bf !important;
         &::before {
           content: "";
           position: absolute;
-          top: -2px;
-          right: -2px;
+          top: 0;
+          right: 0;
           width: 0;
           height: 0;
           border-top: 36px solid #9854bf;
@@ -330,8 +333,8 @@ onMounted(async () => {
         &::after {
           content: "";
           position: absolute;
-          top: 3px;
-          right: 1px;
+          top: 4px;
+          right: 3px;
           display: block;
           width: 16px;
           height: 16px;

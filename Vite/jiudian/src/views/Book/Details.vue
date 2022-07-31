@@ -330,7 +330,7 @@ onMounted(async () => {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 18px;
     width: 100;
     height: 218px;
@@ -343,11 +343,12 @@ onMounted(async () => {
     }
 
     .back {
-      display: inline-block;
-      margin: -4px 0 0 -3px;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      display: block;
       width: 26px;
       height: 26px;
-      border-radius: 50%;
       background: url(@/assets/svg/back.svg) no-repeat;
       background-size: cover;
       z-index: 1;
@@ -471,6 +472,7 @@ onMounted(async () => {
             border: 1px solid rgba(255, 255, 255, 0.5);
           }
           > i {
+            font-style: normal;
             font-weight: 300;
             font-size: 10px;
             color: #333;
@@ -548,6 +550,10 @@ onMounted(async () => {
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       transition: height 0.6s;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       > b {
         color: #a05bbd;

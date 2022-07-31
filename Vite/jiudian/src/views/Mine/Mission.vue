@@ -429,6 +429,7 @@ onMounted(async () => {
         i {
           position: relative;
           padding: 0 20px 0 5px;
+          font-style: normal;
           color: #9c58be;
           &::before {
             content: "";
