@@ -8,9 +8,9 @@
   integrity sha512-9uJveS9eY9DJ0t64YbIBZICtJy8a5QrDEVdiLCG97fVLpDTpGX7t8mMSb6OWw6Lrnjqj4O8zwjELX3dhoMgiBg==
 
 "@nutui/nutui@^3.1.22":
-  version "3.1.22"
-  resolved "https://registry.yarnpkg.com/@nutui/nutui/-/nutui-3.1.22.tgz#80173670a2aa84cbba2deb645ccc7c28f26e944e"
-  integrity sha512-Bw76ShpdIKf43wdpExBx58cs8DRSxSvHVCHLFM30V8tf16vs6oGklWbGQD5s3+qV1s4pb1RLTD7CoKEbM8vH4A==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@nutui/nutui/-/nutui-3.2.0.tgz#ae1b35f20c587a04cf52c6784a02cd1b5075d172"
+  integrity sha512-sA8YHxnyXUZPunvzJNCaQyg89963QV0VBB4S9gHPDH8vWHHvuB72twEyyvjWmmqsB4xmItzt4TNWW8UFj1JExA==
   dependencies:
     sass "^1.50.0"
     vscode "^1.1.37"

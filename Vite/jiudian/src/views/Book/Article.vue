@@ -34,7 +34,9 @@ const state: IStateProps | any = reactive({
   locked: false,
   chapter: {
     chapters: [],
-    comic_item: {},
+    comic_item: {
+      current_read_chapter: 1,
+    },
   },
   chapter_number: 1,
   naturalHeight: 286,
@@ -58,7 +60,7 @@ const getContents = async (): Promise<void> => {
   if (data.content?.length) {
     state.ispush = true;
     state.plus = data.locked;
-    state.plus = true;
+    // state.plus = true;
     state.naturalHeight = parseInt(zoomImage(data.content[0])?.height || 286);
     state.chapter.chapters[data.chapter_number - 1].locked = data.locked;
     content.value = [...content.value, ...data.content];
@@ -136,6 +138,9 @@ onMounted(async () => {
     chapter_number && (state.chapter_number = chapter_number);
     const { data }: IResProps = await getChaptersApi(state.id);
     state.chapter = data;
+    if (data.comic_item?.current_read_chapter) {
+      state.chapter_number = data.comic_item?.current_read_chapter;
+    }
     getContents();
     title();
   }
@@ -286,6 +291,7 @@ onMounted(async () => {
 
   .nut-cell {
     box-sizing: border-box;
+    position: static;
     margin: 0;
     padding: 0;
     width: 100%;

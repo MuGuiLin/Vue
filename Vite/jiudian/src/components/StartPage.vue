@@ -1,25 +1,19 @@
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-const show = ref(true);
-onMounted(() => {
-  setTimeout(() => {
-    show.value = false;
-  }, 4000);
-});
+<script setup lang="ts" name="StartPage">
 </script>
 
 <template>
-  <section v-if="show" class="start"></section>
+  <div class="start-page"></div>
 </template>
 
 <style lang="scss" scoped>
-.start {
+.start-page {
   @keyframes opacity {
     0% {
       opacity: 1;
     }
     100% {
       opacity: 0;
+      z-index: -1;
     }
   }
   position: fixed;
@@ -31,7 +25,7 @@ onMounted(() => {
   height: 100vh;
   background: white url(@/assets/imgs/start.gif) center center no-repeat;
   background-size: cover;
-  animation: opacity 1s 3s 1 forwards;
+  animation: opacity 0.3s 3.3s forwards;
   z-index: 666;
 }
 </style>

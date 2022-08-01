@@ -6,7 +6,9 @@ import StartPage from "@coms/StartPage.vue";
 
 <template>
   <router-view />
-  <StartPage />
+  <teleport to="body">
+    <StartPage />
+  </teleport>
 </template>
 
 <style lang="scss" >
