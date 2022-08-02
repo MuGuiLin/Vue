@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount, nextTick } from "vue";
 import Recharge from "@coms/Recharge.vue";
 import { useGo, usePar, back } from "@hooks/usePage";
 import { getChaptersApi, getContentsApi } from "@api/book";
@@ -9,6 +9,7 @@ import home from "@/assets/icon/home.webp";
 import info from "@/assets/icon/info.webp";
 import item from "@/assets/icon/item.webp";
 import time from "@/assets/icon/time.webp";
+import { log } from "console";
 
 let out: any = null;
 const go = useGo();
@@ -63,7 +64,8 @@ const getContents = async (): Promise<void> => {
     // state.plus = true;
     state.naturalHeight = parseInt(zoomImage(data.content[0])?.height || 286);
     state.chapter.chapters[data.chapter_number - 1].locked = data.locked;
-    content.value = [...content.value, ...data.content];
+    // content.value = [...content.value, ...data.content];
+    content.value.push(...[data.content]);
   }
 };
 
@@ -105,11 +107,28 @@ const scrollBottom = () => {
 };
 
 const scroll = (o: any) => {
-  if (o && 10 < o?.length) {
-    state.naturalHeight = parseInt(zoomImage(o[0])?.height) || 286;
-    state.chapter_number = o[0]?.chapter_number;
-    title();
+  const scrollTop =
+    document.documentElement.scrollTop || document.body.scrollTop;
+
+  const windowHeight =
+    document.documentElement.clientHeight || document.body.clientHeight;
+
+  const scrollHeight =
+    document.documentElement.scrollHeight || document.body.scrollHeight;
+
+  // if (
+  //   scrollTop + windowHeight + clientHeight * 10 > scrollHeight &&
+  //   content.length !== 0
+  // ) {
+  if ((scrollTop + windowHeight) * 2 > scrollHeight && content.length !== 0) {
+    scrollBottom();
   }
+
+  // if (o && 10 < o?.length) {
+  //   state.naturalHeight = parseInt(zoomImage(o[0])?.height) || 286;
+  //   state.chapter_number = o[0]?.chapter_number;
+  //   title();
+  // }
   if (state.show) {
     state.show = false;
   }
@@ -144,6 +163,12 @@ onMounted(async () => {
     getContents();
     title();
   }
+
+  window.addEventListener("scroll", scroll, true);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", scroll);
 });
 </script>
 
@@ -153,7 +178,20 @@ onMounted(async () => {
       <a class="back" @click="back()"></a>
     </header>
 
-    <nut-cell>
+    <main class="article-main" @click="show">
+      <div
+        class="comics"
+        v-for="(c, i) in content"
+        :key="i"
+        :id="'comics-' + Number(i + 1)"
+      >
+        <div class="pict" v-for="(p, j) in c" :key="j">
+          <img :src="p.url" :alt="p.sort" />
+        </div>
+      </div>
+    </main>
+
+    <!-- <nut-cell>
       <nut-list
         :height="state.naturalHeight"
         :listData="content"
@@ -166,7 +204,7 @@ onMounted(async () => {
           <img :src="item.url" :alt="item.sort" />
         </template>
       </nut-list>
-    </nut-cell>
+    </nut-cell> -->
 
     <nut-tabbar
       :bottom="true"
@@ -286,6 +324,20 @@ onMounted(async () => {
       background: url(@/assets/icon/back.webp) no-repeat;
       background-size: cover;
       z-index: 1;
+    }
+  }
+
+  &-main {
+    width: 100vw;
+    .comics {
+      .pict {
+        img {
+          display: block;
+          width: 100%;
+          object-fit: cover;
+          object-position: center top;
+        }
+      }
     }
   }
 
