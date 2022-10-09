@@ -16,7 +16,9 @@ body {
     scrollbar-width            : none;
 
     &::-webkit-scrollbar {
-        display: none;
+        display        : none;
+        opacity        : 0;
+        scrollbar-width: none;
     }
 }
 
