@@ -10,6 +10,7 @@
     <router-link to="tsx">Tsx</router-link> |
     <router-link to="404">404</router-link>
   </nav>
+  <hr />
   <router-view></router-view>
 </template>
 
@@ -21,7 +22,9 @@ nav {
   }
 
   a.router-link-active {
-    color: green;
+    color: white;
+	font-size: 22px;
+	font-weight: bold;
   }
 }
 </style>
