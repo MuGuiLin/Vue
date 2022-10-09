@@ -1,5 +1,9 @@
 <script lang="ts" setup>
+<<<<<<< HEAD
 import { ref, reactive, onMounted } from "vue";
+=======
+import { ref, reactive, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
+>>>>>>> e1fb8abe5b4d1384fa8abd55ca304b31ee96d349
 import Recharge from "@coms/Recharge.vue";
 import { useGo, usePar, back } from "@hooks/usePage";
 import { getChaptersApi, getContentsApi } from "@api/book";
@@ -130,6 +134,11 @@ const select = (number: number) => {
   title();
   show();
 };
+
+watch(() => state.vsible, (n, o:any) => {
+  console.log(55, n, o);
+  
+})
 
 onMounted(async () => {
   const { id, chapter_number } = query;
