@@ -22,12 +22,13 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/Slot"),
     },
     {
-        path: "/svg",
+        // path: '/user/:id',
+        path: "/svg:",
         name: "Svg",
         component: () => import("@/views/Svg"),
         children: [
             {
-                path: "/demo",
+                path: "",
                 name: "SvgDemo",
                 component: () => import("@/views/Svg/Demo"),
             },
@@ -35,7 +36,12 @@ export const routes: Array<RouteRecordRaw> = [
                 path: "tsx",
                 name: "SvgTsx",
                 component: () => import("@/views/Svg/Tsx"),
-            }
+            },
+            {
+                path: "defaule",
+                name: "SvgDefaule",
+                component: () => import("@/views/Svg/Defaule.vue"),
+            },
         ],
 
     },
@@ -45,7 +51,8 @@ export const routes: Array<RouteRecordRaw> = [
         // redirect: "/",
         component: () => import("@/views/NotFound"),
         meta: {
-            title: "TSX"
+            title: "TSX",
+            noCache: true
         }
     },
 ];

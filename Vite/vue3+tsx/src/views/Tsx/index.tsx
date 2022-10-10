@@ -35,3 +35,17 @@ export default defineComponent({
         );
     },
 });
+
+/**
+ *  1、在vue中使用tsx 需要安装 npm i @vitejs/plugin-vue-jsx -D
+ * 
+ *  2、然后在vite.config.ts配置文件里 将其添加到plugins:[]中
+ *      import jsx from '@vitejs/plugin-vue-jsx'
+ *      plugins: [
+ *          vue(),
+ *          jsx({
+ *              transformOn: true,
+ *              mergeProps: true,
+ *          })
+ *      ]
+ */
