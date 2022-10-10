@@ -8,7 +8,11 @@ import jsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig((config: UserConfig) => {
   return {
     plugins: [
-      vue(), jsx({
+      vue({
+        // https://cn.vuejs.org/guide/extras/reactivity-transform.html#explicit-opt-in
+        reactivityTransform: true
+      }),
+      jsx({
         transformOn: true,
         mergeProps: true,
       })

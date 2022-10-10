@@ -50,14 +50,18 @@ export default defineComponent({
         return () => {
             console.log('tsx插槽：', ctx.slots);
 
-            return <div>
-                {/* 默认插槽 */}
-                {ctx.slots.default && ctx.slots.default()}
+            /**
+             * 在.tsx插槽中，其实就是在子组件中去执行父组件传递进来的函数，如果要传参数只需要把参数放在函数中返回去就OK了。
+             */
 
-                {/* 具名插槽 */}
+            return <div>
+                {/* 默认插槽出口 */}
+                {ctx.slots.default && ctx.slots.default({ data1: "我是.tsx默认插槽出口传来的数据666", data2: state.arr[0] })}
+
+                {/* 具名插槽出口 */}
                 {ctx.slots.juming && ctx.slots.juming()}
 
-                {/* 作用域插槽 */}
+                {/* 作用域插槽出口 */}
                 {ctx.slots.zuoyongyu && ctx.slots.zuoyongyu(state)}
 
             </div>
