@@ -6,9 +6,11 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="about">About</router-link> |
-    <router-link to="tsx">Tsx</router-link> |
-    <router-link to="404">404</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/tsx">Tsx</router-link> |
+    <router-link to="/slot">Slot</router-link> |
+    <router-link to="/svg">Svg</router-link> |
+    <router-link to="/404">404</router-link>
   </nav>
   <hr />
   <router-view></router-view>
