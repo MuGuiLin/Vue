@@ -5,9 +5,9 @@ export default defineComponent({
     props: {
     },
     setup(props) {
-        const msg = ref('Hello tsx！');
+        const msg = ref('Hello .Tsx！');
         const state = reactive({
-            count: 1
+            count: 404
         });
         return {
             msg,
@@ -23,8 +23,8 @@ export default defineComponent({
     render() {
         console.log(this);
         const { msg, state } = this;
-        return <h1>
-            {msg} <button onClick={(event) => { state.count++ }}>{state.count}</button>
+        return <h1 style={{ textAlign: 'center', lineHeight: '100vh' }} onClick={(event) => { state.count++ }}>
+            {msg}<b>{state.count}</b>
         </h1>
     }
 });

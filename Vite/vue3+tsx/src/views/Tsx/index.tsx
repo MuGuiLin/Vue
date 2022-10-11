@@ -1,5 +1,5 @@
 import { defineComponent, ref } from "vue";
-import less from "./style.module.less";
+import style from "./style.module.less";
 import MuButton from "@/components/tsxcoms/MuButton";
 
 export default defineComponent({
@@ -16,16 +16,16 @@ export default defineComponent({
         };
     },
     render() {
-        console.log(111, this, less);
+        console.log(111, this, style);
         const { count } = this;
         return (
             <div
-                class={less.color}
+                class={style.color}
                 onClick={() => {
                     this.push(66);
                 }}
             >
-                数据值：<b class={less.big}>{count}</b>
+                数据值：<b class={style.big}>{count}</b>
                 <MuButton>默认按钮{count}</MuButton>
                 <MuButton type="primary">主要按钮{count}</MuButton>
                 <MuButton type="success">成功按扭{count}</MuButton>

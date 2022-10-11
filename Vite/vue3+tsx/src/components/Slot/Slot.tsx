@@ -38,7 +38,7 @@ export default defineComponent({
         state.sort = () => {
             type = !type;
 
-            state.arr.sort((a, b) => {
+            state.arr.sort((a: { [x: string]: number; age: number; }, b: { [x: string]: number; age: number; }) => {
                 if (type) {
                     return a['age'] > b.age ? 1 : -1;
                 } else {
