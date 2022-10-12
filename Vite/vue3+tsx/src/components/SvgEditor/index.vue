@@ -1,182 +1,52 @@
 
 <script setup lang="ts" name="SvgEditor">
-import { onDeactivated, onMounted, onUnmounted } from "vue";
+import { Class } from "@babel/types";
+import { reactive, onMounted, onUnmounted } from "vue";
 
-class scale {
-    private readonly oDraw: HTMLDivElement;
-    private readonly oCanvas: HTMLDivElement;
+import scale from "./hooks/scale";
 
-    private readonly cScaleX: HTMLCanvasElement | any;
-    private readonly cScaleY: HTMLCanvasElement | any;
-    private readonly oScaleX: HTMLCanvasElement;
-    private readonly oScaleY: HTMLCanvasElement;
+interface IState {
+    width: number,
+    height: number,
+    scale: any,
+    lineX: number;
+    lineY: number;
+};
 
-    public scaleXW: number = 0;
-    public scaleXH: number = 0;
-    public scaleYH: number = 0;
-    public scaleYW: number = 0;
-    public scaleXZ: number = 0;
-    public scaleYZ: number = 0;
+const state = <IState>reactive({
+    width: 1008,
+    height: 567,
+    // width: 1920,
+    // height: 1080,
+    lineX: 100,
+    lineY: 100,
+    scale: null,
+});
 
-    constructor() {
-        this.oDraw = document.querySelector(".draw") as HTMLDivElement;
-        this.oCanvas = document.querySelector(".canvas") as HTMLDivElement;
-        this.oScaleX = document.querySelector(".scale-x") as HTMLCanvasElement;
-        this.oScaleY = document.querySelector(".scale-y") as HTMLCanvasElement;
-        this.cScaleX = this.oScaleX.getContext("2d") as
-            | CanvasRenderingContext2D
-            | any;
-        this.cScaleY = this.oScaleY.getContext("2d") as
-            | CanvasRenderingContext2D
-            | any;
-        this.init();
+const resize = ({ target }: Event | any) => {
+    if ('width' === target.name) {
+        state.width = target.value;
+    } else if ('height' === target.name) {
+        state.height = target.value;
     }
+    setTimeout(() => {
+        state.scale.reset();
+    }, 300);
+};
 
-    draw() {
-        const {
-            oDraw,
-            cScaleX,
-            cScaleY,
-            scaleXW,
-            scaleYW,
-            scaleXH,
-            scaleYH,
-            scaleXZ,
-            scaleYZ,
-        } = this;
-
-        cScaleX.clearRect(0, 0, scaleXW, scaleXH);
-        cScaleY.clearRect(0, 0, scaleYW, scaleYH);
-
-        for (let i = 0; i < 50; i++) {
-            cScaleX.beginPath();
-            cScaleY.beginPath();
-
-            if (i === 0) {
-                cScaleX.fillStyle = cScaleX.strokeStyle = "rgb(0, 222, 204)";
-                cScaleY.fillStyle = cScaleY.strokeStyle = "rgb(0, 222, 204)";
-            } else {
-                cScaleX.fillStyle = cScaleX.strokeStyle = "rgb(156, 156, 156)";
-                cScaleY.fillStyle = cScaleY.strokeStyle = "rgb(156, 156, 156)";
-            }
-            //
-            cScaleY.lineWidth = cScaleX.lineWidth = 0.5;
-            // 线宽0.5 模糊解决 scaleXZ + i * 50 - (0.5)
-            // 原点向右
-            // 0 50 100 150
-
-            cScaleX.moveTo(scaleXZ + i * 50 - 0.5, 0);
-            cScaleX.lineTo(scaleXZ + i * 50 - 0.5, scaleXH);
-
-            cScaleY.moveTo(0, scaleYZ + i * 50 - 0.5);
-            cScaleY.lineTo(scaleYW, scaleYZ + i * 50 - 0.5);
-
-            // Y
-            cScaleY.moveTo(scaleYW * 0.8, scaleYZ + i * 50 + 10 - 0, 5);
-            cScaleY.lineTo(scaleYW, scaleYZ + i * 50 + 10 - 0.5);
-
-            cScaleY.moveTo(scaleYW * 0.65, scaleYZ + i * 50 + 20 - 0, 5);
-            cScaleY.lineTo(scaleYW, scaleYZ + i * 50 + 20 - 0.5);
-
-            cScaleY.moveTo(scaleYW * 0.8, scaleYZ + i * 50 + 30) - 0, 5;
-            cScaleY.lineTo(scaleYW, scaleYZ + i * 50 + 30 - 0.5);
-
-            cScaleY.moveTo(scaleYW * 0.65, scaleYZ + i * 50 + 40 - 0, 5);
-            cScaleY.lineTo(scaleYW, scaleYZ + i * 50 + 40 - 0.5);
-            // Y
-
-            // X
-            cScaleX.moveTo(scaleXZ + i * 50 - 0.5 + 10, scaleXH * 0.8);
-            cScaleX.lineTo(scaleXZ + i * 50 - 0.5 + 10, scaleXH);
-
-            cScaleX.moveTo(scaleXZ + i * 50 - 0.5 + 20, scaleXH * 0.65);
-            cScaleX.lineTo(scaleXZ + i * 50 - 0.5 + 20, scaleXH);
-
-            cScaleX.moveTo(scaleXZ + i * 50 - 0.5 + 30, scaleXH * 0.8);
-            cScaleX.lineTo(scaleXZ + i * 50 - 0.5 + 30, scaleXH);
-
-            cScaleX.moveTo(scaleXZ + i * 50 - 0.5 + 40, scaleXH * 0.65);
-            cScaleX.lineTo(scaleXZ + i * 50 - 0.5 + 40, scaleXH);
-            // X
-
-            cScaleY.font = cScaleX.font = "9px 微软雅黑";
-            cScaleX.fillText(i * 50, scaleXZ + i * 50 + 2, 9);
-
-            let n1 = String(i * 50).split("");
-            n1.forEach((item, index) => {
-                cScaleY.fillText(item, 3, scaleYZ + i * 50 + 9 * (index + 1));
-            });
-
-            // 原点向左
-            cScaleX.moveTo(scaleXZ - i * 50 - 0.5, 0);
-            cScaleX.lineTo(scaleXZ - i * 50 - 0.5, scaleXH);
-
-            cScaleY.moveTo(scaleYW * 0.8, scaleYZ - i * 50 - 10 - 0.5);
-            cScaleY.lineTo(scaleYW, scaleYZ - i * 50 - 10 - 0.5);
-
-            cScaleY.moveTo(scaleYW * 0.65, scaleYZ - i * 50 - 20 - 0.5);
-            cScaleY.lineTo(scaleYW, scaleYZ - i * 50 - 20 - 0.5);
-
-            cScaleY.moveTo(scaleYW * 0.8, scaleYZ - i * 50 - 30) - 0.5;
-            cScaleY.lineTo(scaleYW, scaleYZ - i * 50 - 30 - 0.5);
-
-            cScaleY.moveTo(scaleYW * 0.65, scaleYZ - i * 50 - 40 - 0.5);
-            cScaleY.lineTo(scaleYW, scaleYZ - i * 50 - 40 - 0.5);
-
-            cScaleX.moveTo(scaleXZ - i * 50 - 0.5 - 10, scaleXH * 0.8);
-            cScaleX.lineTo(scaleXZ - i * 50 - 0.5 - 10, scaleXH);
-
-            cScaleX.moveTo(scaleXZ - i * 50 - 0.5 - 20, scaleXH * 0.65);
-            cScaleX.lineTo(scaleXZ - i * 50 - 0.5 - 20, scaleXH);
-
-            cScaleX.moveTo(scaleXZ - i * 50 - 0.5 - 30, scaleXH * 0.8);
-            cScaleX.lineTo(scaleXZ - i * 50 - 0.5 - 30, scaleXH);
-
-            cScaleX.moveTo(scaleXZ - i * 50 - 0.5 - 40, scaleXH * 0.65);
-            cScaleX.lineTo(scaleXZ - i * 50 - 0.5 - 40, scaleXH);
-
-            cScaleX.fillText(-i * 50, scaleXZ - i * 50 + 2, 9);
-
-            let n2 = String(-i * 50).split("");
-            n2.forEach((item, index) => {
-                cScaleY.fillText(item, 3, scaleYZ - i * 50 + 9 * (index + 1));
-            });
-
-            cScaleX.stroke();
-            cScaleY.stroke();
-        }
-    }
-
-    reset() {
-        const { oDraw, oCanvas, oScaleX, oScaleY } = this;
-
-        this.scaleXW = oScaleX.width = oDraw.offsetWidth;
-        this.scaleYH = oScaleY.height = oDraw.offsetHeight;
-
-        this.scaleXZ = oCanvas.offsetLeft - Math.round(oCanvas.offsetWidth / 2);
-        this.scaleYZ = oCanvas.offsetTop - Math.round(oCanvas.offsetHeight / 2);
-        this.draw();
-    }
-
-    init() {
-        const { oDraw, oScaleX, oScaleY } = this;
-
-        this.scaleXW = oScaleX.width = oDraw.offsetWidth;
-        this.scaleXH = oScaleX.height = 15;
-
-        this.scaleYH = oScaleY.height = oDraw.offsetHeight;
-        this.scaleYW = oScaleY.width = 15;
-
-        window.onresize = () => {
-            this.reset();
-        };
-
-        this.reset();
-    }
+const mousemove = ({ clientX, clientY }: Event | any) => {
+    state.lineX = clientX - 180;
+    state.lineY = clientY - 50;
 }
 
+
 onMounted(() => {
-    new scale();
+    state.scale = new scale({
+        draw: '.draw',
+        canvas: '.canvas',
+        scale_x: '.scale-x',
+        scale_y: '.scale-y'
+    });
 });
 
 onUnmounted(() => {
@@ -189,34 +59,41 @@ onUnmounted(() => {
         <header class="mu-header">
             <menu></menu>
         </header>
-
         <section class="mu-canvas">
             <aside class="tool"></aside>
-            <main class="draw">
+            <!-- <main class=""> -->
+            <div class="draw" @mousemove="mousemove">
                 <div class="scale">
-                    <canvas class="scale-x"></canvas>
-                    <canvas class="scale-y"></canvas>
+                    <div class="scale-x-box">
+                        <canvas class="scale-x"></canvas>
+                    </div>
+                    <div class="scale-y-box">
+                        <canvas class="scale-y"></canvas>
+                    </div>
                 </div>
                 <div class="canvas">
-                    <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-                        <foreignObject id="background_pattern" width="100%" height="100%" preserveAspectRatio="xMinYMin"
-                            style="pointer-events: none">
-                            <div style="
-                  pointer-events: none;
-                  width: 100%;
-                  height: 100%;
-                  background-image: url(data:image/gif;base64,R0lGODlhEAAQAIAAAP///9bW1iH5BAAAAAAALAAAAAAQABAAAAIfjG+gq4jM3IFLJgpswNly/XkcBpIiVaInlLJr9FZWAQA7);
-                "></div>
-                        </foreignObject>
-                    </svg>
+                    <svg id="svg" xmlns="http://www.w3.org/2000/svg" :width="state.width" :height="state.height"
+                        viewBox="0 0 1008 567"></svg>
                 </div>
                 <div class="subline">
-                    <div class="subline-x"></div>
-                    <div class="subline-y"></div>
+                    <div class="subline-x" :style="{top: state.lineY + 'px'}"></div>
+                    <div class="subline-y" :style="{left: state.lineX + 'px'}"></div>
                 </div>
-            </main>
-            <aside class="attr"></aside>
+            </div>
+            <aside class="attr">
+                <h4>画布大小：</h4>
+                <input type="number" :value="state.width" name="width" @input="resize" />
+                <input type="number" :value="state.height" name="height" @input="resize" />
+            </aside>
+            <!-- </main> -->
+
         </section>
+        <footer class="footer">
+            <p>
+                <b>X：{{state.lineX}}</b>
+                <b>Y：{{state.lineY}}</b>
+            </p>
+        </footer>
     </article>
 </template>
 
@@ -228,68 +105,82 @@ onUnmounted(() => {
     height: 100%;
     overflow: hidden;
     background-color: rgb(30, 30, 30);
-    background: radial-gradient(#1c0e3e -30%, rgb(30, 30, 30) 100%);
+    background: radial-gradient(#0229A0 -150%, rgb(30, 30, 30) 100%);
 
     .mu-header {
         height: 50px;
         background-color: rgb(60, 60, 60);
-        background-color: white;
+    }
+
+    .tool {
+        flex-basis: 180px;
+        height: 100%;
+        background-color: rgb(45, 45, 45);
+        border-right: 1px solid rgb(100, 100, 100);
     }
 
     .mu-canvas {
+        box-sizing: border-box;
+        position: relative;
         display: flex;
+        height: calc(100vh - 100px);
+        border-top: 1px solid rgb(100, 100, 100);
+        overflow: hidden;
 
-        height: calc(100vh - 50px);
 
-        .tool {
-            flex-basis: 180px;
-            height: 100%;
-            background-color: rgb(45, 45, 45);
-            background-color: white;
-            border-top: 1px solid rgb(100, 100, 100);
-        }
 
         .draw {
             box-sizing: border-box;
             position: relative;
             flex: 1;
-            min-width: 1008px;
+            display: flex;
+            flex-direction: column;
             overflow: auto;
 
             .scale {
                 position: relative;
                 z-index: 1;
 
-                &::before {
-                    content: "";
-                    box-sizing: border-box;
-                    display: block;
-                    width: 15px;
-                    height: 15px;
-                    background: rgb(80, 80, 80);
-                    border: 1px solid rgb(100, 100, 100);
-                    border-bottom: 0;
-                    border-right: 0;
-                }
+                // &::after {
+                //     content: "";
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: block;
+                //     width: 15px;
+                //     height: 17px;
+                //     background: rgb(70, 70, 70);
+                //     box-shadow: 2px 6px 12px 4px rgba(30, 30, 30, .6);
+                // }
 
-                &-x {
-                    box-sizing: border-box;
-                    position: absolute;
+                &-x-box {
+                    position: sticky;
                     top: 0;
-                    left: 15px;
-                    border-top: 1px solid rgb(100, 100, 100);
+                    left: 0;
+                    width: 100%;
+                    height: 17px;
                     background: rgb(80, 80, 80);
-                    box-shadow: 0px 2px 6px 0px rgb(30 30 30 / 60%);
+
+                    >.scale-x {
+                        background: rgb(80, 80, 80);
+                        box-shadow: 0px 2px 6px 0px rgba(30, 30, 30, .6);
+                    }
                 }
 
-                &-y {
-                    box-sizing: border-box;
-                    position: absolute;
-                    top: 15px;
+                &-y-box {
+                    position: sticky;
+                    top: 0;
                     left: 0;
-                    border-left: 1px solid rgb(100, 100, 100);
+                    width: 15px;
+                    height: 100%;
                     background: rgb(80, 80, 80);
-                    box-shadow: 2px 0px 6px 0px rgb(30 30 30 / 60%);
+
+                    >.scale-y {
+                        position: relative;
+                        top: -17px;
+                        background: rgb(80, 80, 80);
+                        box-shadow: 2px 0px 6px 0px rgba(30, 30, 30, .6);
+                    }
                 }
             }
 
@@ -298,43 +189,62 @@ onUnmounted(() => {
                 position: absolute;
                 top: 50%;
                 left: 50%;
+                background-image: url(data:image/png;base64,R0lGODlhEAAQAIAAAP///9bW1iH5BAAAAAAALAAAAAAQABAAAAIfjG+gq4jM3IFLJgpswNly/XkcBpIiVaInlLJr9FZWAQA7);
                 transform: translate(-50%, -50%);
-                width: 1008px;
-                height: 567px;
-                width: 1920px;
-                height: 1080px;
-                background: white;
-                z-index: 0;
+
+                svg {
+                    transition: all 500ms cubic-bezier(0.16, 0.66, 0.28, 0.96);
+                }
             }
 
             .subline {
-                position: absolute;
-                top: 0;
-                left: 0;
+                user-select: none;
+
+                &>div {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background-color: blueviolet;
+                }
 
                 &-x {
-                    width: 0px;
+                    top: 0;
                     height: 1px;
                     background: linear-gradient(to right, blueviolet, rgb(0, 124, 204));
                 }
 
                 &-y {
+                    left: 0;
                     width: 1px;
-                    height: 0px;
-                    background: rgb(80, 80, 80);
+                    background-image: linear-gradient(blueviolet, rgb(0, 124, 204));
                 }
             }
+
+
         }
 
         .attr {
-            position: relative;
+            box-sizing: border-box;
+            padding: 10px;
             flex-basis: 300px;
+            width: 300px;
             height: 100%;
             background-color: rgb(80, 80, 80);
-            border-top: 1px solid rgb(100, 100, 100);
             border-left: 1px solid rgb(100, 100, 100);
+            box-shadow: -2px 0px 6px 0px rgba(30, 30, 30, .6);
             z-index: 1;
         }
+    }
+
+    .footer {
+        box-sizing: border-box;
+        padding: 5px 20px;
+        width: 100%;
+        height: 30px;
+        text-align: center;
+        background: wheat;
     }
 }
 </style>
