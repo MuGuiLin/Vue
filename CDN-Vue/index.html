@@ -39,14 +39,24 @@
           >https://cn.vuejs.org</a
         >
       </p>
+      <p class="p">
+        <a
+          class="a"
+          href="./esm-browser.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >esm-browser 模块化开发</a
+        >
+      </p>
+      <!-- <mu-input v-module:value="count" /> -->
     </div>
-    <script>
+    <script type="module">
+    //   import Input from "./js/components/mu-input.js";
       const { createApp, ref, onMounted } = Vue;
       const app = createApp({
         data() {
           return {
-            message:
-              "Vue3.js 易学易用，性能出色，适用场景丰富的 Web 前端框架。",
+            message: "Vue3.js 易学易用，性能出色，适用场景丰富的 Web 前端框架。",
           };
         },
         mounted() {
