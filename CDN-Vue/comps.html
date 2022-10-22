@@ -9,31 +9,46 @@
   <body>
     <div id="app" class="app">
       <h3 class="h3">{{ count }}</h3>
-      <button class="button" @click="pull(0)">{{ count }}</button>
+      <button class="button" @click="pull(0)">{{ count }}</button>、
       <mu-input :value="count" type="number" @input="pull" :input="pull" />
-      <!-- <mu-input :value="count" type="password" :input="pull" /> -->
+      <mu-button type="button" :click="click" @click="click">666</mu-button>
     </div>
     <script type="module">
       import { createApp, ref } from "./js/package/vue.esm-browser.js";
 
       import Input from "./js/components/mu-input.js";
+      import Button from "./js/components/mu-button/index.js";
+      console.log(11111, Button);
 
       const app = createApp({
-        components: {
-          "mu-input": Input,
-        },
+        // components: {
+        //   "mu-input": Input,
+        //   "mu-button": Button,
+        // },
         setup(props) {
-          let count = ref(0);
+          let count = ref(1);
           const pull = (num = 0) => {
             count.value = num ? num : Number(count.value) + 1;
           };
+
+          const click = () => {
+            alert(666);
+          };
+
           return {
             pull,
             count,
+            click,
           };
         },
       });
+      [Input, Button].forEach((o, i, a) => {
+        app.component(o.name, o);
+      });
+      app.component(Button.name, Button);
+
       app.mount("#app");
+      console.log("app", app);
     </script>
   </body>
 </html>

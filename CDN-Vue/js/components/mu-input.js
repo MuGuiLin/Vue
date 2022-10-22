@@ -3,8 +3,9 @@ import { defineComponent, ref } from '../package/vue.esm-browser.js';
 export default defineComponent({
     name: 'mu-input',
     template: `
-    <label>{{label}}：<input :type="type" v-model="value" @input="input" /></label>
-    <label>{{label}}：<input :type="type" v-model="value" @input="input2" /></label>
+    <label>{{label}}：<input :type="type" v-model="value" @input="input" /></label>、
+    <label>{{label}}：<input :type="type" v-model="value" @input="input2" /></label>、
+    <label>{{label}}：<input :type="type" v-model="value" @input="value = $event.target.value" /></label>
     `,
     props: {
         label: {
