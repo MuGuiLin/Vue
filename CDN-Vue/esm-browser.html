@@ -51,9 +51,15 @@
           target="_blank"
           rel="noopener noreferrer"
           >global 非模块化开发</a
+        >、
+        <a
+          class="a"
+          href="./comps.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >模块化自定义组件开发</a
         >
       </p>
-      <mu-input :value="count" @input="pull" />
     </div>
     <script type="module">
       //import { createApp }  from './js/package/vue.esm-browser.js';  // 注：以模块形式引用本地资源，需要在服务器环境中以http://协议打开，不能在本地以file://协议 文件形式打开！！
@@ -62,12 +68,7 @@
         ref,
       } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js"; // 这种引用本地资源，就可以在本地以文件形式打开，前提是要联网才行！！
 
-      import Input from "./js/components/mu-input.js";
-
       const app = createApp({
-        components: {
-          "mu-input": Input,
-        },
         data() {
           return {
             message:
@@ -77,7 +78,8 @@
         setup(props) {
           let count = ref(0);
           const pull = (num = 0) => {
-            count.value = num ? num : count.value+1;
+            count.value++;
+            count.value = count.value + 1;
           };
           return {
             pull,

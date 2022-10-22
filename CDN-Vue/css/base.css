@@ -115,7 +115,7 @@ body {
 
 .logo {
     height     : 16em;
-    padding    : 2.6em;
+    padding    : 2.2em;
     will-change: filter;
 }
 
@@ -127,7 +127,7 @@ body {
     max-width              : 960px;
     margin                 : 0 auto;
     font-size              : 76px;
-    line-height            : 2;
+    line-height            : 1.6;
     font-weight            : 900;
     letter-spacing         : -1.5px;
     background             : -webkit-linear-gradient(315deg, #42d392 25%, #647eff);

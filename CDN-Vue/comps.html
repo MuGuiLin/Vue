@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDN-Vue</title>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <h3 class="h3">{{ count }}</h3>
+      <button class="button" @click="pull(0)">{{ count }}</button>
+      <mu-input :value="count" type="number" @input="pull" :input="pull" />
+      <!-- <mu-input :value="count" type="password" :input="pull" /> -->
+    </div>
+    <script type="module">
+      import { createApp, ref } from "./js/package/vue.esm-browser.js";
+
+      import Input from "./js/components/mu-input.js";
+
+      const app = createApp({
+        components: {
+          "mu-input": Input,
+        },
+        setup(props) {
+          let count = ref(0);
+          const pull = (num = 0) => {
+            count.value = num ? num : Number(count.value) + 1;
+          };
+          return {
+            pull,
+            count,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
