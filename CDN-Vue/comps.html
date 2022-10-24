@@ -10,21 +10,24 @@
     <div id="app" class="app">
       <h3 class="h3">{{ count }}</h3>
       <button class="button" @click="pull(0)">{{ count }}</button>、
-      <mu-input :value="count" type="number" @input="pull" :input="pull" />
-      <mu-button type="button" :click="click" @click="click">666</mu-button>
+      <!-- <mu-input :value="count" type="number" @input="pull" :input="pull" />
+      <mu-button type="button" :click="click" @click="click">666</mu-button> -->
+      <mu-render class="mupiao" :render="render"></mu-render>
     </div>
     <script type="module">
       import { createApp, ref } from "./js/package/vue.esm-browser.js";
 
       import Input from "./js/components/mu-input.js";
       import Button from "./js/components/mu-button/index.js";
+      import H from "./js/h.js";
       console.log(11111, Button);
 
       const app = createApp({
-        // components: {
+        components: {
         //   "mu-input": Input,
         //   "mu-button": Button,
-        // },
+        'mu-render': H
+        },
         setup(props) {
           let count = ref(1);
           const pull = (num = 0) => {
@@ -39,6 +42,35 @@
             pull,
             count,
             click,
+            render: (h, params) => {
+            return h(
+              "div",
+              {
+                style: {
+                  fontSize: "10px",
+                },
+              },
+              [
+                h(
+                  "button",
+                  {
+                    props: {
+                      type: "ghost",
+                    },
+                    style: {
+                      fontSize: "10px",
+                    },
+                    on: {
+                      click: () => {
+                        console.log(params);
+                      },
+                    },
+                  },
+                  "其他"
+                ),
+              ]
+            );
+          },
           };
         },
       });
