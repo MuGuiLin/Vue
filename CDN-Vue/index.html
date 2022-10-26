@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDN-Vue</title>
+    <link rel="stylesheet" href="./css/base.css" />
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <script src="./js/package/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <img src="./img/vue.svg" class="logo vue" alt="Vue logo" />
+      <h1 class="h1">
+        渐进式 {{ count }}
+        <br />
+        JavaScript 框架 CDN式引用
+      </h1>
+
+      <h3 class="h3">{{ message }}</h3>
+      <button class="button" @click="pull">{{ count }}</button>
+      <p class="p">
+        下载地址：
+        <a
+          class="a"
+          href="https://cdnjs.com/libraries/vue"
+          target="_blank"
+          rel="noopener noreferrer"
+          >https://cdnjs.com/libraries/vue</a
+        >
+      </p>
+      <p class="p">
+        官方文档：<a
+          class="a"
+          href="https://cn.vuejs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >https://cn.vuejs.org</a
+        >
+      </p>
+      <p class="p">
+        <a
+          class="a"
+          href="./esm-browser.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >esm-browser 模块化开发</a
+        >
+      </p>
+      <!-- <mu-input v-module:value="count" /> -->
+    </div>
+    <script type="module">
+    //   import Input from "./js/components/mu-input.js";
+      const { createApp, ref, onMounted } = Vue;
+      const app = createApp({
+        data() {
+          return {
+            message: "Vue3.js 易学易用，性能出色，适用场景丰富的 Web 前端框架。",
+          };
+        },
+        mounted() {
+          console.log(2);
+        },
+        setup(props) {
+          let count = ref(0);
+          const pull = () => {
+            count.value++;
+          };
+          onMounted(() => {
+            console.log(1);
+          });
+          return {
+            pull,
+            count,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

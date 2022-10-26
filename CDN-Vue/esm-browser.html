@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDN-Vue</title>
+    <link rel="stylesheet" href="./css/base.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <img src="./img/vue.svg" class="logo vue" alt="Vue logo" />
+      <h1 class="h1">
+        渐进式 {{ count }}
+        <br />
+        JavaScript 框架 CDN式引用
+      </h1>
+
+      <h3 class="h3">{{ message }}</h3>
+      <button class="button" @click="pull">{{ count }}</button>
+      <p class="p">
+        下载地址：
+        <a
+          class="a"
+          href="https://cdnjs.com/libraries/vue"
+          target="_blank"
+          rel="noopener noreferrer"
+          >https://cdnjs.com/libraries/vue</a
+        >
+      </p>
+      <p class="p">
+        官方文档：<a
+          class="a"
+          href="https://cn.vuejs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >https://cn.vuejs.org</a
+        >
+      </p>
+      <p class="p">
+        <a
+          class="a"
+          href="./index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >global 非模块化开发</a
+        >、
+        <a
+          class="a"
+          href="./comps.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >模块化自定义组件开发</a
+        >
+      </p>
+    </div>
+    <script type="module">
+      //import { createApp }  from './js/package/vue.esm-browser.js';  // 注：以模块形式引用本地资源，需要在服务器环境中以http://协议打开，不能在本地以file://协议 文件形式打开！！
+      import {
+        createApp,
+        ref,
+      } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js"; // 这种引用本地资源，就可以在本地以文件形式打开，前提是要联网才行！！
+
+      const app = createApp({
+        data() {
+          return {
+            message:
+              "Vue3.js 易学易用，性能出色，适用场景丰富的 Web 前端框架。",
+          };
+        },
+        setup(props) {
+          let count = ref(0);
+          const pull = (num = 0) => {
+            // count.value++;
+            count.value = count.value + 1;
+          };
+          return {
+            pull,
+            count,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
