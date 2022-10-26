@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>直播-新建</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="./../css/index.css">
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="//unpkg.com/element-plus"></script>
+  <script src="//unpkg.com/element-plus/dist/locale/zh-cn"></script>
+  <script src="./../parser/index.js" type="module"></script>
+  <script src="./addLive.js" type="module"></script>
+</head>
+
+<body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+  <div id="app">
+    <div class="cms-container">
+      <!-- 面包屑导航 -->
+      <div class="cms-breadcrumb">
+        看看号管理 > 内容管理 > 直播 > <span class="active">新建</span>
+      </div>
+      <!-- 面包屑导航 end -->
+
+      <!-- 分割线 -->
+      <div class="divider"></div>
+
+      <div class="content">
+        <div class="cms-edit-container">
+          <div class="cms-edit_left">
+            <div class="flex-row btn-container">
+              <!-- <button class="cms-btn cms-btn-danger cms-btn-round">取消</button> -->
+              <cms-button @click="handleBtnClick" type="danger" :round="true">取消</cms-button>
+              <cms-button @click="handleBtnClick" type="success" :solid="true" :round="true"
+                style="margin-left: 50px">
+                保存
+              </cms-button>
+              <cms-button @click="handleBtnClick" type="success" :round="true" :has_icon="true" :shadow="true" style="margin-left: 70px">
+                <template #icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="14" height="14" style="
+                    fill: rgba(26, 177, 147, 1);
+                    border-color: rgba(0, 0, 0, 0);
+                    border-width: apx;
+                    border-style: undefined;
+                  " filter="none">
+                    <path
+                      d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z">
+                    </path>
+                  </svg>
+                </template>
+                
+                送审
+              </cms-button>
+              <cms-button @click="handleBtnClick" type="success" :round="true" :has_icon="true" :shadow="true" class="fixed-right" style="margin-left: auto">
+                <template #icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="
+                      fill: rgba(26, 177, 147, 1);
+                      border-color: rgba(0, 0, 0, 0);
+                      border-width: bpx;
+                      border-style: undefined;
+                    " filter="none">
+                    <path
+                      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                  </svg>
+                </template>
+                预览
+              </cms-button>
+            </div>
+
+            <div class="cms-form-container">
+              <form>
+                <cms-section label="基础信息">
+                  <div class="flex-row justify-between">
+                    <cms-input v-model="data.model.title" style="flex:3;" :inline="true" :is_show="true" label="主标题" placeholder="请输入标题" :required="true"></cms-input>
+                    <cms-radio 
+                      style="flex:1;justify-content: flex-end;" 
+                      :inline="true" 
+                      :is_label_show="false" 
+                      :options="radioOptions"
+                    ></cms-radio>
+                  </div>
+                  <div class="flex-row justify-between">
+                    <cms-input v-model="data.model.subtitle" style="flex:3;" :inline="true" :is_show="true" label="副标题" placeholder="请输入副标题"></cms-input>
+                    <div style="flex:1;"></div>
+                  </div>
+                  <cms-switch v-model="data.live.is_long_time" size="medium" label="24小时慢直播" :inline="true"></cms-switch>
+                  <div class="flex-row">
+                    <cms-date-time-picker v-model="data.live.start_time" style="flex:3;" label="直播开始" :required="true"></cms-date-time-picker>
+                    <div style="flex:1;"></div>
+                    <cms-date-time-picker v-model="data.live.end_time" style="flex:3;" label="直播结束" :required="true"></cms-date-time-picker>
+                  </div>
+                  <div class="flex-row">
+                    <cms-input v-model="data.model.introduction" style="flex:3;" label="简介" type="textarea" placeholder="请输入简介"></cms-input>
+                    <div style="flex:1;"></div>
+                    <cms-upload v-model="data.model.cover" style="flex:2;" label="封面图" :required="true"></cms-upload>
+                  </div>
+                </cms-section>
+
+                <cms-section label="素材信息" style="align-items: flex-start;">
+                  <live-stream-config v-model="data.streams"></live-stream-config>
+                  <tags-selector level="2" source_type="by_variable" :source_variable="data.labels" :system_labels="data.model.system_labels" has_custom_labels :custom_labels="data.model.custom_labels"></tags-selector>
+                </cms-section>
+              </form>
+            </div>
+          </div>
+          <div class="cms-edit_right">
+            <div class="flex-row btn-container">
+              <cms-button type="info" solid round :has_icon="true" fixed-right style="width: 120px; top: 0; margin-left: auto">
+                <template #icon>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" style="
+                    fill: rgba(117, 132, 160, 1);
+                    border-color: rgba(0, 0, 0, 0);
+                    border-width: bpx;
+                    border-style: undefined;
+                  " filter="none">
+                  <path
+                    d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                </svg>
+                </template>
+                操作记录
+              </cms-button>
+            </div>
+            <div class="cms-edit__collapse">
+              <vip-config></vip-config>
+              <comment-config></comment-config>
+              <data-show-config></data-show-config>
+              <display-ratio-config></display-ratio-config>
+              <user-num-show-config></user-num-show-config>
+              <share-config></share-config>
+              <host-config></host-config>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <script src="./js/jquery-3.2.1.min.js"></script>
+  <script>
+    // 用于点击上传时，点击触发input[type="file"]
+    $(".cms-upload-img").click(function () {
+      $(this).children('input[type="file"]')[0].click();
+    });
+
+    // 上传图片后展示图片
+    $(".cms-upload-img input[type='file']").change(function () {
+      if (typeof FileReader != "undefined") {
+        let uploadDiv = $(this).parent();
+        let img = $(this).parent().next(".cms-upload_result").children("img");
+        img.attr("src", "");
+        let regex = /(.jpg|.jpeg|.gif|.png|.bmp)$/;
+        $($(this)[0].files).each(function () {
+          let file = $(this);
+          if (regex.test(file[0].name.toLowerCase())) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+              img.attr("src", e.target.result);
+              img.parent().show();
+              uploadDiv.hide();
+            };
+            reader.readAsDataURL(file[0]);
+          } else {
+            alert(file[0].name + "不是图片");
+            img.attr("src", "");
+            return false;
+          }
+        });
+      } else {
+        console.log("浏览器不支持 HTML5 FileReader.");
+      }
+    });
+
+    $(".cms-upload-img_result_remove").click(function () {
+      $(this).parent().hide();
+      $(this).parent().parent().children(".cms-upload-img").show();
+      $(".cms-upload-img input[type='file']").val("");
+    });
+
+    // 视频上传
+    $(".cms-upload-video").click(function () {
+      $(this).children('input[type="file"]')[0].click();
+    });
+
+    // 上传视频后显示标题
+    $(".cms-upload-video input[type='file']").change(function () {
+      if (typeof FileReader != "undefined") {
+        let uploadDiv = $(this).parent();
+        let resultDiv = $(this).parent().next(".cms-upload-video_result");
+        resultDiv.children(".cms-upload-video_result_title").html("");
+        let regex = /(.mp4)$/;
+        $($(this)[0].files).each(function () {
+          let file = $(this);
+          if (regex.test(file[0].name.toLowerCase())) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+              resultDiv
+                .children(".cms-upload-video_result_title")
+                .html(file[0].name);
+              resultDiv.show();
+              uploadDiv.hide();
+            };
+            reader.readAsDataURL(file[0]);
+          } else {
+            alert(file[0].name + "不是视频");
+            resultDiv.children(".cms-upload-video_result_title").html("");
+            return false;
+          }
+        });
+      } else {
+        console.log("浏览器不支持 HTML5 FileReader.");
+      }
+    });
+
+    $(".cms-upload-video_result_remove").click(function () {
+      $(this).parent().hide();
+      $(this).parent().parent().children(".cms-upload-video").show();
+      $(".cms-upload-video input[type='file']").val("");
+    });
+
+    // 右侧展开
+    $(".collapse-item__header").click(function () {
+      const parent = $(this).parents(".collapse-item");
+      const isActive = parent.hasClass("active");
+      if (isActive) {
+        parent.removeClass("active");
+      } else {
+        parent.addClass("active");
+      }
+    });
+  </script> -->
+</body>
+
+</html>
