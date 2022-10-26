@@ -43,7 +43,7 @@ export default defineConfig((config: UserConfig) => {
 
     server: {
       host: true,
-      port: 666,
+      port: 888,
       strictPort: 888,
       open: false,
       https: false,

@@ -1,6 +1,5 @@
 
 <script setup lang="ts" name="SvgEditor">
-import { Class } from "@babel/types";
 import { reactive, onMounted, onUnmounted } from "vue";
 
 import scale from "./hooks/scale";
