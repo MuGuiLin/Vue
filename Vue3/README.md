@@ -397,24 +397,24 @@ module.exports = {
 
 ## 在Vite 中使用Less
 
-**安装less 和 less-loader**
+**只需安装less即可，vite默认支持less-loader**
 
 使用 NPM:
 
 ```
-$ npm i -D less less-loader
+$ npm i -D less
 ```
 
 使用 Yarn:
 
 ```
-$ yarn add -D less less-loader
+$ yarn add -D less
 ```
 
 使用 PNPM:
 
 ```
-$ pnpm add less less-loader
+$ pnpm add less
 ```
 
 

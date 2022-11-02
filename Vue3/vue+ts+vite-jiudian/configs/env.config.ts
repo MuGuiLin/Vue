@@ -4,38 +4,38 @@ const config: EnvType = {
     env: `localhost`,
     localhost: {
         __URL__: `/api`,
-        __NET__: `https://dev-wxh5.xhbigdata.com`,
+        __NET__: `https://www.xxx.com`,
         __API__VERSION: `/api/v1`,
-        __APPID__: `wx8c126cd1d82f6306`,
+        __APPID__: ``,
     },
     development: {
-        __URL__: `https://dev-api.xhbigdata.com`,
+        __URL__: `https://www.xxx.com`,
         __NET__: location.origin,
         __API__VERSION: `/api/v1`,
-        __APPID__: `wx8c126cd1d82f6306`,
+        __APPID__: ``,
     },
     test: {
-        __URL__: `https://test-api.xhbigdata.com`,
+        __URL__: `https://www.xxx.com`,
         __NET__: location.origin,
         __API__VERSION: `/api/v1`,
-        __APPID__: `wx8c126cd1d82f6306`,
+        __APPID__: ``,
     },
     production: {
-        __URL__: `https://api.xhbigdata.com`,
+        __URL__: `https://www.xxx.com`,
         __NET__: location.origin,
         __API__VERSION: `/api/v1`,
-        __APPID__: `wx8f504206a897a7f5`,
+        __APPID__: ``,
     }
 };
 
 switch (location.hostname || document.domain) {
-    case `dev-wxh5.xhbigdata.com`:
+    case `det-www.xxx.com`:
         config.env = `development`;
         break;
-    case `test-wxh5.xhbigdata.com`:
+    case `test-www.xxx.com`:
         config.env = `test`;
         break;
-    case `wxh5.xhbigdata.com`:
+    case `www.xxx.com`:
         config.env = `production`;
         break;
 }
