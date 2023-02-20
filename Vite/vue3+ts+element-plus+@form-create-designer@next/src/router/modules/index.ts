@@ -56,6 +56,10 @@ export const routers = [
     // which is lazy-loaded when the route is visited.
     component: () => import("@/views/AboutView.vue"),
   },
+  {
+    path: "/:pathMatch(.*)",
+    redirect: "/main",
+  },
 ];
 
 export default routers;

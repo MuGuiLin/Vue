@@ -12,16 +12,14 @@ import Navs from "../navs/index.vue";
     <el-container>
       <Navs />
       <RouterView />
-      <router-view/>
-      <RouterView />
-      <router-view/>
     </el-container>
   </el-container>
 </template>
 
 <style scoped lang="less">
 .el-header {
-  border-bottom: 1px solid var(--el-menu-border-color);
+  border-bottom: 1px solid var(--el-border-color);
+  box-shadow: 0 1px 4px rgba(0, 22, 38, 0.1);
 }
 .el-main {
   min-height: calc(100vh - 60px);

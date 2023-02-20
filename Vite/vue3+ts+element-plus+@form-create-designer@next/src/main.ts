@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import cachePinia from "pinia-plugin-persist";
 
 import ElementPlus from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
@@ -15,11 +16,7 @@ import "@/theme/main.less";
 
 const app = createApp(App);
 
-app.use(createPinia());
-app.use(ElementPlus);
-app.use(formCreate);
-app.use(FcDesigner);
-app.use(router);
+app.use(createPinia().use(cachePinia)).use(ElementPlus).use(formCreate).use(FcDesigner).use(router);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
