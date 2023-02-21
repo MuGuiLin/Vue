@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+  import { ref } from 'vue';
 
-import { useUserStore } from '@/stores/modules/user';
-const { users, logout } = useUserStore();
+  import { useUserStore } from '@/stores/modules/user';
+  const { users, logout }: any = useUserStore();
 
-const visible = ref(false);
+  const visible = ref(false);
 </script>
 
 <template>
@@ -15,7 +15,9 @@ const visible = ref(false);
     </h1>
     <div class="setup">
       <span>
-        <el-icon><Avatar /></el-icon>管理员
+        <el-icon>
+          <Avatar />
+        </el-icon>{{ users.usrPhone }}
       </span>
       <span @click="visible = true"> </span>
       <el-popover :visible="visible" placement="top" :width="160">
@@ -26,7 +28,9 @@ const visible = ref(false);
         </div>
         <template #reference>
           <span @click="visible = true">
-            <el-icon><SwitchButton /></el-icon>退出系统
+            <el-icon>
+              <SwitchButton />
+            </el-icon>退出系统
           </span>
         </template>
       </el-popover>
@@ -35,41 +39,46 @@ const visible = ref(false);
 </template>
 
 <style scoped lang="less">
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .title {
-    position: relative;
-    padding-left: 60px;
-    line-height: 60px;
-    font-size: 18px;
-    color: var(--el-color-primary);
-    img {
-      position: absolute;
-      top: -3px;
-      left: 0px;
-      width: 60px;
-    }
-  }
-  .setup {
-    color: #333;
-    span {
-      margin: 0 10px;
-      font-size: 15px;
-      cursor: pointer;
-      &:last-child i {
-        color: red;
-      }
-      i {
-        position: relative;
-        top: 3px;
-        margin-right: 3px;
-        font-size: 17px;
-        color: var(--el-color-primary);
+    .title {
+      position: relative;
+      padding-left: 60px;
+      line-height: 60px;
+      font-size: 18px;
+      color: var(--el-color-primary);
+
+      img {
+        position: absolute;
+        top: -3px;
+        left: 0px;
+        width: 60px;
       }
     }
+
+    .setup {
+      color: #333;
+
+      span {
+        margin: 0 10px;
+        font-size: 15px;
+        cursor: pointer;
+
+        &:last-child i {
+          color: red;
+        }
+
+        i {
+          position: relative;
+          top: 3px;
+          margin-right: 3px;
+          font-size: 17px;
+          color: var(--el-color-primary);
+        }
+      }
+    }
   }
-}
 </style>

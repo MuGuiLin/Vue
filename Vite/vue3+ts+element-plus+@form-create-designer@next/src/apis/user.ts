@@ -14,7 +14,7 @@ enum Api {
   USR_LOGIN = `/auto/usrLogin`,
   USR_INFO = `/auto/usrInfo`,
   USR_REFRESH = `/auto/usrRefresh`,
-  USR_GETDO = `/auto/usrGet.do`,
+  USR_GETDO = `/auto/usrsGet.do`,
   USR_ADDDO = `/auto/usrAdd.do`,
   USR_EDITDO = `/auto/usrEdit.do`,
 }
@@ -28,7 +28,6 @@ export function usrLoginApi(data?: any): Promise<any> {
   return http({
     method: 'POST',
     url: Api.USR_LOGIN,
-    headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
     data,
   });
 }
@@ -38,12 +37,13 @@ export function usrLoginApi(data?: any): Promise<any> {
  * @param Authorization
  * @returns josn
  */
-export function usrInfoApi(Authorization: any): Promise<unknown> {
+export function usrInfoApi(params: any): Promise<unknown> {
   return http({
     method: 'GET',
     url: Api.USR_INFO,
+    params,
     headers: {
-      Authorization,
+      'Content-Type': ContentTypeEnum.FORM_URLENCODED,
     },
   });
 }
@@ -57,6 +57,9 @@ export function usrRefreshApi(Authorization: IRefresParams): Promise<unknown> {
   return http({
     method: 'POST',
     url: Api.USR_REFRESH,
+    headers: {
+      Authorization,
+    },
   });
 }
 
@@ -69,7 +72,6 @@ export function usrGetDoApi(data: any): Promise<unknown> {
   return http({
     method: 'POST',
     url: Api.USR_GETDO,
-    headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
     data,
   });
 }
@@ -83,7 +85,6 @@ export function usrAddDoApi(data: any): Promise<unknown> {
   return http({
     method: 'POST',
     url: Api.USR_ADDDO,
-    headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
     data,
   });
 }
@@ -97,7 +98,6 @@ export function usrEditDoApi(data: any): Promise<unknown> {
   return http({
     method: 'POST',
     url: Api.USR_EDITDO,
-    headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
     data,
   });
 }

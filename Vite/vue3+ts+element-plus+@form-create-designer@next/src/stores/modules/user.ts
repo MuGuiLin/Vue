@@ -3,8 +3,7 @@ import { TOKEN_KEY, PREFIX_KEY, USERS_KEY } from '@/enums/auth';
 import { useRoute as UseRoute, useRouter as UseRouter, usrLoginApi, usrInfoApi } from '@/apis/user';
 
 interface IAccessProps {
-  users?: any;
-  usrToken: string;
+  usr?: any;
 }
 
 export const useRoute = UseRoute;
@@ -13,7 +12,7 @@ export const useRouter = UseRouter;
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
-      token: 'hnba3eqlz8ei07j442k8wsvz845s4554b5edd41bf7f707350acdab7362da15',
+      token: '',
       users: {},
     };
   },
@@ -31,12 +30,12 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     async login(pars: any) {
-      const { users, usrToken = '' }: IAccessProps = await usrLoginApi(pars);
-      if (usrToken) {
-        this.token = usrToken;
-        // this.users = users;
+      const { usr }: IAccessProps = await usrLoginApi(pars);
+      if (usr.usrToken) {
+        this.users = usr;
+        this.token = usr.usrToken;
       }
-      return users;
+      return this.users;
     },
 
     async logout() {

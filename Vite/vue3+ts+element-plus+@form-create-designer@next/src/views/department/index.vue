@@ -59,12 +59,12 @@ const edit = (row: any, is: number) => {
         max-height="680"
         style="width: 100%"
       >
-        <el-table-column type="index" label="序号" align="center" width="60" />
+        <el-table-column fixed="left" type="index" label="序号" align="center" width="60" />
         <el-table-column prop="depID" label="部门ID" width="160" />
         <el-table-column prop="depName" label="部门名称" width="180" />
         <el-table-column prop="updateDate" label="修改时间" sortable min-width="180" />
         <el-table-column prop="createDate" label="创建时间" sortable min-width="180" />
-        <el-table-column fixed="right" label="操作" align="center" width="160">
+        <el-table-column fixed="right" label="操作" align="center" width="180">
           <template #default="scope">
             <el-button type="success" size="small" @click="edit(scope.row, 2)"
               ><el-icon><DocumentCopy /></el-icon>复制</el-button

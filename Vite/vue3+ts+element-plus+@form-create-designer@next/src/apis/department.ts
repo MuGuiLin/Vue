@@ -12,6 +12,7 @@ interface IRefresParams {
 
 enum Api {
   DEPS_GETDO = `/auto/depsGet.do`,
+  DEP_NAMES_GETDO = `/auto/depNamesGet.do`,
 }
 
 /**
@@ -28,7 +29,7 @@ export function getDepsGetDoApi(params: any): Promise<unknown> {
 }
 
 /**
- * 获取部门列表
+ * 获取部门管理列表
  * @param data
  * @returns josn
  */
@@ -36,7 +37,19 @@ export function depsGetDoApi(data: any): Promise<unknown> {
   return http({
     method: 'POST',
     url: Api.DEPS_GETDO,
-    headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
+    data,
+  });
+}
+
+/**
+ * 获取部门下拉列表
+ * @param data
+ * @returns josn
+ */
+export function depNamesGetApi(data: any): Promise<unknown> {
+  return http({
+    method: 'POST',
+    url: Api.DEP_NAMES_GETDO,
     data,
   });
 }

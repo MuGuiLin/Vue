@@ -18,20 +18,20 @@ onMounted(() => {
       <template #header>
         <el-row class="top-setup">
           <!-- <el-button>Default</el-button>
-      <el-button type="info">Info</el-button>
-      <el-button type="warning">Warning</el-button> -->
-          <el-button type="danger"
-            ><el-icon><Delete /></el-icon> 清 空</el-button
-          >
-          <el-button type="success" @click="designer.preview()"
-            ><el-icon><View /></el-icon> 预 览</el-button
-          >
-          <el-button type="primary" @click="getJson"
-            ><el-icon><Promotion /></el-icon> 发 布</el-button
-          >
+        <el-button type="info">Info</el-button>
+        <el-button type="warning">Warning</el-button> -->
+          <el-button type="danger"><el-icon>
+              <Delete />
+            </el-icon> 清 空</el-button>
+          <el-button type="success" @click="designer.preview()"><el-icon>
+              <View />
+            </el-icon> 预 览</el-button>
+          <el-button type="primary" @click="getJson"><el-icon>
+              <Promotion />
+            </el-icon> 发 布</el-button>
         </el-row>
       </template>
-      <fc-designer ref="designer" height="800px" />
+      <fc-designer ref="designer" height="740px" />
     </el-card>
   </el-main>
 </template>
@@ -39,10 +39,12 @@ onMounted(() => {
 <style scoped lang="less">
 .department-edit {
   .el-card {
+
     .top-setup {
       display: flex;
       justify-content: center;
       padding: 10px;
+
       .el-button {
         .el-icon {
           margin-right: 2px;
@@ -59,10 +61,10 @@ onMounted(() => {
         // background: url(@/assets/img/iphone-box.png) no-repeat center top;
         // background-size: contain;
       }
+
       ._fc-m-tools {
         display: none;
       }
     }
   }
-}
-</style>
+}</style>
