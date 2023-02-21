@@ -1,38 +1,42 @@
-import { useRouter as UseRouter, useRoute as UseRoute } from "vue-router";
+import { useRouter as UseRouter, useRoute as UseRoute } from 'vue-router';
 
-import { http } from "@/utils";
+import { ContentTypeEnum } from '@/enums/http';
+import { http } from '@/utils/index';
 
 export const useRoute = UseRoute;
 export const useRouter = UseRouter;
 
-const Api = {
-    GET_DEPARTMENT: `/auto/getDepartment`,
-    ADD_DEPARTMENT: `/auto/addDepartment`,
+interface IRefresParams {
+  Authorization: string;
 }
 
+enum Api {
+  DEPS_GETDO = `/auto/depsGet.do`,
+}
+
+/**
+ * 获取GET
+ * @param params
+ * @returns josn
+ */
+export function getDepsGetDoApi(params: any): Promise<unknown> {
+  return http({
+    method: 'GET',
+    url: Api.DEPS_GETDO,
+    params,
+  });
+}
 
 /**
  * 获取部门列表
- * @param params 
+ * @param data
  * @returns josn
  */
-export function getDepartmentApi(params) {
-    return http({
-        method: 'GET',
-        url: Api.GET_DEPARTMENT,
-        params,
-    });
-}
-
-/**
- * 新增部门
- * @param data 
- * @returns josn
- */
-export function addDepartmentApi(data) {
-    return http({
-        method: 'POST',
-        url: Api.ADD_DEPARTMENT,
-        data,
-    });
+export function depsGetDoApi(data: any): Promise<unknown> {
+  return http({
+    method: 'POST',
+    url: Api.DEPS_GETDO,
+    headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
+    data,
+  });
 }

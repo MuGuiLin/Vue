@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref } from 'vue';
 
-const router = useRouter();
+import { useUserStore } from '@/stores/modules/user';
+const { users, logout } = useUserStore();
 
 const visible = ref(false);
 </script>
@@ -22,9 +22,7 @@ const visible = ref(false);
         <p style="line-height: 36px">是否确认退出系统？</p>
         <div style="text-align: right; margin: 0">
           <el-button size="small" @click="visible = false">取消</el-button>
-          <el-button size="small" type="primary" @click="router.push('/')"
-            >确认</el-button
-          >
+          <el-button size="small" type="primary" @click="logout()">确认</el-button>
         </div>
         <template #reference>
           <span @click="visible = true">

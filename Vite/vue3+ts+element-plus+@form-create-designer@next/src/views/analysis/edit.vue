@@ -1,14 +1,14 @@
-<script setup lang="ts" name="departmentEdit">
+<script setup lang="ts" name="analysisEdit">
 import { ref } from "vue";
 </script>
 
 <template>
-  <el-main class="department-edit">
+  <el-main class="analysis-edit">
 
   </el-main>
 </template>
 
 <style scoped lang="less">
-.department-edit {
+.analysis-edit {
 }
 </style>

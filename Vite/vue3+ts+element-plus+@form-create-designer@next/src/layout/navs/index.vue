@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRoute } from "vue-router";
-const {path} = useRoute();
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+const { path } = useRoute();
 
 const isCollapse = ref(false);
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -26,24 +26,36 @@ const handleClose = (key: string, keyPath: string[]) => {
           <el-icon><Menu /></el-icon>
           <span>部门管理</span>
         </template>
-        <el-menu-item index="/department"><el-icon><Document /></el-icon>部门列表</el-menu-item>
-        <el-menu-item index="/departmentEdit"><el-icon><DocumentAdd /></el-icon>新增部门</el-menu-item>
+        <el-menu-item index="/department"
+          ><el-icon><Document /></el-icon>部门列表</el-menu-item
+        >
+        <el-menu-item index="/departmentEdit"
+          ><el-icon><DocumentAdd /></el-icon>新增部门</el-menu-item
+        >
       </el-sub-menu>
       <el-sub-menu index="2">
         <template #title>
           <el-icon><Avatar /></el-icon>
           <span>用户管理</span>
         </template>
-        <el-menu-item index="/user"><el-icon><Document /></el-icon>用户列表</el-menu-item>
-        <el-menu-item index="/userEdit"><el-icon><DocumentAdd /></el-icon>新增用户</el-menu-item>
+        <el-menu-item index="/user"
+          ><el-icon><Document /></el-icon>用户列表</el-menu-item
+        >
+        <el-menu-item index="/userEdit"
+          ><el-icon><DocumentAdd /></el-icon>新增用户</el-menu-item
+        >
       </el-sub-menu>
       <el-sub-menu index="3">
         <template #title>
           <el-icon><Histogram /></el-icon>
           <span>数据分析</span>
         </template>
-        <el-menu-item index="/analysis"><el-icon><Document /></el-icon>数据列表</el-menu-item>
-        <el-menu-item index="/analysisEdit"><el-icon><DataAnalysis /></el-icon>数据图表</el-menu-item>
+        <el-menu-item index="/analysis"
+          ><el-icon><Document /></el-icon>数据列表</el-menu-item
+        >
+        <el-menu-item index="/analysisEdit"
+          ><el-icon><DataAnalysis /></el-icon>数据图表</el-menu-item
+        >
       </el-sub-menu>
     </el-menu>
   </el-aside>
@@ -59,6 +71,10 @@ const handleClose = (key: string, keyPath: string[]) => {
     .el-menu-vertical-demo:not(.el-menu--collapse) {
       width: 220px;
       min-height: 400px;
+    }
+    .el-menu-item.is-active {
+      color: white;
+      background: var(--el-menu-active-color);
     }
   }
 }

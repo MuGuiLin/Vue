@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "@/stores/modules/user";
-import routers from "./modules";
+import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '@/stores/modules/user';
+import routers from './modules';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL as string),
@@ -10,13 +10,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next): any => {
-  document.title = (<string>to.meta.title) as "工时统计-后台管理系统";
-  if ("/" === to.path) {
+  document.title = <string>to.meta.title || '工时统计-后台管理系统';
+  if ('/' === to.path) {
     next();
   } else {
     const { token } = useUserStore();
     if (!token) {
-      return next({ path: "/" });
+      return next({ path: '/' });
     }
   }
   next();
