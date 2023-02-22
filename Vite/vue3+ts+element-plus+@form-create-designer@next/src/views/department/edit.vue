@@ -1,15 +1,35 @@
 <script setup lang="ts" name="departmentEdit">
-import { ref, onMounted } from 'vue';
-const designer = ref();
+import { ref, reactive, onMounted } from 'vue';
+const designer: any = ref();
 
-const getJson = () => {
-  console.log(designer, designer.value);
-  designer.value.getJson();
+const nemu = reactive([]);
+
+const config = reactive({
+  showBaseForm: false
+});
+
+const clearRule = () => {
+  designer.value.clearDragRule();
+  designer.value.clearActiveRule();
+};
+
+const preview = () => {
+  // designer.value.preview();
+  designer.value.previewFc();
+};
+
+const getRule = () => {
+  const json = designer.value.getJson();
+  console.log(json);
+
+  const rule = designer.value.getRule();
+  console.log(rule);
 };
 
 onMounted(() => {
   console.log(designer.value);
 });
+
 </script>
 
 <template>
@@ -18,20 +38,20 @@ onMounted(() => {
       <template #header>
         <el-row class="top-setup">
           <!-- <el-button>Default</el-button>
-        <el-button type="info">Info</el-button>
-        <el-button type="warning">Warning</el-button> -->
-          <el-button type="danger"><el-icon>
+                      <el-button type="info">Info</el-button>
+                      <el-button type="warning">Warning</el-button> -->
+          <el-button type="danger" @click="clearRule"><el-icon>
               <Delete />
             </el-icon> 清 空</el-button>
-          <el-button type="success" @click="designer.preview()"><el-icon>
+          <el-button type="success" @click="preview"><el-icon>
               <View />
             </el-icon> 预 览</el-button>
-          <el-button type="primary" @click="getJson"><el-icon>
+          <el-button type="primary" @click="getRule"><el-icon>
               <Promotion />
             </el-icon> 发 布</el-button>
         </el-row>
       </template>
-      <fc-designer ref="designer" height="740px" />
+      <fc-designer ref="designer" :nemu="nemu" :config="config" height="740px" />
     </el-card>
   </el-main>
 </template>
@@ -67,4 +87,5 @@ onMounted(() => {
       }
     }
   }
-}</style>
+}
+</style>

@@ -7,6 +7,12 @@ import { ContentTypeEnum } from '@/enums/http';
 
 let loading: any = null;
 
+const storageClear = () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  location.reload();
+};
+
 const http = axios.create({
   baseURL: '/api',
   timeout: 60 * 1000,
@@ -58,14 +64,16 @@ http.interceptors.response.use(
         message: res.data?.message,
         type: 'error',
       });
+      if (res.data?.code) {
+        setTimeout(storageClear, 3000);
+      }
       return Promise.reject(res);
     }
   },
   (err) => {
     loading?.close();
     if (401 === err.response?.status) {
-      localStorage.clear();
-      sessionStorage.clear();
+      storageClear();
     }
     ElMessage({
       showClose: true,
