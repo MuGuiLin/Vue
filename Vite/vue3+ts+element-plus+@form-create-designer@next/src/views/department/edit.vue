@@ -1,35 +1,34 @@
 <script setup lang="ts" name="departmentEdit">
-import { ref, reactive, onMounted } from 'vue';
-const designer: any = ref();
+  import { ref, reactive, onMounted } from 'vue';
+  const designer: any = ref();
 
-const nemu = reactive([]);
+  const nemu = reactive([]);
 
-const config = reactive({
-  showBaseForm: false
-});
+  const config = reactive({
+    showBaseForm: false,
+  });
 
-const clearRule = () => {
-  designer.value.clearDragRule();
-  designer.value.clearActiveRule();
-};
+  const clearRule = () => {
+    designer.value.clearDragRule();
+    designer.value.clearActiveRule();
+  };
 
-const preview = () => {
-  // designer.value.preview();
-  designer.value.previewFc();
-};
+  const preview = () => {
+    // designer.value.preview();
+    designer.value.previewFc();
+  };
 
-const getRule = () => {
-  const json = designer.value.getJson();
-  console.log(json);
+  const getRule = () => {
+    const json = designer.value.getJson();
+    console.log(json);
 
-  const rule = designer.value.getRule();
-  console.log(rule);
-};
+    const rule = designer.value.getRule();
+    console.log(rule);
+  };
 
-onMounted(() => {
-  console.log(designer.value);
-});
-
+  onMounted(() => {
+    console.log(designer.value);
+  });
 </script>
 
 <template>
@@ -40,15 +39,24 @@ onMounted(() => {
           <!-- <el-button>Default</el-button>
                       <el-button type="info">Info</el-button>
                       <el-button type="warning">Warning</el-button> -->
-          <el-button type="danger" @click="clearRule"><el-icon>
+          <el-button type="danger" @click="clearRule"
+            ><el-icon>
               <Delete />
-            </el-icon> 清 空</el-button>
-          <el-button type="success" @click="preview"><el-icon>
+            </el-icon>
+            清 空</el-button
+          >
+          <el-button type="success" @click="preview"
+            ><el-icon>
               <View />
-            </el-icon> 预 览</el-button>
-          <el-button type="primary" @click="getRule"><el-icon>
+            </el-icon>
+            预 览</el-button
+          >
+          <el-button type="primary" @click="getRule"
+            ><el-icon>
               <Promotion />
-            </el-icon> 发 布</el-button>
+            </el-icon>
+            发 布</el-button
+          >
         </el-row>
       </template>
       <fc-designer ref="designer" :nemu="nemu" :config="config" height="740px" />
@@ -57,35 +65,34 @@ onMounted(() => {
 </template>
 
 <style scoped lang="less">
-.department-edit {
-  .el-card {
+  .department-edit {
+    .el-card {
+      .top-setup {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
 
-    .top-setup {
-      display: flex;
-      justify-content: center;
-      padding: 10px;
+        .el-button {
+          .el-icon {
+            margin-right: 2px;
+          }
+        }
+      }
 
-      .el-button {
-        .el-icon {
-          margin-right: 2px;
+      .el-card__body {
+        padding-top: 0 !important;
+      }
+
+      ::v-deep {
+        ._fc-m-drag {
+          // background: url(@/assets/img/iphone-box.png) no-repeat center top;
+          // background-size: contain;
+        }
+
+        ._fc-m-tools {
+          display: none;
         }
       }
     }
-
-    .el-card__body {
-      padding-top: 0 !important;
-    }
-
-    ::v-deep {
-      ._fc-m-drag {
-        // background: url(@/assets/img/iphone-box.png) no-repeat center top;
-        // background-size: contain;
-      }
-
-      ._fc-m-tools {
-        display: none;
-      }
-    }
   }
-}
 </style>

@@ -26,7 +26,7 @@ http.interceptors.request.use(
   (cfg) => {
     if (cfg.data?.loading || cfg.params?.loading) {
       loading = ElLoading.service({
-        target: document.querySelector('.el-table'),
+        target: document.querySelector('.el-table') as HTMLElement,
         fullscreen: true,
         text: cfg.data?.loadingText || cfg.params?.loadingText || '加载中，请稍候！',
       });

@@ -37,7 +37,7 @@ export function usrLoginApi(data?: any): Promise<any> {
  * @param Authorization
  * @returns josn
  */
-export function usrInfoApi(params: any): Promise<unknown> {
+export function usrInfoApi(params: any, _Authorization?: IRefresParams): Promise<unknown> {
   return http({
     method: 'GET',
     url: Api.USR_INFO,
@@ -50,16 +50,12 @@ export function usrInfoApi(params: any): Promise<unknown> {
 
 /**
  * 刷新token
- * @param Authorization
- * @returns josn
+ * @returns token
  */
-export function usrRefreshApi(Authorization: IRefresParams): Promise<unknown> {
+export function usrRefreshApi(): Promise<unknown> {
   return http({
     method: 'POST',
     url: Api.USR_REFRESH,
-    headers: {
-      Authorization,
-    },
   });
 }
 

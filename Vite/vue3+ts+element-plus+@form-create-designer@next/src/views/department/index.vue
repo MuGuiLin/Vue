@@ -1,23 +1,23 @@
 <script setup lang="ts" name="department">
-import { reactive } from 'vue';
+  import { reactive } from 'vue';
 
-import { useRouter, depsGetDoApi } from '@/apis/department';
-import { useTable } from '@/hooks/useTable';
+  import { useRouter, depsGetDoApi } from '@/apis/department';
+  import { useTable } from '@/hooks/useTable';
 
-const router = useRouter();
+  const router = useRouter();
 
-const ruleForm = reactive({
-  keyword: '',
-});
+  const ruleForm = reactive({
+    keyword: '',
+  });
 
-const { formRef, data, page, total, loading, pageSize, reset, submit } = useTable(
-  depsGetDoApi,
-  ruleForm,
-);
+  const { formRef, data, page, total, loading, pageSize, reset, submit } = useTable(
+    depsGetDoApi,
+    ruleForm,
+  );
 
-const edit = (row: any, is: number) => {
-  router.push(`/departmentEdit?id=${row.depID}&is=${is}`);
-};
+  const edit = (row: any, is: number) => {
+    router.push(`/departmentEdit?id=${row.depID}&is=${is}`);
+  };
 </script>
 
 <template>
@@ -87,6 +87,4 @@ const edit = (row: any, is: number) => {
   </el-main>
 </template>
 
-<style scoped lang="less">
-
-</style>
+<style scoped lang="less"></style>

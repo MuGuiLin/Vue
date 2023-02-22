@@ -4,7 +4,7 @@ import type { RuleFormType, TableReturn, ResponseDataType } from './types';
 import { ref, watch, onMounted } from 'vue';
 import { debounce } from '@/utils/index';
 
-export const useTable = <T extends (...args: any) => Promise<ResponseDataType<any>> | any>(
+export const useTable = <T extends (_args: any) => Promise<ResponseDataType<any>> | any>(
   requestApi: T,
   ruleForm: RuleFormType,
 ) => {
