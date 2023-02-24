@@ -27,15 +27,15 @@ export const useTable = <T extends (_args: any) => Promise<ResponseDataType<any>
       loading.value = true;
       debounce(async () => {
         try {
-          const res: ResponseDataType | any = await requestApi({
+          const { data: o }: ResponseDataType | any = await requestApi({
             ...props,
             ...ruleForm,
             page: page.value,
             pageSize: pageSize.value,
           });
-          data.value = res.list || [];
-          total.value = res.total || 1;
-          resolve(res);
+          data.value = o.list || [];
+          total.value = o.total || 1;
+          resolve(o);
         } catch (err) {
           reject(err);
           throw new Error(`API请求出错：${err}`);

@@ -2,8 +2,8 @@
   import type { FormInstance, FormRules } from 'element-plus';
   import { ref, reactive, onMounted } from 'vue';
 
-  import { useRoute, useRouter, usrAddDoApi, usrEditDoApi } from '@/apis/user';
-  import { depNamesGetApi } from '@/apis/department';
+  import { $msg, useRoute, useRouter, usrGetDoApi, usrAddDoApi, usrEditDoApi } from '@/apis/user';
+  import { depNamesGetDoApi } from '@/apis/department';
 
   const { query } = useRoute();
   const router = useRouter();
@@ -24,11 +24,11 @@
 
   const form = reactive({
     id: query.id || '',
+    depID: '',
+    state: '1',
     usrName: '',
     usrPhone: '',
     usrMail: '',
-    depID: '',
-    state: '',
   });
 
   const department: any = ref<Array<any>>([]);
@@ -44,8 +44,13 @@
   const suerSetup = async () => {
     try {
       loading.value = true;
-      form.id ? await usrEditDoApi(form) : await usrAddDoApi(form);
-      router.back();
+      const { message }: any = form.id ? await usrEditDoApi(form) : await usrAddDoApi(form);
+      $msg({
+        showClose: true,
+        message,
+        type: 'success',
+        onClose: router.back,
+      });
     } catch (err) {
       throw new Error(`API请求出错：${err}`);
     } finally {
@@ -68,9 +73,23 @@
   };
 
   onMounted(async () => {
-    depNamesGetApi(form).then((depNames = []) => {
-      department.value = depNames;
-    });
+    const { data }: Array<any> | any = await depNamesGetDoApi(form);
+    if (data.length) {
+      department.value = data;
+    }
+
+    if (form.id) {
+      try {
+        const { data }: any = await usrGetDoApi({ usrID: form.id });
+        form.depID = data.depID;
+        form.state = data.state;
+        form.usrName = data.usrName;
+        form.usrPhone = data.usrPhone;
+        form.usrMail = data.usrMail;
+      } catch (error) {
+        console.error(error);
+      }
+    }
   });
 </script>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="user">
   import { reactive } from 'vue';
 
-  import { useRouter, usrGetDoApi } from '@/apis/user';
+  import { useRouter, usrsGetDoApi } from '@/apis/user';
   import { useTable } from '@/hooks/useTable';
 
   const router = useRouter();
@@ -11,7 +11,7 @@
   });
 
   const { data, page, total, loading, pageSize, formRef, reset, submit } = useTable(
-    usrGetDoApi,
+    usrsGetDoApi,
     ruleForm,
   );
 
@@ -43,14 +43,10 @@
             <el-col :span="18">
               <el-form-item>
                 <el-button type="primary" @click="submit(formRef)"
-                  ><el-icon>
-                    <Search /> </el-icon
-                  >搜索</el-button
+                  ><el-icon> <Search /> </el-icon>搜索</el-button
                 >
                 <el-button type="warning" @click="reset(formRef)"
-                  ><el-icon>
-                    <Refresh /> </el-icon
-                  >重置</el-button
+                  ><el-icon> <Refresh /> </el-icon>重置</el-button
                 >
               </el-form-item>
             </el-col>
@@ -93,9 +89,7 @@
         <el-table-column fixed="right" label="操作" align="center" width="160">
           <template #default="scope">
             <el-button type="primary" size="small" @click="edit(scope.row)"
-              ><el-icon>
-                <Edit /> </el-icon
-              >编辑</el-button
+              ><el-icon> <Edit /> </el-icon>编辑</el-button
             >
           </template>
         </el-table-column>

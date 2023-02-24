@@ -57,14 +57,14 @@ http.interceptors.response.use(
   (res) => {
     loading?.close();
     if (200 === res.status && 200 === res.data?.code) {
-      return Promise.resolve(res.data.data);
+      return Promise.resolve(res.data);
     } else {
       ElMessage({
         showClose: true,
         message: res.data?.message,
         type: 'error',
       });
-      if (res.data?.code) {
+      if (401 === res.data?.code) {
         setTimeout(storageClear, 3000);
       }
       return Promise.reject(res);

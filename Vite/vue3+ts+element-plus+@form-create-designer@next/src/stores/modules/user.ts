@@ -3,7 +3,7 @@ import { TOKEN_KEY, PREFIX_KEY, USERS_KEY } from '@/enums/auth';
 import { useRoute as UseRoute, useRouter as UseRouter, usrLoginApi, usrInfoApi } from '@/apis/user';
 
 interface IAccessProps {
-  usr?: any;
+  data?: any;
 }
 
 export const useRoute = UseRoute;
@@ -30,7 +30,9 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     async login(pars: any) {
-      const { usr }: IAccessProps = await usrLoginApi(pars);
+      const {
+        data: { usr },
+      }: IAccessProps = await usrLoginApi(pars);
       if (usr.usrToken) {
         this.users = usr;
         this.token = usr.usrToken;

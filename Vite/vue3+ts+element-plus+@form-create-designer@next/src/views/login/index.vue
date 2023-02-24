@@ -2,6 +2,7 @@
   import type { FormInstance } from 'element-plus';
   import { reactive, ref, onBeforeMount } from 'vue';
   import { useRouter, useUserStore } from '@/stores/modules/user';
+  import { yzmSendApi } from '@/apis/user';
 
   const router = useRouter();
   const { token, login } = useUserStore();
@@ -9,17 +10,28 @@
   const loading = ref(false);
 
   const form = reactive({
-    account: '18717791650',
-    password: '1234',
+    usrPhone: '18717791650',
+    yzm: '1234',
   });
 
   const rule = reactive({
-    account: [{ required: true, message: '请输入账号！', trigger: 'blur' }],
-    password: [{ required: true, message: '请输入密码！', trigger: 'blur' }],
+    usrPhone: [{ required: true, message: '请输入账号！', trigger: 'blur' }],
+    yzm: [{ required: true, message: '请输入密码！', trigger: 'blur' }],
   });
 
   const goMain = (): void => {
     router.push('/main');
+  };
+
+  const yzmSend = async () => {
+    try {
+      loading.value = true;
+      await yzmSendApi({ usrPhone: form.usrPhone });
+    } catch (err) {
+      throw new Error(`API请求出错：${err}`);
+    } finally {
+      loading.value = false;
+    }
   };
 
   const submit = (formEl: FormInstance | undefined) => {
@@ -28,8 +40,8 @@
       if (valid) {
         loading.value = true;
         login({
-          usrPhone: form.account,
-          yzm: form.password,
+          usrPhone: form.usrPhone,
+          yzm: form.yzm,
         })
           .then(() => {
             // location.reload();
@@ -57,20 +69,25 @@
         <img src="@/assets/icon/logo.png" alt="logo" />
         后台管理系统
       </h1>
-      <el-form-item label="" prop="account">
-        <el-input v-model="form.account" clearable placeholder="账号" autocomplete="off" />
+      <el-form-item label="" prop="usrPhone">
+        <el-input v-model="form.usrPhone" clearable placeholder="手机号" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="" prop="password">
+      <el-form-item label="" prop="yzm" class="yzm">
         <el-input
-          type="password"
-          v-model="form.password"
+          type="number"
+          v-model="form.yzm"
           clearable
-          placeholder="密码"
+          placeholder="验证码"
           autocomplete="off"
         />
+        <el-button type="success" @click="yzmSend">
+          <el-icon><ChatDotSquare /></el-icon>获取验证码
+        </el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" :loading="loading" @click="submit(formRef)">登 录</el-button>
+        <el-button type="primary" :loading="loading" @click="submit(formRef)">
+          <el-icon><Position /></el-icon>登 录
+        </el-button>
       </el-form-item>
     </el-form>
   </el-main>
@@ -98,24 +115,39 @@
     background: #fff;
     border: 1px solid var(--el-border-color);
     border-radius: var(--el-border-radius-base);
-  }
-  .el-title {
-    position: relative;
-    padding: 20px 0 30px 80px;
-    text-align: center;
-    font-size: 28px;
-    color: var(--el-color-primary);
-  }
-  .el-title img {
-    position: absolute;
-    top: -5px;
-    left: 30px;
-    width: 80px;
-  }
-  .el-form-item--large {
-    margin-bottom: 30px;
-  }
-  .el-button {
-    width: 100%;
+
+    .el-title {
+      position: relative;
+      padding: 20px 0 30px 80px;
+      text-align: center;
+      font-size: 28px;
+      color: var(--el-color-primary);
+      img {
+        position: absolute;
+        top: -5px;
+        left: 30px;
+        width: 80px;
+      }
+    }
+    ::v-deep {
+      .yzm {
+        .el-form-item__content {
+          justify-content: space-between;
+          .el-input {
+            width: 48%;
+          }
+          .el-button {
+            width: 48%;
+          }
+        }
+      }
+    }
+
+    .el-form-item--large {
+      margin-bottom: 30px;
+    }
+    .el-button {
+      width: 100%;
+    }
   }
 </style>
