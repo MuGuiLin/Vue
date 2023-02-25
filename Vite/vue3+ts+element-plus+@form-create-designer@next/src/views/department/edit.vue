@@ -86,11 +86,13 @@
       const formField: Array<any> = [];
       const getJson = JSON.parse(designer.value.getJson());
       getJson.forEach((o: any) => {
-        formField.push({
-          filed: o?.field || uniqueId(),
-          filedName: o.title,
-          fieldType: 'timePicker' === o.type || 'datePicker' === o.type ? 'timestamp' : 'text',
-        });
+        if (o?.field) {
+          formField.push({
+            filed: o?.field || uniqueId(),
+            filedName: o.title,
+            fieldType: 'timePicker' === o.type || 'datePicker' === o.type ? 'timestamp' : 'text',
+          });
+        }
       });
       const { message = '保存成功！' }: any = await depReleaseDoApi({
         ...state,
@@ -107,7 +109,7 @@
     } else {
       $msg({
         showClose: true,
-        message: '对不起：请正确新加表单项！',
+        message: '对不起：请正确添加表单项！',
         type: 'error',
       });
     }
