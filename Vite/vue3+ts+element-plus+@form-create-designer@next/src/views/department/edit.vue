@@ -1,5 +1,6 @@
 <script setup lang="ts" name="departmentEdit">
   import { ref, reactive, onMounted } from 'vue';
+  import { uniqueId } from '@/utils';
 
   import { $msg, useRoute, useRouter, depGetDoApi, depReleaseDoApi } from '@/apis/department';
 
@@ -11,8 +12,11 @@
   // http://designer.form-create.com/guide
   const config = reactive({
     showBaseForm: true,
+    disabled: {
+      showBaseForm: false,
+    },
   });
-  const nemu = reactive([
+  const menu = reactive([
     {
       name: 'main',
       title: '表单组件',
@@ -40,16 +44,16 @@
         // 'editor',
       ],
     },
-    // {
-    //   name: 'aide',
-    //   title: '辅助组件',
-    //   list: ['alert', 'button', 'span', 'divider'],
-    // },
-    // {
-    //   name: 'layout',
-    //   title: '布局组件2',
-    //   list: ['row', 'tab', 'space'],
-    // },
+    {
+      name: 'aide',
+      title: '辅助组件',
+      list: ['alert', 'button', 'span', 'divider'],
+    },
+    {
+      name: 'layout',
+      title: '布局组件2',
+      list: ['row', 'tab', 'space'],
+    },
   ]);
 
   const state: any = reactive({
@@ -83,7 +87,7 @@
       const getJson = JSON.parse(designer.value.getJson());
       getJson.forEach((o: any) => {
         formField.push({
-          filed: o.field,
+          filed: o?.field || uniqueId(),
           filedName: o.title,
           fieldType: 'timePicker' === o.type || 'datePicker' === o.type ? 'timestamp' : 'text',
         });
@@ -111,6 +115,13 @@
 
   onMounted(async () => {
     console.log('designer', designer.value);
+
+    designer.value.removeMenuItem('slider');
+    designer.value.removeMenuItem('rate');
+    designer.value.removeMenuItem('color');
+    designer.value.removeMenuItem('transfer');
+    designer.value.removeMenuItem('tree');
+    designer.value.removeMenuItem('editor');
     if (state.depID) {
       try {
         const {
@@ -118,8 +129,8 @@
         }: any = await depGetDoApi({ depID: state.depID });
         state.depID = dep.depID;
         state.depName = dep.depName;
-        designer.value.setOption(JSON.parse(dep.formOption));
-        designer.value.setRule(JSON.parse(dep.formJson));
+        dep.formOption && designer.value.setOption(JSON.parse(dep.formOption));
+        dep.formJson && designer.value.setRule(JSON.parse(dep.formJson));
       } catch (error) {
         console.error(error);
       }
@@ -135,7 +146,7 @@
           <el-col :span="6">
             <el-form-item label="部门名称" prop="depName">
               <el-input
-                v-model="state.depName"
+                v-model.trim="state.depName"
                 placeholder="请输入部门名称！"
                 autocomplete="off"
                 clearable
@@ -166,7 +177,8 @@
           </el-col>
         </el-row>
       </template>
-      <fc-designer ref="designer" :nemu="nemu" :config="config" height="740px" />
+      <!-- <fc-designer ref="designer" :menu="menu" :config="config" height="740px" /> -->
+      <fc-designer ref="designer" :config="config" height="740px" />
     </el-card>
   </el-main>
 </template>

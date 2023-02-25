@@ -1,7 +1,4 @@
-import http from "./http";
-import { debounce } from './tool';
+import http from './http';
+import { debounce, query, uuid, suuid, uniqueId, scrollIntoView } from './tool';
 
-export {
-    http,
-    debounce
-}
+export { http, debounce, query, uuid, suuid, uniqueId, scrollIntoView };

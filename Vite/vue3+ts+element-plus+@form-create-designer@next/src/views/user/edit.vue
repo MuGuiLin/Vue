@@ -112,7 +112,7 @@
       >
         <el-form-item label="姓名" prop="usrName">
           <el-input
-            v-model="form.usrName"
+            v-model.trim="form.usrName"
             placeholder="请输入姓名！"
             autocomplete="off"
             clearable
@@ -121,7 +121,7 @@
         <el-form-item label="手机号" prop="usrPhone">
           <el-input
             type="number"
-            v-model="form.usrPhone"
+            v-model.number="form.usrPhone"
             placeholder="请输入手机号！"
             autocomplete="off"
             clearable

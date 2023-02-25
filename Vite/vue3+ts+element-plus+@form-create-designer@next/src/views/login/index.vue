@@ -70,15 +70,17 @@
         后台管理系统
       </h1>
       <el-form-item label="" prop="usrPhone">
-        <el-input v-model="form.usrPhone" clearable placeholder="手机号" autocomplete="off" />
+        <el-input v-model.number="form.usrPhone" clearable placeholder="手机号" minlength="11" maxlength="11" autocomplete="off" />
       </el-form-item>
       <el-form-item label="" prop="yzm" class="yzm">
         <el-input
           type="number"
-          v-model="form.yzm"
+          v-model.number="form.yzm"
           clearable
           placeholder="验证码"
           autocomplete="off"
+          minlength="4"
+          maxlength="6"
         />
         <el-button type="success" @click="yzmSend">
           <el-icon><ChatDotSquare /></el-icon>获取验证码
