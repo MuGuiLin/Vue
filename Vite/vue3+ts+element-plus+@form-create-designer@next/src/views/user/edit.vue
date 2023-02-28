@@ -121,7 +121,7 @@
         <el-form-item label="手机号" prop="usrPhone">
           <el-input
             type="number"
-            v-model.number="form.usrPhone"
+            v-model="form.usrPhone"
             placeholder="请输入手机号！"
             autocomplete="off"
             clearable
