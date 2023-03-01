@@ -7,6 +7,8 @@ import { ContentTypeEnum } from '@/enums/http';
 
 let loading: any = null;
 
+console.log(import.meta.env);
+
 const storageClear = () => {
   localStorage.clear();
   sessionStorage.clear();
@@ -14,7 +16,7 @@ const storageClear = () => {
 };
 
 const http = axios.create({
-  baseURL: '/api',
+  baseURL: 'development' == import.meta.env.MODE ? '/api' : '',
   timeout: 60 * 1000,
   withCredentials: true,
   headers: {

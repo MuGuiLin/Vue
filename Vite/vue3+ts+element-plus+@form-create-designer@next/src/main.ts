@@ -5,7 +5,7 @@ import cachePinia from 'pinia-plugin-persist';
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
-import formCreate from '@form-create/element-ui';
+// import formCreate from '@form-create/element-ui';
 import FcDesigner from '@form-create/designer';
 
 import App from './App.vue';
@@ -20,7 +20,7 @@ const app = createApp(App);
 app
   .use(createPinia().use(cachePinia))
   .use(ElementPlus, { locale })
-  .use(formCreate)
+  // .use(formCreate)
   .use(FcDesigner)
   .use(router);
 

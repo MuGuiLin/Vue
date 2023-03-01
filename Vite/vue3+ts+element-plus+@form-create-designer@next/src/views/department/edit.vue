@@ -19,41 +19,82 @@
   const menu = reactive([
     {
       name: 'main',
-      title: '表单组件',
+      title: '基础控件',
       list: [
+        {
+          icon: 'icon-input',
+          name: 'input',
+          label: '输入框',
+        },
+        {
+          icon: 'icon-radio',
+          name: 'radio',
+          label: '单选框',
+        },
         {
           icon: 'icon-checkbox',
           name: 'checkbox',
-          label: '单选框',
+          label: '多选框',
         },
-        // 'input',
-        // 'number',
-        // 'radio',
-        // 'checkbox',
-        // 'select',
-        // '_switch',
-        // 'time',
-        // 'date',
-        // 'slider',
-        // 'rate',
-        // 'color',
-        // 'cascader',
-        // 'upload',
-        // 'transfer',
-        // 'tree',
-        // 'editor',
+        {
+          icon: 'icon-select',
+          name: 'select',
+          label: '选择器',
+        },
+        {
+          icon: 'icon-switch',
+          name: 'switch',
+          label: '开关',
+        },
+        {
+          icon: 'icon-slider',
+          name: 'slider',
+          label: '滑块',
+        },
+        {
+          icon: 'icon-date',
+          name: 'datePicker',
+          label: '日期',
+        },
+        {
+          icon: 'icon-time',
+          name: 'timePicker',
+          label: '时间',
+        },
       ],
     },
-    {
-      name: 'aide',
-      title: '辅助组件',
-      list: ['alert', 'button', 'span', 'divider'],
-    },
-    {
-      name: 'layout',
-      title: '布局组件2',
-      list: ['row', 'tab', 'space'],
-    },
+    // {
+    //   name: 'aide',
+    //   title: '辅助组件',
+    //   list: ['alert', 'button', 'span', 'divider'],
+    // },
+    // {
+    //   name: 'layout',
+    //   title: '布局组件',
+    //   list: ['row', 'tab', 'space'],
+    // },
+
+    //  {
+    //         name: 'main',
+    //         title: t('menu.main'),
+    //         list: [
+    //             input, number, radio, checkbox, select, _switch, time, date, slider, rate, color, cascader, upload, transfer, tree, editor
+    //         ]
+    //     },
+    //     {
+    //         name: 'aide',
+    //         title: t('menu.aide'),
+    //         list: [
+    //             alert, button, span, divider
+    //         ]
+    //     },
+    //     {
+    //         name: 'layout',
+    //         title: t('menu.layout'),
+    //         list: [
+    //             row, tab, space
+    //         ]
+    //     },
   ]);
 
   const state: any = reactive({
@@ -117,13 +158,6 @@
 
   onMounted(async () => {
     console.log('designer', designer.value);
-
-    designer.value.removeMenuItem('slider');
-    designer.value.removeMenuItem('rate');
-    designer.value.removeMenuItem('color');
-    designer.value.removeMenuItem('transfer');
-    designer.value.removeMenuItem('tree');
-    designer.value.removeMenuItem('editor');
     if (state.depID) {
       try {
         const {
@@ -179,8 +213,7 @@
           </el-col>
         </el-row>
       </template>
-      <!-- <fc-designer ref="designer" :menu="menu" :config="config" height="740px" /> -->
-      <fc-designer ref="designer" :config="config" height="740px" />
+      <fc-designer ref="designer" :menu="menu" :config="config" height="740px" />
     </el-card>
   </el-main>
 </template>
@@ -215,6 +248,13 @@
         ._fc-m-drag {
           // background: url(@/assets/img/iphone-box.png) no-repeat center top;
           // background-size: contain;
+        }
+
+        ._fc-l {
+          ._fc-l-item {
+            margin: 23px 15px;
+            border: 1px solid #ccc;
+          }
         }
 
         ._fc-m-tools {
