@@ -1,1 +1,0 @@
-import{d as _,c as t,o,a as s,_ as n}from"./index-a89cdc83.js";const a=_({__name:"edit",setup(c){return(d,p)=>{const e=s("el-main");return o(),t(e,{class:"analysis-edit"})}}});const r=n(a,[["__scopeId","data-v-f0876df6"]]);export{r as default};
