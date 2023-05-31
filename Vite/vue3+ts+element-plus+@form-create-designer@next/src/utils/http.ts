@@ -16,7 +16,7 @@ const storageClear = () => {
 };
 
 const http = axios.create({
-  baseURL: 'development' == import.meta.env.MODE ? '/api' : '',
+  baseURL: 'development' == import.meta.env.MODE ? '/api' : 'https://stanserver.cn',
   timeout: 60 * 1000,
   withCredentials: true,
   headers: {

@@ -11,7 +11,7 @@
 
   const form = reactive({
     usrPhone: '18717791650',
-    yzm: '1234',
+    yzm: '123456',
   });
 
   const rule = reactive({
