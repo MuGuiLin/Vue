@@ -1,14 +1,17 @@
 <script setup lang="ts" name="Store">
 import { storeToRefs } from "pinia";
 import { userStore } from "@/store/modules/user.ts";
+
 const store = userStore();
 console.log(store);
-const { name, age, changeAge } = storeToRefs(store);
+
+const { name, lang, age, changeAge } = storeToRefs(store);
 
 const change = () => {
   // 修改方式1
   age.value = 18;
   name.value = "小穆";
+  lang.value = "zh" === lang.value ? "en" : "zh";
 
   // 修改方式2
   store.$patch((state) => {

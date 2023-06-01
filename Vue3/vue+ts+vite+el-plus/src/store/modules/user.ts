@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 
-export const userStore = defineStore('my-user-store', {
-
+export const userStore = defineStore('user', {
     state() {
         return {
             name: '沐枫',
+            lang: 'zh',
             age: 32,
             list: [1, 2, 3, 4, 5, 6]
         }
@@ -14,10 +14,10 @@ export const userStore = defineStore('my-user-store', {
         enabled: true,
         strategies: [
             {
-                key: 'my-user-store',   // 存储状态的 key
+                key: '--USER--',   // 存储状态的 key
                 storage: window.localStorage,   // 默认 window.sessionStorage
                 paths: [
-                    'name', 'age'   // 指定要存储的状态名 (前后不能有空格，必需和上面state中声明的一样！！)
+                    'lang', 'name', 'age'   // 指定要存储的状态名 (前后不能有空格，必需和上面state中声明的一样！！)
                 ]
             }
         ]
