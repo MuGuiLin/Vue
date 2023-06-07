@@ -39,12 +39,17 @@ const title2 = useI18n.t("home.title");
     <HelloWorld msg="Vite + Vue" />
 
     <RouterLink to="/upload">upload</RouterLink>、
-    <RouterLink to="/store">store</RouterLink>
+    <RouterLink to="/store">store</RouterLink>、
+    <RouterLink to="/table">table</RouterLink>
   </div>
 </template>
 
 <style scoped lang="less">
 .home {
+  text-align: center;
+  width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
   .logo {
     height: 6em;
     padding: 1.5em;

@@ -20,17 +20,16 @@ export const routes: Array<RouteRecordRaw> = [
         path: '/upload',
         name: 'Upload',
         component: () => import('@views/Upload.vue'),
-        meta: {
-            title: "vue3+ts+el-plus"
-        }
     },
     {
         path: '/store',
         name: 'Store',
         component: () => import('@views/Store.vue'),
-        meta: {
-            title: "vue3+ts+el-plus"
-        }
+    },
+    {
+        path: '/table',
+        name: 'Table',
+        component: () => import('@views/Table.vue'),
     },
     {
         path: "/:pathMatch(.*)",

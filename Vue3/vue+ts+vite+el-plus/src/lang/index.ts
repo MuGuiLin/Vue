@@ -10,22 +10,22 @@ import Store from '@/store';
 import Lang from '@/store/modules/lang.ts';
 
 // const { lang = 'zh' } = storeToRefs(Lang(Store));  // Lang(Store) 这里会使本地存失效！！！
-let locale = 'zh';
-nextTick(() => {
-    const { lang  = 'zh' } = storeToRefs(Lang());
-    locale = lang.value
-    console.log(lang.value, 66666)
-})
+// let locale = 'zh';
+// nextTick(() => {
+//     const { lang  = 'zh' } = storeToRefs(Lang());
+//     locale = lang.value
+//     console.log(lang.value, 66666)
+// })
 
 // const { lang: locale = 'zh' } = verifyJsonPase(localStorage.getItem('__LANG__') as string);
 
 export default createI18n({
 
     // locale: lang.value || 'zh',
-    // locale: localStorage.getItem('__LANG__') || 'zh',
+    locale: localStorage.getItem('__LANG__') || 'zh',
 
     legacy: false,  //  // 使用 Composition API 模式，则需要将其设置为false （没有该参数可能会报错）
-    locale: locale || 'zh',  // 默认zh翻译
+    // locale: locale || 'zh',  // 默认zh翻译
 
     messages: {
         zh,

@@ -32,6 +32,7 @@ export default defineConfig({
   server: {
     host: true,
     port: 666,
+    // hmr: true,
     strictPort: 888,
     open: false,
     https: false,
