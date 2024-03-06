@@ -1,4 +1,5 @@
 import { defineComponent, reactive } from 'vue';
+import './Solt.less'
 
 export default defineComponent({
     name: 'TsxSolt',
@@ -54,7 +55,7 @@ export default defineComponent({
              * 在.tsx插槽中，其实就是在子组件中去执行父组件传递进来的函数，如果要传参数只需要把参数放在函数中返回去就OK了。
              */
 
-            return <div>
+            return <div class="slot">
                 {/* 默认插槽出口 */}
                 {ctx.slots.default && ctx.slots.default({ data1: "我是.tsx默认插槽出口传来的数据666", data2: state.arr[0] })}
 

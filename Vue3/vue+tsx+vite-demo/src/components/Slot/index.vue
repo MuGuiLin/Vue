@@ -45,7 +45,7 @@ state.sort = () => {
 </script>
 
 <template>
-    <div>
+    <div class="slot">
         <!-- <dialog open>我是一个插槽组件</dialog> -->
         <slot data1="我是默认插槽出口传来的数据666" :data2="state.arr[0]">默认插槽出口1 <h3>【注：写在这个slot标签中的内容，如果引入的父组件里有内容(空标签也算)传过来，那么这里就会被覆盖掉，反之就显示这里的内容！！！】</h3></slot>
         <slot name="default">默认插槽出口2 name="default" 可不用加（注：和上面二选一！！）</slot>

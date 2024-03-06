@@ -9,7 +9,7 @@ import TsxSlot from '@/components/Slot/Slot'
     <article>
         <h1> This is a Slot page </h1>
 
-        <h2>.vue插槽</h2>
+        <h2>xxx.vue 的插槽</h2>
 
         <Slot v-slot="slotProps">
             <h3>默认插槽内容</h3>
@@ -50,7 +50,7 @@ import TsxSlot from '@/components/Slot/Slot'
 
 
         <br><br><br>
-        <h2>.tsx插槽</h2>
+        <h2>xxx.tsx 的插槽</h2>
         <TsxSlot v-slot="mupiao">
             <h3>默认插槽内容</h3>
             <pre>接收插槽传来的数据： {{ mupiao.data1 }}, {{ mupiao.data2 }}</pre>
@@ -87,16 +87,18 @@ import TsxSlot from '@/components/Slot/Slot'
 article {
     h2 {
         margin-top: 20px;
-        color: blueviolet
+        color: white;
+        line-height: 50px;
+        border-bottom: 2px solid white;
     }
 
     h3 {
         margin-top: 20px;
-        color: red
+        color: #08d308
     }
 
     button b {
-        color: blueviolet
+        color: rgb(226, 43, 180)
     }
 }
 </style>
