@@ -3,7 +3,7 @@ export default (app: any) => {
         mounted(el: any) {
             console.log('focus', el)
             el.focus()
-            el.style = 'border: 1px solid red'
+            el.style = 'border: 2px solid #08d308'
         },
     })
 
