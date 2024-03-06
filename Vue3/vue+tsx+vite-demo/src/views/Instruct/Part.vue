@@ -1,18 +1,14 @@
 <script setup lang="ts">
-const vMove = (el) => {
+const vFocus = (el) => {
+  el.focus();
   console.log("v-move", el);
-  el.addEventListener("transitionend", (e) => {
-    console.log("transitionend", e);
-  });
 };
 </script>
 
 <template>
   <h3>局部指令</h3>
-  <ul>
-    <li v-move>1.自定义指令</li>
-  </ul>
-
+  <input v-focus placeholder="自定义 局部指令v-focus" />
+  <ul></ul>
 </template>
 
 
