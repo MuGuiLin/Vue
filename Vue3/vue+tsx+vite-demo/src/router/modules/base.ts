@@ -26,6 +26,24 @@ export const routes: Array<RouteRecordRaw> = [
                 component: () => import("@/views/Slot/index.vue"),
             },
             {
+                path: "/instruct",
+                name: "Instruct",
+                component: () => import("@/views/Instruct/index.vue"),
+                redirect: "/instruct/part",
+                children: [
+                    {
+                        path: "part",
+                        name: "Part",
+                        component: () => import("@/views/Instruct/Part"),
+                    },
+                    {
+                        path: "global",
+                        name: "Global",
+                        component: () => import("@/views/Instruct/Global"),
+                    },
+                ],
+            },
+            {
                 // path: '/user/:id',
                 path: "svg:",
                 name: "Svg",
@@ -47,7 +65,6 @@ export const routes: Array<RouteRecordRaw> = [
                         component: () => import("@/views/Svg/Defaule.vue"),
                     },
                 ],
-
             },
         ]
     },

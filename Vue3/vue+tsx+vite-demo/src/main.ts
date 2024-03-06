@@ -1,6 +1,14 @@
 import { createApp } from 'vue'
-import './style.css'
 import router from './router'
+
+import internal from './stream/instruct'
 import App from './App.vue'
 
-createApp(App).use(router).mount('#app');
+import './style.css'
+
+const app = createApp(App);
+
+// 全局自定义指令
+internal(app)
+
+app.use(router).mount('#app');

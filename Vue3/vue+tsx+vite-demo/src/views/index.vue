@@ -10,6 +10,7 @@
             <router-link to="/tsx">Tsx</router-link> |
             <router-link to="/slot">Slot</router-link> |
             <router-link to="/svg">Svg</router-link> |
+            <router-link to="/instruct">Instruct</router-link> |
             <router-link to="/svgEdit">svgEdit</router-link> |
             <router-link to="/404">404</router-link>
         </nav>
