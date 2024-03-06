@@ -1,5 +1,4 @@
 <script setup lang="ts" name="MuTable">
-import Vue from "vue";
 
 interface ITableData {
   [propName: string]: any;
