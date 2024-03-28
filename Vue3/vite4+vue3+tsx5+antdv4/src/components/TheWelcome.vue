@@ -1,10 +1,30 @@
 <script setup lang="ts">
+import { ref, getCurrentInstance } from 'vue'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
+
+const prototype = getCurrentInstance()
+console.log('getCurrentInstance', prototype)
+
+const { appContext, proxy } = prototype
+console.log('appContext', appContext)
+console.log('proxy', proxy)
+
+const global = appContext.config.globalProperties
+console.log('appContext.config.globalProperties', global)
+
+const { $t } = global
+
+const title = $t('home.title')
+console.log(title)
+
+const useI18n = proxy.useI18n()
+console.log(useI18n)
+const title2 = useI18n.t('home.title')
 </script>
 
 <template>
@@ -12,18 +32,18 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>Documentation</template>
+    <template #heading>{{ $t('home.tag1.title') }}</template>
 
     Vue’s
-    <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
-    provides you with all information you need to get started.
+    <a href="https://vuejs.org/" target="_blank" rel="noopener">{{ $t('home.tag1.link') }}</a>
+    {{ $t('home.tag1.text') }}
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
       <ToolingIcon />
     </template>
-    <template #heading>Tooling</template>
+    <template #heading>{{ $t('home.tag2.title') }}</template>
 
     This project is served and bundled with
     <a href="https://vitejs.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
@@ -45,7 +65,7 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #icon>
       <EcosystemIcon />
     </template>
-    <template #heading>Ecosystem</template>
+    <template #heading>{{ $t('home.tag3.title') }}</template>
 
     Get official tools and libraries for your project:
     <a href="https://pinia.vuejs.org/" target="_blank" rel="noopener">Pinia</a>,
@@ -61,7 +81,7 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #icon>
       <CommunityIcon />
     </template>
-    <template #heading>Community</template>
+    <template #heading>{{ $t('home.tag4.title') }}</template>
 
     Got stuck? Ask your question on
     <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>, our official
@@ -79,7 +99,7 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #icon>
       <SupportIcon />
     </template>
-    <template #heading>Support Vue</template>
+    <template #heading>{{ $t('home.tag5.title') }}</template>
 
     As an independent project, Vue relies on community backing for its sustainability. You can help
     us by

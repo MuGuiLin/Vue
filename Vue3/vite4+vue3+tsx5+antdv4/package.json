@@ -15,9 +15,23 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@vueuse/core": "^10.9.0",
+    "ant-design-vue": "^4.1.2",
+    "axios": "^1.6.8",
+    "codemirror": "^6.0.1",
+    "lodash-es": "^4.17.21",
+    "mitt": "^3.0.1",
+    "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
+    "pinia-plugin-persist": "^1.0.0",
+    "qrcode": "^1.5.3",
+    "qs": "^6.12.0",
+    "showdown": "^2.1.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-i18n": "^9.10.2",
+    "vue-router": "^4.3.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",
@@ -35,6 +49,7 @@
     "eslint-plugin-playwright": "^1.5.2",
     "eslint-plugin-vue": "^9.17.0",
     "jsdom": "^24.0.0",
+    "less": "^4.2.0",
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.0.3",
     "typescript": "~5.4.0",

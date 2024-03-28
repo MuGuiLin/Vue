@@ -1,7 +1,17 @@
+<script setup lang="ts">
+import { getCurrentInstance } from 'vue'
+const {
+  appContext: {
+    config: {
+      globalProperties: { $t }
+    }
+  }
+} = getCurrentInstance()
+</script>
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <main class="about">
+    <h1>{{ $t('about.title') }}</h1>
+  </main>
 </template>
 
 <style>

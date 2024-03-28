@@ -1,14 +1,22 @@
-import './assets/main.css'
+import 'ant-design-vue/dist/reset.css';
+import '@/theme/main.less';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import Antdv from 'ant-design-vue';
+import { createApp } from 'vue';
 
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue';
+import { setupLang } from "@/lang";
+import { setupStore } from '@/store';
+import { setupRouter } from '@/router';
 
-const app = createApp(App)
+(async () => {
+    const app = createApp(App);
 
-app.use(createPinia())
-app.use(router)
+    setupStore(app);
 
-app.mount('#app')
+    setupLang(app);
+
+    setupRouter(app);
+
+    app.use(Antdv).mount('#app');
+})();
