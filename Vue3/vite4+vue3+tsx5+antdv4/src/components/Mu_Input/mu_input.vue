@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {} from 'vue'
+import {useAttrs, useSlots} from 'vue'
 import { Input } from 'ant-design-vue'
 /**
  * 二次封装UI组件
