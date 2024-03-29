@@ -1,9 +1,9 @@
 export { Input } from 'ant-design-vue';
 
 import { install, getAssetsFile } from "@/utils";
-import mu_input from './mu_input.vue'
+import muinput from './MuInput.vue'
 
-export const MuInput = install(mu_input)
+export const MuInputCompositionAPI = install(muinput)
 export const GetAssetsFile = getAssetsFile;
 
-export default MuInput;
+export default MuInputCompositionAPI;

@@ -1,14 +1,21 @@
 export { storeToRefs } from 'pinia';
 import { defineStore } from 'pinia';
 
+export type lang = 'zh' | 'en';
+export type theme = 'dark' | 'light';
+
 export const useUserStore = defineStore('__USER__', {
     state() {
         return {
             name: '沐枫',
-            lang: 'zh',
+            lang: 'zh', // 'zh' || 'en'
+            theme: {
+                is: true,
+                mode: 'dark' // 'dark' | 'light'
+            },
             age: 32,
             list: [1, 2, 3, 4, 5, 6]
-        }
+        };
     },
 
     persist: {
@@ -18,7 +25,7 @@ export const useUserStore = defineStore('__USER__', {
                 key: '__USER__',   // 存储状态的 key
                 storage: window.localStorage,   // 默认 window.sessionStorage
                 paths: [
-                    'lang', 'name', 'age'   // 指定要存储的状态名 (前后不能有空格，必需和上面state中声明的一样！！)
+                    'name', 'lang', 'theme', 'name', 'age', 'list',   // 指定要存储的状态名 (前后不能有空格，必需和上面state中声明的一样！！)
                 ]
             }
         ]

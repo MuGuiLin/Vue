@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { getCurrentInstance } from 'vue'
+import { getCurrentInstance, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import { TranslationOutlined } from '@ant-design/icons-vue'
+import { TranslationOutlined, BgColorsOutlined } from '@ant-design/icons-vue'
 import { useUserStore, storeToRefs } from '@/store/modules/user'
 import HelloWorld from '@/components/HelloWorld.vue'
+import { useTheme } from '@/hooks/useTheme'
 
-const { lang } = storeToRefs(useUserStore())
+const { lang, theme } = storeToRefs(useUserStore())
+const { theme: use_theme } = useTheme()
 
 const {
   appContext: {
@@ -19,12 +21,65 @@ const setLang = () => {
   lang.value = 'zh' === lang.value ? 'en' : 'zh'
   location.reload()
 }
+
+const setTheme = () => {
+  theme.value.mode = theme.value.is ? 'dark' : 'light'
+  document.documentElement.dataset.theme = theme.value.mode
+  // location.reload()
+}
+
+onMounted(() => {
+  /**
+   * prefers-color-scheme 的两种监听方式
+   *  1、 css里通过@media监听
+   *  2、js里面通过matchMedia监听
+   * 注：两种方式都能监听到操作系统主题变化后的值
+   */
+
+  // 检查用户是否偏好深色主题
+  const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+  // js监听操作系统主题变化时触发
+  darkModeMediaQuery.addEventListener('change', () => {
+    if (darkModeMediaQuery.matches) {
+      console.log('主题已切换：用户偏好深色主题，暗色主题：dark')
+      // 在这里应用深色主题的样式或逻辑
+      // tipText.innerHTML = darkTip
+    } else {
+      console.log('主题已切换：用户偏好浅色主题，亮色主题：light')
+      // 在这里应用浅色主题的样式或逻辑
+      // tipText.innerHTML = lightTip
+    }
+  })
+
+  // 初始检查
+  if (darkModeMediaQuery.matches) {
+    console.log('初始状态：用户偏好深色主题')
+  } else {
+    console.log('初始状态：用户偏好浅色主题')
+  }
+})
 </script>
 
 <template>
   <a-button class="lang-btn" type="primary" ghost @click="setLang"
     ><TranslationOutlined />{{ lang }}</a-button
   >
+  <a-button
+    class="theme-btn"
+    type="primary"
+    ghost
+    @click="'dark' === use_theme ? (use_theme = 'light') : (use_theme = 'dark')"
+    ><BgColorsOutlined />{{ use_theme }}</a-button
+  >
+  <a-switch
+    class="theme-switch"
+    v-model:checked="theme.is"
+    @change="setTheme"
+    checked-children="dark"
+    un-checked-children="light"
+  />
+
   <section id="home">
     <header>
       <img alt="Vue logo" class="logo" src="@/assets/svg/logo.svg" width="125" height="125" />
@@ -48,9 +103,18 @@ const setLang = () => {
 </template>
 
 <style scoped lang="less" >
-.lang-btn {
+.lang-btn,
+.theme-btn,
+.theme-switch {
   position: fixed;
   top: 10px;
+  right: 250px;
+}
+.theme-btn {
+  right: 150px;
+}
+.theme-switch {
+  top: 15px;
   right: 50px;
 }
 header {

@@ -2,7 +2,7 @@ import { type AppRouteRecordRaw } from '../types'
 
 import RouteView from '@/views/store/RouteView.vue'
 
-export default [
+export const storeRoute: AppRouteRecordRaw[] = [
     {
         path: '/store',
         name: 'Store',
@@ -34,3 +34,6 @@ export default [
         ]
     },
 ];
+
+
+export default storeRoute;

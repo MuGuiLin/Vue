@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 Components</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.4.21/vue.global.min.js"></script>
+    <style>
+        .box,
+        .son {
+            padding: 50px;
+            border: 1px solid gray;
+        }
+
+        .son {
+            margin: 50px auto;
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        // 定义局部组件（子组件）
+        const jubu = {
+            template: `<div class="son">
+                我是【局部】的alert组件 {{text}}
+                <button @click="alert">点我弹出</button>
+                ，这里父组件传过来的值：{{name}}
+                <button @click="update">点我修改从父组件传过来的值</button>
+            </div>`,
+            inheritAttrs: false, // Non-props不继承父组件在标签中设置的特性 如style、class、自定义属性等 默认为：true
+            // props:['name', ''],
+            props: {
+                // 注：由于组件的复用机制，所有的props都使得其父子prop之间形成了一个单向下行绑定（就是：父组件向子组件传递的参数，当父组件改变这个参数时，在子组件中的这个参数也会变，反过来则不行【也就是：子组件不能修改父组件传递的参数】，但是如果实在要改，可以在子组件中调用父组件的方法来进行修改）
+                name: {
+                    type: String,   // 类型校检 String Number Boolean Array Function Symbol Object
+                    validator: (val) => {
+                        console.log(val);
+                        // 精确校检：返回Boolean
+                        return -1 != val.search('枫'); // 校检父组件传过来的值中必须要有“枫”字！
+                    },
+                    default: '',    // 默认值
+                    required: true, // 是否必填
+                }
+            },
+            // emits: ['genxin'], 
+            emits: {
+                // 子组件向父组件传参是的：精确校检 返回Boolean
+                genxin: (val) => {
+                    return -1 != val.search('Mu'); // 校检向父组件传过去的值中必须要有“Mu”字！
+                }
+            }, 
+            data() {
+                return {
+                    text: ''
+                }
+            },
+            mounted() {
+                this.text = '1 2 3 4 5 6 7 8 9';
+            },
+            methods: {
+                alert() {
+                    alert('我是局部的alert组件！');
+                    this.text = this.text.split('').reverse().join('');
+                },
+                update() {
+                    // 调用父组件的修改方法，并传新值过去
+                    this.$emit('genxin', 'MuGuiLin');
+                }
+            }
+        };
+
+        // 创建Vue应用（根组件）
+        const app = Vue.createApp({
+            // 可以给子组件传递：变量 和 方法
+            template: `
+                <h1>Vue3 Components</h1> <hr/>
+                <section class="box">
+                    <h3>根组件：{{name}}</h3> <hr/>
+
+                    <alert/>
+ 
+                    <jubu :name="name" @genxin="updataName" />
+
+                    <count :cost="pay" />
+                </section>
+            `,
+            components: {
+                // 注册局部组件（注：全局组件【就是用app.component()来定义的】无需注册，直接使用即可！）
+                jubu
+            },
+            data() {
+                return {
+                    name: '沐枫',
+                    pay: (par) => {
+                        // par 子组件调用并传回来的参数
+                        alert(par);
+                    }
+                }
+            },
+            methods: {
+                updataName(newName) {
+                    this.name = newName;
+                }
+            },
+        });
+
+        // 定义全局组件（子组件）
+        app.component('alert', {
+            template: `<div class="son">
+                我是【全局】的alert组件 {{text}}
+                <button @click="alert">点我弹出</button>
+            </div>`,
+            data() {
+                return {
+                    text: ''
+                }
+            },
+            mounted() {
+                this.text = '1 2 3 4 5 6 7 8 9';
+            },
+            methods: {
+                alert() {
+                    alert('我是全局的alert组件！');
+                    this.text = this.text.split('').reverse().join('');
+                }
+            },
+        });
+
+        // 注：全局组件用多了会影响性能！！
+        app.component('count', {
+            template: `<div class="son">
+                我是【全局】的count组件
+                <button @click="join">增加 +1</button>
+                <input v-model="count" >
+                <b>{{count}} </b>
+                <button @click="less">减少 -1</button>
+            </div>`,
+
+            // setup(props) {
+            //     const count = app.ref(0);
+            //     return {
+            //         count
+            //     }
+            // }
+            props: {
+                // 接收父组件传来的方法
+                cost: {
+                    type: Function
+                }
+            },
+            data() {
+                return {
+                    count: 100
+                }
+            },
+            methods: {
+                join() {
+                    this.count++;
+                    this.cost(this.count);
+                },
+                less() {
+                    this.count--;
+                    this.cost(this.count);
+                }
+            },
+        });
+
+
+        // 挂载应用
+        const vm = app.mount('#app');
+    </script>
+</body>
+
+</html>

@@ -13,7 +13,11 @@ onActivated(() => {
 </script>
 
 <template>
-  <section class="antdv">AntdV</section>
+  <section class="antdv">
+    <h1>AntdV</h1>
+    <hr />
+    <router-link to="/antdv/muinput">二次封装UI组件</router-link>
+  </section>
 </template>
 
 <style scoped lang="less">
