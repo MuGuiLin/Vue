@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { getCurrentInstance } from 'vue'
+
+console.log('.meta配置文件内容：', import.meta);
+console.log('.env配置文件内容：', import.meta.env);
+console.log('.env配置文件中的后端API域名', import.meta.env.VITE_API_URL);
+
 const {
   appContext: {
     config: {
