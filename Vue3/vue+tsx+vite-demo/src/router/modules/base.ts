@@ -34,12 +34,12 @@ export const routes: Array<RouteRecordRaw> = [
                     {
                         path: "part",
                         name: "Part",
-                        component: () => import("@/views/Instruct/Part"),
+                        component: () => import("@/views/Instruct/Part.vue"),
                     },
                     {
                         path: "global",
                         name: "Global",
-                        component: () => import("@/views/Instruct/Global"),
+                        component: () => import("@/views/Instruct/Global.vue"),
                     },
                 ],
             },
