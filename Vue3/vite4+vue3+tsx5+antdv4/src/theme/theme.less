@@ -52,6 +52,7 @@
     --color-text   : var(--vt-c-text-dark-2);
   }
 }
+
 // CSS自动监听操作系统主题变化后的 亮色主题匹配
 @media (prefers-color-scheme: light) {
   :root {
@@ -108,3 +109,13 @@ html[data-theme="cyan"] {
   --color-text   : var(--vt-c-text-light-1);
 }
 
+//顶部进度条颜色
+#nprogress {
+  .bar {
+    background: -webkit-linear-gradient(0, #00dbde, #fc00ff) !important;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px red, 0 0 10px #fc00ff !important;
+  }
+}

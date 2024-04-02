@@ -3,6 +3,9 @@ import {
   type RouteRecordRaw
 } from 'vue-router';
 
+// 引入 nprogress 相关方法
+import { start, close, } from '@/utils/nprogress';
+
 import basic from './basic';
 import vue3 from './modules/vue3';
 import store from './modules/store';
@@ -21,9 +24,12 @@ const router = createRouter({
   ],
 });
 
+// 路由前置守卫
 router.beforeEach((to, _from, next): any => {
+  // 开启进度条
+  start();
   // const { token, login } = pinia();
-  // document.title = <string>to.meta.title as 'title';
+  document.title = <string>to.meta.title as 'title';
   // if (!token) {
   //     return login(() => {
   //         next('/');
@@ -32,6 +38,12 @@ router.beforeEach((to, _from, next): any => {
   next();
 });
 
+
+// 路由后置守卫
+router.afterEach(() => {
+  // 关闭进度条
+  close();
+});
 
 export function setupRouter(app: any) {
   app.use(router);
