@@ -180,7 +180,7 @@ $ pnpm add vuex@next
 
 在项目src目录中：新增store/index.ts文件，配置如下：
 
-```js
+```vue
 import { createStore } from 'vuex'
 import { defineStore } from 'pinia'
 
