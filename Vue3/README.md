@@ -182,6 +182,7 @@ $ pnpm add vuex@next
 
 ```js
 import { createStore } from 'vuex'
+import { defineStore } from 'pinia'
 
 export default createStore({
   state: {
