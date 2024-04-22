@@ -42,10 +42,7 @@ onDeactivated(() => {
 
 <template>
   <main class="keep-alive">
-    <pre>
-
-    </pre>
-
+    了解更多：<a href="https://cn.vuejs.org/guide/built-ins/keep-alive.html">Vue keep-alive</a>
     <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-item label="姓名：">
           <a-input v-if="formState.show" v-model:value="formState.name" />

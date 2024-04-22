@@ -42,6 +42,7 @@ onDeactivated(() => {
 
 <template>
   <main class="keep-alive">
+    了解更多：<a href="https://cn.vuejs.org/guide/built-ins/keep-alive.html">Vue keep-alive</a>
     <pre>
     onActivated 是 Vue 3 中组件生命周期钩子的一部分，它是在组件被 keep-alive 缓存并且再次被激活时调用的钩子函数。这个钩子函数通常用于处理组件被缓存后再次显示时的逻辑。
     当一个被 &lt;keep-alive> 包裹的组件被切换展示时，如果该组件定义了 onActivated 钩子函数，那么该钩子函数将会被调用。
