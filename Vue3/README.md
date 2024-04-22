@@ -1,6 +1,6 @@
 # Vite 
 
-> 下一代前端开发与构建工具！
+> Web前端开发与构建工具！
 >
 > Vite（法语意为 "快速的"，发音 `/vit/`![img](https://cn.vitejs.dev/voice.svg)，发音同 "veet"）是一种新型前端构建工具，能够显著提升前端开发体验。它主要由两部分组成：
 >
@@ -180,8 +180,9 @@ $ pnpm add vuex@next
 
 在项目src目录中：新增store/index.ts文件，配置如下：
 
-```js
+```vue
 import { createStore } from 'vuex'
+import { defineStore } from 'pinia'
 
 export default createStore({
   state: {
