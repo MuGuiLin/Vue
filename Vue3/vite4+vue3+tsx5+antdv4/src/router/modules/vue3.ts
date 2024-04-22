@@ -72,6 +72,33 @@ export const vue3Route: AppRouteRecordRaw[] = [
                 },
                 component: () => import('@/views/vue3/Letter.vue'),
             },
+            {
+                path: '/vue3/keepAlive',
+                name: 'KeepAlive',
+                meta: {
+                    title: 'keep-alive LRU算法',
+                },
+                redirect: '/vue3/keepAlive/index',
+                component: () => import('@/views/vue3/KeepAlive/RouteView.vue'),
+                children: [
+                    {
+                        path: '/vue3/keepAlive/index',
+                        name: 'KeepAliveIndex',
+                        meta: {
+                            title: 'keep-alive LRU算法',
+                        },
+                        component: () => import('@/views/vue3/KeepAlive/Index.vue'),
+                    },
+                    {
+                        path: '/vue3/keepAlive/edit',
+                        name: 'KeepAliveEdit',
+                        meta: {
+                            title: '编辑',
+                        },
+                        component: () => import('@/views/vue3/KeepAlive/Edit.vue'),
+                    }
+                ]
+            },
         ]
     },
 ];
